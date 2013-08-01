@@ -1,0 +1,3343 @@
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+
+import javax.portlet.PortletPreferences;
+
+//Add Site
+
+userId = PortalUtil.getUserId(actionRequest);
+
+ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+	WebKeys.THEME_DISPLAY);
+
+companyId = themeDisplay.getCompanyId();
+
+Group group = GroupLocalServiceUtil.getGroup(companyId, "Guest");
+
+groupId = group.getGroupId();
+
+ServiceContext serviceContext = ServiceContextFactory.getInstance(
+	Group.class.getName(), actionRequest);
+
+//ADD PAGE
+
+//Add Collaboration Part
+
+Map<Locale, String> nameMapCollaboration = new HashMap<Locale, String>();
+nameMapCollaboration.put(Locale.US, "Collaboration");
+Map<Locale, String> titleMapCollaboration = new HashMap<Locale, String>();
+titleMapCollaboration.put(Locale.US, "");
+Map<Locale, String> descriptionMapCollaboration = new HashMap<Locale, String>();
+descriptionMapCollaboration.put(Locale.US, "");
+Map<Locale, String> keywordsMapCollaboration = new HashMap<Locale, String>();
+keywordsMapCollaboration.put(Locale.US, "");
+Map<Locale, String> robotsMapCollaboration = new HashMap<Locale, String>();
+robotsMapCollaboration.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapCollaboration = new HashMap<Locale, String>();
+friendlyURLMapCollaboration.put(Locale.US, "/collaboration");
+
+Layout collaborationLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapCollaboration, titleMapCollaboration,
+	descriptionMapCollaboration, keywordsMapCollaboration,
+	robotsMapCollaboration, "link_to_layout", null, false,
+	friendlyURLMapCollaboration, serviceContext);
+
+collaborationlayoutId = collaborationLayout.getLayoutId();
+
+Map<Locale, String> nameMapBlog = new HashMap<Locale, String>();
+nameMapBlog.put(Locale.US, "Blogs");
+Map<Locale, String> titleMapBlog = new HashMap<Locale, String>();
+titleMapBlog.put(Locale.US, "");
+Map<Locale, String> descriptionMapBlog = new HashMap<Locale, String>();
+descriptionMapBlog.put(Locale.US, "");
+Map<Locale, String> keywordsMapBlog = new HashMap<Locale, String>();
+keywordsMapBlog.put(Locale.US, "");
+Map<Locale, String> robotsMapBlog = new HashMap<Locale, String>();
+robotsMapBlog.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapBlog = new HashMap<Locale, String>();
+friendlyURLMapBlog.put(Locale.US, "/blogs");
+
+Layout layoutBlogs = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, collaborationlayoutId, nameMapBlog, titleMapBlog,
+	descriptionMapBlog, keywordsMapBlog, robotsMapBlog, "portlet", null, false,
+	friendlyURLMapBlog, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesBlog =
+	layoutBlogs.getTypeSettingsProperties();
+
+typeSettingsPropertiesBlog.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesBlog.setProperty("column-1", "71_INSTANCE_rETjYe1irD4L");
+typeSettingsPropertiesBlog.setProperty("column-2", "115,33,114");
+
+layoutBlogs.setTypeSettingsProperties(typeSettingsPropertiesBlog);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutBlogs.getLayoutId(),
+	layoutBlogs.getTypeSettings());
+
+UnicodeProperties propertiesBlog = new UnicodeProperties();
+
+propertiesBlog.setProperty("displayStyle","from-level-0");
+propertiesBlog.setProperty("headerType","root-layout");
+propertiesBlog.setProperty("bulletStyle","dots");
+propertiesBlog.setProperty("rootLayoutType","absolute");
+propertiesBlog.setProperty("includedLayouts","auto");
+propertiesBlog.setProperty("nestedChildren","1");
+propertiesBlog.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceBlog","71_INSTANCE_rETjYe1irD4L");
+portletResourceBlog = (String)actionRequest.getAttribute("portletResourceBlog");
+
+PortletPreferences portletPreferencesBlog =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceBlog);
+
+for (Map.Entry<String, String> entry : propertiesBlog.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesBlog.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutBlogs.getPlid(), "71_INSTANCE_rETjYe1irD4L",
+	portletPreferencesBlog);
+
+Map<Locale, String> nameMapDD = new HashMap<Locale, String>();
+nameMapDD.put(Locale.US, "Dynamic Data");
+Map<Locale, String> titleMapDD = new HashMap<Locale, String>();
+titleMapDD.put(Locale.US, "");
+Map<Locale, String> descriptionMapDD = new HashMap<Locale, String>();
+descriptionMapDD.put(Locale.US, "");
+Map<Locale, String> keywordsMapDD = new HashMap<Locale, String>();
+keywordsMapDD.put(Locale.US, "");
+Map<Locale, String> robotsMapDD = new HashMap<Locale, String>();
+robotsMapDD.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapDD = new HashMap<Locale, String>();
+friendlyURLMapDD.put(Locale.US, "/dynamic-data");
+
+Layout layoutDD = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, collaborationlayoutId, nameMapDD, titleMapDD,
+	descriptionMapDD, keywordsMapDD, robotsMapDD, "portlet", null, false,
+	friendlyURLMapDD, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesDD =
+	layoutDD.getTypeSettingsProperties();
+
+typeSettingsPropertiesDD.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesDD.setProperty("column-1", "71_INSTANCE_cpWOAkKlrbl2");
+typeSettingsPropertiesDD.setProperty("column-2", "169_INSTANCE_yOInr1Ynqt0S");
+
+layoutDD.setTypeSettingsProperties(typeSettingsPropertiesDD);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutDD.getLayoutId(),
+	layoutDD.getTypeSettings());
+
+UnicodeProperties propertiesDD = new UnicodeProperties();
+
+propertiesDD.setProperty("displayStyle","from-level-0");
+propertiesDD.setProperty("headerType","root-layout");
+propertiesDD.setProperty("bulletStyle","dots");
+propertiesDD.setProperty("rootLayoutType","absolute");
+propertiesDD.setProperty("includedLayouts","auto");
+propertiesDD.setProperty("nestedChildren","1");
+propertiesDD.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceDD","71_INSTANCE_cpWOAkKlrbl2");
+
+portletResourceDD = (String)actionRequest.getAttribute("portletResourceDD");
+
+PortletPreferences portletPreferencesDD =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceDD);
+
+for (Map.Entry<String, String> entry : propertiesDD.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesDD.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutDD.getPlid(), "71_INSTANCE_cpWOAkKlrbl2",
+	portletPreferencesDD);
+
+Map<Locale, String> nameMapWiki = new HashMap<Locale, String>();
+nameMapWiki.put(Locale.US, "Wiki");
+Map<Locale, String> titleMapWiki = new HashMap<Locale, String>();
+titleMapWiki.put(Locale.US, "");
+Map<Locale, String> descriptionMapWiki = new HashMap<Locale, String>();
+descriptionMapWiki.put(Locale.US, "");
+Map<Locale, String> keywordsMapWiki = new HashMap<Locale, String>();
+keywordsMapWiki.put(Locale.US, "");
+Map<Locale, String> robotsMapWiki = new HashMap<Locale, String>();
+robotsMapWiki.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapWiki = new HashMap<Locale, String>();
+friendlyURLMapWiki.put(Locale.US, "/wiki");
+
+Layout layoutWiki = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, collaborationlayoutId, nameMapWiki, titleMapWiki,
+	descriptionMapWiki, keywordsMapWiki, robotsMapWiki, "portlet",null, false,
+	friendlyURLMapWiki, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesWiki =
+	layoutWiki.getTypeSettingsProperties();
+
+typeSettingsPropertiesWiki.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesWiki.setProperty("column-1", "71_INSTANCE_cpWOAkKlrbl3");
+typeSettingsPropertiesWiki.setProperty("column-2", "36");
+
+layoutWiki.setTypeSettingsProperties(typeSettingsPropertiesWiki);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutWiki.getLayoutId(),
+	layoutWiki.getTypeSettings());
+
+UnicodeProperties propertiesWiki = new UnicodeProperties();
+
+propertiesWiki.setProperty("displayStyle","from-level-0");
+propertiesWiki.setProperty("headerType","root-layout");
+propertiesWiki.setProperty("bulletStyle","dots");
+propertiesWiki.setProperty("rootLayoutType","absolute");
+propertiesWiki.setProperty("includedLayouts","auto");
+propertiesWiki.setProperty("nestedChildren","1");
+propertiesWiki.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceWiki","71_INSTANCE_cpWOAkKlrbl3");
+portletResourceWiki = (String)actionRequest.getAttribute("portletResourceWiki");
+
+PortletPreferences portletPreferencesWiki =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceWiki);
+
+for (Map.Entry<String, String> entry : propertiesWiki.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesWiki.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutWiki.getPlid(), "71_INSTANCE_cpWOAkKlrbl3",
+	portletPreferencesWiki);
+
+Map<Locale, String> nameMapMB = new HashMap<Locale, String>();
+nameMapMB.put(Locale.US, "Message Board");
+Map<Locale, String> titleMapMB = new HashMap<Locale, String>();
+titleMapMB.put(Locale.US, "");
+Map<Locale, String> descriptionMapMB = new HashMap<Locale, String>();
+descriptionMapMB.put(Locale.US, "");
+Map<Locale, String> keywordsMapMB = new HashMap<Locale, String>();
+keywordsMapMB.put(Locale.US, "");
+Map<Locale, String> robotsMapMB = new HashMap<Locale, String>();
+robotsMapMB.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapMB = new HashMap<Locale, String>();
+friendlyURLMapMB.put(Locale.US, "/message-board");
+
+Layout layoutMB = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, collaborationlayoutId, nameMapMB, titleMapMB,
+	descriptionMapMB, keywordsMapMB, robotsMapMB, "portlet", null, false,
+	friendlyURLMapMB, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesMB =
+	layoutMB.getTypeSettingsProperties();
+
+typeSettingsPropertiesMB.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesMB.setProperty("column-1", "71_INSTANCE_vRgh12ulcIbj");
+typeSettingsPropertiesMB.setProperty("column-2", "19");
+
+layoutMB.setTypeSettingsProperties(typeSettingsPropertiesMB);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutMB.getLayoutId(),
+	layoutMB.getTypeSettings());
+
+UnicodeProperties propertiesMB = new UnicodeProperties();
+
+propertiesMB.setProperty("displayStyle","from-level-0");
+propertiesMB.setProperty("headerType","root-layout");
+propertiesMB.setProperty("bulletStyle","dots");
+propertiesMB.setProperty("rootLayoutType","absolute");
+propertiesMB.setProperty("includedLayouts","auto");
+propertiesMB.setProperty("nestedChildren","1");
+propertiesMB.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceMB","71_INSTANCE_vRgh12ulcIbj");
+portletResourceMB = (String)actionRequest.getAttribute("portletResourceMB");
+
+PortletPreferences portletPreferencesMB =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceMB);
+
+for (Map.Entry<String, String> entry : propertiesMB.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesMB.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutMB.getPlid(), "71_INSTANCE_vRgh12ulcIbj",
+	portletPreferencesMB);
+
+//Collaboration page link to blog page.
+
+UnicodeProperties typeSettingsPropertiesColl =
+	collaborationLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesColl.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesColl.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesColl.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesColl.setProperty(
+	"linkToLayoutId", String.valueOf(layoutBlogs.getLayoutId()));
+typeSettingsPropertiesColl.setProperty("sitemap-include", "1");
+typeSettingsPropertiesColl.setProperty("layout-template-id", "2_columns_ii");
+
+collaborationLayout.setTypeSettingsProperties(typeSettingsPropertiesColl);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, collaborationlayoutId,
+	collaborationLayout.getTypeSettings());
+
+//Add Community Part
+
+Map<Locale, String> nameMapCommunity = new HashMap<Locale, String>();
+nameMapCommunity.put(Locale.US, "Community");
+Map<Locale, String> titleMapCommunity = new HashMap<Locale, String>();
+titleMapCommunity.put(Locale.US, "");
+Map<Locale, String> descriptionMapCommunity = new HashMap<Locale, String>();
+descriptionMapCommunity.put(Locale.US, "");
+Map<Locale, String> keywordsMapCommunity = new HashMap<Locale, String>();
+keywordsMapCommunity.put(Locale.US, "");
+Map<Locale, String> robotsMapCommunity = new HashMap<Locale, String>();
+robotsMapCommunity.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapCommunity = new HashMap<Locale, String>();
+friendlyURLMapCommunity.put(Locale.US, "/community");
+
+Layout communityLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapCommunity, titleMapCommunity, descriptionMapCommunity,
+	keywordsMapCommunity, robotsMapCommunity, "link_to_layout", null, false,
+	friendlyURLMapCommunity, serviceContext);
+
+communityLayoutId = communityLayout.getLayoutId();
+
+Map<Locale, String> nameMapBookmark = new HashMap<Locale, String>();
+nameMapBookmark.put(Locale.US, "Bookmarks");
+Map<Locale, String> titleMapBookmark = new HashMap<Locale, String>();
+titleMapBookmark.put(Locale.US, "");
+Map<Locale, String> descriptionMapBookmark = new HashMap<Locale, String>();
+descriptionMapBookmark.put(Locale.US, "");
+Map<Locale, String> keywordsMapBookmark = new HashMap<Locale, String>();
+keywordsMapBookmark.put(Locale.US, "");
+Map<Locale, String> robotsMapBookmark = new HashMap<Locale, String>();
+robotsMapBookmark.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapBookmark = new HashMap<Locale, String>();
+friendlyURLMapBookmark.put(Locale.US, "/bookmarks");
+
+Layout bookmarksLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapBookmark, titleMapBookmark,
+	descriptionMapBookmark, keywordsMapBookmark, robotsMapBookmark, "portlet", null, false,
+	friendlyURLMapBookmark, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesBookmark =
+	bookmarksLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesBookmark.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesBookmark.setProperty("column-2", "28");
+typeSettingsPropertiesBookmark.setProperty("column-1", "71_INSTANCE_7VL6SLQvAQyJ,");
+
+bookmarksLayout.setTypeSettingsProperties(typeSettingsPropertiesBookmark);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, bookmarksLayout.getLayoutId(),
+	bookmarksLayout.getTypeSettings());
+
+UnicodeProperties propertiesBookmark = new UnicodeProperties();
+
+propertiesBookmark.setProperty("displayStyle","from-level-0");
+propertiesBookmark.setProperty("headerType","root-layout");
+propertiesBookmark.setProperty("bulletStyle","dots");
+propertiesBookmark.setProperty("rootLayoutType","absolute");
+propertiesBookmark.setProperty("includedLayouts","auto");
+propertiesBookmark.setProperty("nestedChildren","1");
+propertiesBookmark.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceBookmark","71_INSTANCE_7VL6SLQvAQyJ");
+portletResourceBookmark = (String)actionRequest.getAttribute(
+	"portletResourceBookmark");
+
+PortletPreferences portletPreferencesBookmark =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceBookmark);
+
+for (Map.Entry<String, String> entry : propertiesBookmark.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesBookmark.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, bookmarksLayout.getPlid(), "71_INSTANCE_7VL6SLQvAQyJ",
+	portletPreferencesBookmark);
+
+Map<Locale, String> nameMapFD = new HashMap<Locale, String>();
+nameMapFD.put(Locale.US, "Friends Directory");
+Map<Locale, String> titleMapFD = new HashMap<Locale, String>();
+titleMapFD.put(Locale.US, "");
+Map<Locale, String> descriptionMapFD = new HashMap<Locale, String>();
+descriptionMapFD.put(Locale.US, "");
+Map<Locale, String> keywordsMapFD = new HashMap<Locale, String>();
+keywordsMapFD.put(Locale.US, "");
+Map<Locale, String> robotsMapFD = new HashMap<Locale, String>();
+robotsMapFD.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapFD = new HashMap<Locale, String>();
+friendlyURLMapFD.put(Locale.US, "/friends-directory");
+
+Layout layoutFD = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapFD, titleMapFD,
+	descriptionMapFD, keywordsMapFD, robotsMapFD, "portlet", null, false,
+	friendlyURLMapFD, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesFD =
+	layoutFD.getTypeSettingsProperties();
+
+typeSettingsPropertiesFD.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesFD.setProperty("column-2", "186");
+typeSettingsPropertiesFD.setProperty("column-1", "71_INSTANCE_HwcVOI17WGQx,");
+
+layoutFD.setTypeSettingsProperties(typeSettingsPropertiesFD);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutFD.getLayoutId(),
+	layoutFD.getTypeSettings());
+
+UnicodeProperties propertiesFD = new UnicodeProperties();
+
+propertiesFD.setProperty("displayStyle","from-level-0");
+propertiesFD.setProperty("headerType","root-layout");
+propertiesFD.setProperty("bulletStyle","dots");
+propertiesFD.setProperty("rootLayoutType","absolute");
+propertiesFD.setProperty("includedLayouts","auto");
+propertiesFD.setProperty("nestedChildren","1");
+propertiesFD.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceFD","71_INSTANCE_HwcVOI17WGQx");
+
+portletResourceFD = (String)actionRequest.getAttribute("portletResourceFD");
+
+PortletPreferences portletPreferencesFD =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceFD);
+
+for (Map.Entry<String, String> entry : propertiesFD.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesFD.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutFD.getPlid(), "71_INSTANCE_HwcVOI17WGQx",
+	portletPreferencesFD);
+
+Map<Locale, String> nameMapInvitation = new HashMap<Locale, String>();
+nameMapInvitation.put(Locale.US, "Invitation");
+Map<Locale, String> titleMapInvitation = new HashMap<Locale, String>();
+titleMapInvitation.put(Locale.US, "");
+Map<Locale, String> descriptionMapInvitation = new HashMap<Locale, String>();
+descriptionMapInvitation.put(Locale.US, "");
+Map<Locale, String> keywordsMapInvitation = new HashMap<Locale, String>();
+keywordsMapInvitation.put(Locale.US, "");
+Map<Locale, String> robotsMapInvitation = new HashMap<Locale, String>();
+robotsMapInvitation.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapInvitation = new HashMap<Locale, String>();
+friendlyURLMapInvitation.put(Locale.US, "/invitation");
+
+Layout layoutInvitation = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapInvitation,
+	titleMapInvitation, descriptionMapInvitation, keywordsMapInvitation,
+	robotsMapInvitation, "portlet", null, false, friendlyURLMapInvitation,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesInvitation =
+	layoutInvitation.getTypeSettingsProperties();
+
+typeSettingsPropertiesInvitation.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesInvitation.setProperty("column-2", "100");
+typeSettingsPropertiesInvitation.setProperty("column-1", "71_INSTANCE_HwcVOI17WGQm,");
+
+layoutInvitation.setTypeSettingsProperties(typeSettingsPropertiesInvitation);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutInvitation.getLayoutId(),
+	layoutInvitation.getTypeSettings());
+
+UnicodeProperties propertiesInvitation = new UnicodeProperties();
+
+propertiesInvitation.setProperty("displayStyle","from-level-0");
+propertiesInvitation.setProperty("headerType","root-layout");
+propertiesInvitation.setProperty("bulletStyle","dots");
+propertiesInvitation.setProperty("rootLayoutType","absolute");
+propertiesInvitation.setProperty("includedLayouts","auto");
+propertiesInvitation.setProperty("nestedChildren","1");
+propertiesInvitation.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceInvitation","71_INSTANCE_HwcVOI17WGQm");
+portletResourceInvitation = (String)actionRequest.getAttribute(
+	"portletResourceInvitation");
+
+PortletPreferences portletPreferencesInvitation =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceInvitation);
+
+for (Map.Entry<String, String> entry : propertiesInvitation.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesInvitation.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutInvitation.getPlid(), "71_INSTANCE_HwcVOI17WGQm",
+	portletPreferencesInvitation);
+
+Map<Locale, String> nameMapMSite = new HashMap<Locale, String>();
+nameMapMSite.put(Locale.US, "My Site");
+Map<Locale, String> titleMapMSite = new HashMap<Locale, String>();
+titleMapMSite.put(Locale.US, "");
+Map<Locale, String> descriptionMapMSite = new HashMap<Locale, String>();
+descriptionMapMSite.put(Locale.US, "");
+Map<Locale, String> keywordsMapMSite = new HashMap<Locale, String>();
+keywordsMapMSite.put(Locale.US, "");
+Map<Locale, String> robotsMapMSite = new HashMap<Locale, String>();
+robotsMapMSite.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapMSite = new HashMap<Locale, String>();
+friendlyURLMapMSite.put(Locale.US, "/my-site");
+
+Layout layoutMSite = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapMSite, titleMapMSite,
+	descriptionMapMSite, keywordsMapMSite, robotsMapMSite, "portlet", null,
+	false, friendlyURLMapMSite, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesMSite =
+	layoutMSite.getTypeSettingsProperties();
+
+typeSettingsPropertiesMSite.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesMSite.setProperty("column-2", "29");
+typeSettingsPropertiesMSite.setProperty("column-1", "71_INSTANCE_JfIkBcsg8840,");
+
+layoutMSite.setTypeSettingsProperties(typeSettingsPropertiesMSite);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutMSite.getLayoutId(),
+	layoutMSite.getTypeSettings());
+
+UnicodeProperties propertiesMSite = new UnicodeProperties();
+
+propertiesMSite.setProperty("displayStyle","from-level-0");
+propertiesMSite.setProperty("headerType","root-layout");
+propertiesMSite.setProperty("bulletStyle","dots");
+propertiesMSite.setProperty("rootLayoutType","absolute");
+propertiesMSite.setProperty("includedLayouts","auto");
+propertiesMSite.setProperty("nestedChildren","1");
+propertiesMSite.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceMSite","71_INSTANCE_JfIkBcsg8840");
+portletResourceMSite = (String)actionRequest.getAttribute(
+	"portletResourceMSite");
+
+PortletPreferences portletPreferencesMSite =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceMSite);
+
+for (Map.Entry<String, String> entry : propertiesMSite.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesMSite.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutMSite.getPlid(), "71_INSTANCE_JfIkBcsg8840",
+	portletPreferencesMSite);
+
+Map<Locale, String> nameMapPComment = new HashMap<Locale, String>();
+nameMapPComment.put(Locale.US, "Page Comments");
+Map<Locale, String> titleMapPComment = new HashMap<Locale, String>();
+titleMapPComment.put(Locale.US, "");
+Map<Locale, String> descriptionMapPComment = new HashMap<Locale, String>();
+descriptionMapPComment.put(Locale.US, "");
+Map<Locale, String> keywordsMapPComment = new HashMap<Locale, String>();
+keywordsMapPComment.put(Locale.US, "");
+Map<Locale, String> robotsMapPComment = new HashMap<Locale, String>();
+robotsMapPComment.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapPComment = new HashMap<Locale, String>();
+friendlyURLMapPComment.put(Locale.US, "/page-comments");
+
+Layout layoutPComment = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapPComment,
+	titleMapPComment, descriptionMapPComment, keywordsMapPComment,
+	robotsMapPComment, "portlet", null, false, friendlyURLMapPComment,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesPComment =
+	layoutPComment.getTypeSettingsProperties();
+
+typeSettingsPropertiesPComment.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesPComment.setProperty("column-2", "108,107,143");
+typeSettingsPropertiesPComment.setProperty("column-1", "71_INSTANCE_mK2L1tZReQ4h,");
+
+layoutPComment.setTypeSettingsProperties(typeSettingsPropertiesPComment);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutPComment.getLayoutId(),
+	layoutPComment.getTypeSettings());
+
+UnicodeProperties propertiesPComment = new UnicodeProperties();
+
+propertiesPComment.setProperty("displayStyle","from-level-0");
+propertiesPComment.setProperty("headerType","root-layout");
+propertiesPComment.setProperty("bulletStyle","dots");
+propertiesPComment.setProperty("rootLayoutType","absolute");
+propertiesPComment.setProperty("includedLayouts","auto");
+propertiesPComment.setProperty("nestedChildren","1");
+propertiesPComment.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourcePComment","71_INSTANCE_mK2L1tZReQ4h");
+portletResourcePComment = (String)actionRequest.getAttribute(
+	"portletResourcePComment");
+
+PortletPreferences portletPreferencesPComment =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourcePComment);
+
+for (Map.Entry<String, String> entry : propertiesPComment.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesPComment.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutPComment.getPlid(), "71_INSTANCE_mK2L1tZReQ4h",
+	portletPreferencesPComment);
+
+Map<Locale, String> nameMapPDirectory = new HashMap<Locale, String>();
+nameMapPDirectory.put(Locale.US, "Portal Directory");
+Map<Locale, String> titleMapPDirectory = new HashMap<Locale, String>();
+titleMapPDirectory.put(Locale.US, "");
+Map<Locale, String> descriptionMapPDirectory = new HashMap<Locale, String>();
+descriptionMapPDirectory.put(Locale.US, "");
+Map<Locale, String> keywordsMapPDirectory = new HashMap<Locale, String>();
+keywordsMapPDirectory.put(Locale.US, "");
+Map<Locale, String> robotsMapPDirectory = new HashMap<Locale, String>();
+robotsMapPDirectory.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapPDirectory = new HashMap<Locale, String>();
+friendlyURLMapPDirectory.put(Locale.US, "/portal-directory");
+
+Layout layoutPDirectory = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayoutId, nameMapPDirectory,
+	titleMapPDirectory, descriptionMapPDirectory, keywordsMapPDirectory,
+	robotsMapPDirectory, "portlet", null, false, friendlyURLMapPDirectory,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesPDirectory =
+	layoutPDirectory.getTypeSettingsProperties();
+
+typeSettingsPropertiesPDirectory.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesPDirectory.setProperty("column-2", "187,11");
+typeSettingsPropertiesPDirectory.setProperty("column-1", "71_INSTANCE_uixmz2y3dFa6,");
+
+layoutPDirectory.setTypeSettingsProperties(typeSettingsPropertiesPDirectory);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutPDirectory.getLayoutId(),
+	layoutPDirectory.getTypeSettings());
+
+UnicodeProperties propertiesPDirectory = new UnicodeProperties();
+
+propertiesPDirectory.setProperty("displayStyle","from-level-0");
+propertiesPDirectory.setProperty("headerType","root-layout");
+propertiesPDirectory.setProperty("bulletStyle","dots");
+propertiesPDirectory.setProperty("rootLayoutType","absolute");
+propertiesPDirectory.setProperty("includedLayouts","auto");
+propertiesPDirectory.setProperty("nestedChildren","1");
+propertiesPDirectory.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourcePDirectory","71_INSTANCE_uixmz2y3dFa6");
+
+portletResourcePDirectory = (String)actionRequest.getAttribute(
+	"portletResourcePDirectory");
+
+PortletPreferences portletPreferencesPDirectory =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourcePDirectory);
+
+for (Map.Entry<String, String> entry : propertiesPDirectory.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesPDirectory.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutPDirectory.getPlid(), "71_INSTANCE_uixmz2y3dFa6",
+	portletPreferencesPDirectory);
+
+//Community page link to Bookmarks page.
+
+UnicodeProperties typeSettingsPropertiesCommunity =
+	communityLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesCommunity.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesCommunity.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesCommunity.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesCommunity.setProperty(
+	"linkToLayoutId", String.valueOf(bookmarksLayout.getLayoutId()));
+typeSettingsPropertiesCommunity.setProperty("sitemap-include", "1");
+typeSettingsPropertiesCommunity.setProperty("layout-template-id", "2_columns_ii");
+
+communityLayout.setTypeSettingsProperties(typeSettingsPropertiesCommunity);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, communityLayoutId,
+	communityLayout.getTypeSettings());
+
+//ADD Content Management
+
+Map<Locale, String> nameMapContentMan = new HashMap<Locale, String>();
+nameMapContentMan.put(Locale.US, "Content Management");
+Map<Locale, String> titleMapContentMan = new HashMap<Locale, String>();
+titleMapContentMan.put(Locale.US, "");
+Map<Locale, String> descriptionMapContentMan = new HashMap<Locale, String>();
+descriptionMapContentMan.put(Locale.US, "");
+Map<Locale, String> keywordsMapContentMan = new HashMap<Locale, String>();
+keywordsMapContentMan.put(Locale.US, "");
+Map<Locale, String> robotsMapContentMan = new HashMap<Locale, String>();
+robotsMapContentMan.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapContentMan = new HashMap<Locale, String>();
+friendlyURLMapContentMan.put(Locale.US, "/content-management");
+
+Layout contentManLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapContentMan, titleMapContentMan,
+	descriptionMapContentMan, keywordsMapContentMan, robotsMapContentMan,
+	"link_to_layout", null, false, friendlyURLMapContentMan,
+	serviceContext);
+
+contentManLayoutId = contentManLayout.getLayoutId();
+
+Map<Locale, String> nameMapAS = new HashMap<Locale, String>();
+nameMapAS.put(Locale.US, "Asset Publisher");
+Map<Locale, String> titleMapAS = new HashMap<Locale, String>();
+titleMapAS.put(Locale.US, "");
+Map<Locale, String> descriptionMapAS = new HashMap<Locale, String>();
+descriptionMapAS.put(Locale.US, "");
+Map<Locale, String> keywordsMapAS = new HashMap<Locale, String>();
+keywordsMapAS.put(Locale.US, "");
+Map<Locale, String> robotsMapAS = new HashMap<Locale, String>();
+robotsMapAS.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapAS = new HashMap<Locale, String>();
+friendlyURLMapAS.put(Locale.US, "/asset-publisher");
+
+Layout layoutAS = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapAS, titleMapAS,
+	descriptionMapAS, keywordsMapAS, robotsMapAS, "portlet", null, false,
+	friendlyURLMapAS, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesAS =
+	layoutAS.getTypeSettingsProperties();
+
+typeSettingsPropertiesAS.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesAS.setProperty("column-2", "101_INSTANCE_cHzGSpUq98kH");
+typeSettingsPropertiesAS.setProperty("column-1", "71_INSTANCE_kUWGUtU6zEnt,");
+
+layoutAS.setTypeSettingsProperties(typeSettingsPropertiesAS);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutAS.getLayoutId(),
+	layoutAS.getTypeSettings());
+
+UnicodeProperties propertiesAS = new UnicodeProperties();
+
+propertiesAS.setProperty("displayStyle","from-level-0");
+propertiesAS.setProperty("headerType","root-layout");
+propertiesAS.setProperty("bulletStyle","dots");
+propertiesAS.setProperty("rootLayoutType","absolute");
+propertiesAS.setProperty("includedLayouts","auto");
+propertiesAS.setProperty("nestedChildren","1");
+propertiesAS.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceAS","71_INSTANCE_kUWGUtU6zEnt");
+
+portletResourceAS = (String)actionRequest.getAttribute("portletResourceAS");
+
+PortletPreferences portletPreferencesAS =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceAS);
+
+for (Map.Entry<String, String> entry : propertiesAS.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesAS.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutAS.getPlid(), "71_INSTANCE_kUWGUtU6zEnt",
+	portletPreferencesAS);
+
+Map<Locale, String> nameMapBreadcrumb = new HashMap<Locale, String>();
+nameMapBreadcrumb.put(Locale.US, "Breadcrumb");
+Map<Locale, String> titleMapBreadcrumb = new HashMap<Locale, String>();
+titleMapBreadcrumb.put(Locale.US, "");
+Map<Locale, String> descriptionMapBreadcrumb = new HashMap<Locale, String>();
+descriptionMapBreadcrumb.put(Locale.US, "");
+Map<Locale, String> keywordsMapBreadcrumb = new HashMap<Locale, String>();
+keywordsMapBreadcrumb.put(Locale.US, "");
+Map<Locale, String> robotsMapBreadcrumb = new HashMap<Locale, String>();
+robotsMapBreadcrumb.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapBreadcrumb = new HashMap<Locale, String>();
+friendlyURLMapBreadcrumb.put(Locale.US, "/breadcrumb");
+
+Layout layoutBreadcrumb = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapBreadcrumb,
+	titleMapBreadcrumb, descriptionMapBreadcrumb, keywordsMapBreadcrumb,
+	robotsMapBreadcrumb, "portlet", null, false, friendlyURLMapBreadcrumb,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesBreadcrumb =
+	layoutBreadcrumb.getTypeSettingsProperties();
+
+typeSettingsPropertiesBreadcrumb.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesBreadcrumb.setProperty(
+	"column-2", "73_INSTANCE_bOhQtaG2uIry");
+typeSettingsPropertiesBreadcrumb.setProperty(
+	"column-1", "71_INSTANCE_6Oy6CHmEnaPW,");
+
+layoutBreadcrumb.setTypeSettingsProperties(typeSettingsPropertiesBreadcrumb);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutBreadcrumb.getLayoutId(),
+	layoutBreadcrumb.getTypeSettings());
+
+UnicodeProperties propertiesBreadcrumb = new UnicodeProperties();
+
+propertiesBreadcrumb.setProperty("displayStyle","from-level-0");
+propertiesBreadcrumb.setProperty("headerType","root-layout");
+propertiesBreadcrumb.setProperty("bulletStyle","dots");
+propertiesBreadcrumb.setProperty("rootLayoutType","absolute");
+propertiesBreadcrumb.setProperty("includedLayouts","auto");
+propertiesBreadcrumb.setProperty("nestedChildren","1");
+propertiesBreadcrumb.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceBreadcrumb","71_INSTANCE_6Oy6CHmEnaPW");
+portletResourceBreadcrumb = (String)actionRequest.getAttribute(
+	"portletResourceBreadcrumb");
+
+PortletPreferences portletPreferencesBreadcrumb =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceBreadcrumb);
+
+for (Map.Entry<String, String> entry : propertiesBreadcrumb.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesBreadcrumb.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutBreadcrumb.getPlid(), "71_INSTANCE_6Oy6CHmEnaPW",
+	portletPreferencesBreadcrumb);
+
+Map<Locale, String> nameMapCN = new HashMap<Locale, String>();
+nameMapCN.put(Locale.US, "Category Navigation");
+Map<Locale, String> titleMapCN = new HashMap<Locale, String>();
+titleMapCN.put(Locale.US, "");
+Map<Locale, String> descriptionMapCN = new HashMap<Locale, String>();
+descriptionMapCN.put(Locale.US, "");
+Map<Locale, String> keywordsMapCN = new HashMap<Locale, String>();
+keywordsMapCN.put(Locale.US, "");
+Map<Locale, String> robotsMapCN = new HashMap<Locale, String>();
+robotsMapCN.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapCN = new HashMap<Locale, String>();
+friendlyURLMapCN.put(Locale.US, "/category-navigation");
+
+Layout layoutCN = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapCN, titleMapCN,
+	descriptionMapCN, keywordsMapCN, robotsMapCN, "portlet", null, false,
+	friendlyURLMapCN, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesCN =
+	layoutCN.getTypeSettingsProperties();
+
+typeSettingsPropertiesCN.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesCN.setProperty("column-2", "122_INSTANCE_wK4hm8kPKiq2");
+typeSettingsPropertiesCN.setProperty("column-1", "71_INSTANCE_eyemFjZqJ1Kk,");
+
+layoutCN.setTypeSettingsProperties(typeSettingsPropertiesCN);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutCN.getLayoutId(),
+	layoutCN.getTypeSettings());
+
+UnicodeProperties propertiesCN = new UnicodeProperties();
+
+propertiesCN.setProperty("displayStyle","from-level-0");
+propertiesCN.setProperty("headerType","root-layout");
+propertiesCN.setProperty("bulletStyle","dots");
+propertiesCN.setProperty("rootLayoutType","absolute");
+propertiesCN.setProperty("includedLayouts","auto");
+propertiesCN.setProperty("nestedChildren","1");
+propertiesCN.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceCN","71_INSTANCE_eyemFjZqJ1Kk");
+
+portletResourceCN = (String)actionRequest.getAttribute("portletResourceCN");
+
+PortletPreferences portletPreferencesCN =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceCN);
+
+for (Map.Entry<String, String> entry : propertiesCN.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesCN.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutCN.getPlid(), "71_INSTANCE_eyemFjZqJ1Kk",
+	portletPreferencesCN);
+
+Map<Locale, String> nameMapDAM = new HashMap<Locale, String>();
+nameMapDAM.put(Locale.US, "Documents and Media");
+Map<Locale, String> titleMapDAM = new HashMap<Locale, String>();
+titleMapDAM.put(Locale.US, "");
+Map<Locale, String> descriptionMapDAM = new HashMap<Locale, String>();
+descriptionMapDAM.put(Locale.US, "");
+Map<Locale, String> keywordsMapDAM = new HashMap<Locale, String>();
+keywordsMapDAM.put(Locale.US, "");
+Map<Locale, String> robotsMapDAM = new HashMap<Locale, String>();
+robotsMapDAM.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapDAM = new HashMap<Locale, String>();
+friendlyURLMapDAM.put(Locale.US, "/documents-and-media");
+
+Layout layoutDAM = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapDAM, titleMapDAM,
+	descriptionMapDAM, keywordsMapDAM, robotsMapDAM, "portlet", null,
+	false, friendlyURLMapDAM, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesDAM =
+	layoutDAM.getTypeSettingsProperties();
+
+typeSettingsPropertiesDAM.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesDAM.setProperty("column-2", "20");
+typeSettingsPropertiesDAM.setProperty("column-1", "71_INSTANCE_rXmUME1go3zw");
+
+layoutDAM.setTypeSettingsProperties(typeSettingsPropertiesDAM);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutDAM.getLayoutId(),
+	layoutDAM.getTypeSettings());
+
+UnicodeProperties propertiesDAM = new UnicodeProperties();
+
+propertiesDAM.setProperty("displayStyle","from-level-0");
+propertiesDAM.setProperty("headerType","root-layout");
+propertiesDAM.setProperty("bulletStyle","dots");
+propertiesDAM.setProperty("rootLayoutType","absolute");
+propertiesDAM.setProperty("includedLayouts","auto");
+propertiesDAM.setProperty("nestedChildren","1");
+propertiesDAM.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceDAM","71_INSTANCE_rXmUME1go3zw");
+
+portletResourceDAM = (String)actionRequest.getAttribute("portletResourceDAM");
+
+PortletPreferences portletPreferencesDAM =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceDAM);
+
+for (Map.Entry<String, String> entry : propertiesDAM.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesDAM.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutDAM.getPlid(), "71_INSTANCE_rXmUME1go3zw",
+	portletPreferencesDAM);
+
+Map<Locale, String> nameMapNPortlet = new HashMap<Locale, String>();
+nameMapNPortlet.put(Locale.US, "Nested Portlets");
+Map<Locale, String> titleMapNPortlet = new HashMap<Locale, String>();
+titleMapNPortlet.put(Locale.US, "");
+Map<Locale, String> descriptionMapNPortlet = new HashMap<Locale, String>();
+descriptionMapNPortlet.put(Locale.US, "");
+Map<Locale, String> keywordsMapNPortlet = new HashMap<Locale, String>();
+keywordsMapNPortlet.put(Locale.US, "");
+Map<Locale, String> robotsMapNPortlet = new HashMap<Locale, String>();
+robotsMapNPortlet.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapNPortlet = new HashMap<Locale, String>();
+friendlyURLMapNPortlet.put(Locale.US, "/nested-portlets");
+
+Layout layoutNPortlet = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapNPortlet,
+	titleMapNPortlet, descriptionMapNPortlet, keywordsMapNPortlet,
+	robotsMapNPortlet, "portlet", null, false, friendlyURLMapNPortlet,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesNPortlet =
+	layoutNPortlet.getTypeSettingsProperties();
+
+typeSettingsPropertiesNPortlet.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesNPortlet.setProperty(
+	"_118_INSTANCE_mQnir2HWDHrM__column-3", "115");
+typeSettingsPropertiesNPortlet.setProperty(
+	"_118_INSTANCE_mQnir2HWDHrM__column-2", "71_INSTANCE_u9La1oksuZYZ,");
+typeSettingsPropertiesNPortlet.setProperty(
+	"_118_INSTANCE_mQnir2HWDHrM__column-1", "73_INSTANCE_TtL6I5irPv5t,");
+typeSettingsPropertiesNPortlet.setProperty(
+	"nested-column-ids",
+	"118_INSTANCE_mQnir2HWDHrM__column-1, _118_INSTANCE_mQnir2HWDHrM__column-2,_118_INSTANCE_mQnir2HWDHrM__column-3,");
+typeSettingsPropertiesNPortlet.setProperty("column-2", "118_INSTANCE_mQnir2HWDHrM,");
+typeSettingsPropertiesNPortlet.setProperty("column-1", "71_INSTANCE_rXmUME1go3zm,");
+
+layoutNPortlet.setTypeSettingsProperties(typeSettingsPropertiesNPortlet);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutNPortlet.getLayoutId(),
+	layoutNPortlet.getTypeSettings());
+
+UnicodeProperties propertiesNPortlet = new UnicodeProperties();
+
+propertiesNPortlet.setProperty("displayStyle","from-level-0");
+propertiesNPortlet.setProperty("headerType","root-layout");
+propertiesNPortlet.setProperty("bulletStyle","dots");
+propertiesNPortlet.setProperty("rootLayoutType","absolute");
+propertiesNPortlet.setProperty("includedLayouts","auto");
+propertiesNPortlet.setProperty("nestedChildren","1");
+propertiesNPortlet.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceNPortlet","71_INSTANCE_rXmUME1go3zm");
+portletResourceNPortlet = (String)actionRequest.getAttribute("portletResourceNPortlet");
+
+PortletPreferences portletPreferencesNPortlet =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceNPortlet);
+
+for (Map.Entry<String, String> entry : propertiesNPortlet.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesNPortlet.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutNPortlet.getPlid(), "71_INSTANCE_rXmUME1go3zm",
+	portletPreferencesNPortlet);
+
+Map<Locale, String> nameMapPD = new HashMap<Locale, String>();
+nameMapPD.put(Locale.US, "Polls Display");
+Map<Locale, String> titleMapPD = new HashMap<Locale, String>();
+titleMapPD.put(Locale.US, "");
+Map<Locale, String> descriptionMapPD = new HashMap<Locale, String>();
+descriptionMapPD.put(Locale.US, "");
+Map<Locale, String> keywordsMapPD = new HashMap<Locale, String>();
+keywordsMapPD.put(Locale.US, "");
+Map<Locale, String> robotsMapPD = new HashMap<Locale, String>();
+robotsMapPD.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapPD = new HashMap<Locale, String>();
+friendlyURLMapPD.put(Locale.US, "/polls-display");
+
+Layout layoutPD = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapPD, titleMapPD,
+	descriptionMapPD, keywordsMapPD, robotsMapPD, "portlet", null, false,
+	friendlyURLMapPD, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesPD =
+	layoutPD.getTypeSettingsProperties();
+
+typeSettingsPropertiesPD.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesPD.setProperty("column-2", "59_INSTANCE_TbzT9KKPaRFZ");
+typeSettingsPropertiesPD.setProperty("column-1", "71_INSTANCE_FkVY7cJ3m6cm,");
+
+layoutPD.setTypeSettingsProperties(typeSettingsPropertiesPD);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutPD.getLayoutId(),
+	layoutPD.getTypeSettings());
+
+UnicodeProperties propertiesPD = new UnicodeProperties();
+
+propertiesPD.setProperty("displayStyle","from-level-0");
+propertiesPD.setProperty("headerType","root-layout");
+propertiesPD.setProperty("bulletStyle","dots");
+propertiesPD.setProperty("rootLayoutType","absolute");
+propertiesPD.setProperty("includedLayouts","auto");
+propertiesPD.setProperty("nestedChildren","1");
+propertiesPD.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourcePD","71_INSTANCE_FkVY7cJ3m6cm");
+
+portletResourcePD = (String)actionRequest.getAttribute("portletResourcePD");
+
+PortletPreferences portletPreferencesPD =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourcePD);
+
+for (Map.Entry<String, String> entry : propertiesPD.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesPD.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutPD.getPlid(), "71_INSTANCE_FkVY7cJ3m6cm",
+	portletPreferencesPD);
+
+Map<Locale, String> nameMapRD = new HashMap<Locale, String>();
+nameMapRD.put(Locale.US, "Recent Downloads");
+Map<Locale, String> titleMapRD = new HashMap<Locale, String>();
+titleMapRD.put(Locale.US, "");
+Map<Locale, String> descriptionMapRD = new HashMap<Locale, String>();
+descriptionMapRD.put(Locale.US, "");
+Map<Locale, String> keywordsMapRD = new HashMap<Locale, String>();
+keywordsMapRD.put(Locale.US, "");
+Map<Locale, String> robotsMapRD = new HashMap<Locale, String>();
+robotsMapRD.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapRD = new HashMap<Locale, String>();
+friendlyURLMapRD.put(Locale.US, "/recent-downloads");
+
+Layout layoutRD = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapRD, titleMapRD,
+	descriptionMapRD, keywordsMapRD, robotsMapRD, "portlet", null, false,
+	friendlyURLMapRD, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesRD =
+	layoutRD.getTypeSettingsProperties();
+
+typeSettingsPropertiesRD.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesRD.setProperty("column-2", "64");
+typeSettingsPropertiesRD.setProperty("column-1", "71_INSTANCE_yDtUc5UAAhWm,");
+
+layoutRD.setTypeSettingsProperties(typeSettingsPropertiesRD);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutRD.getLayoutId(),
+	layoutRD.getTypeSettings());
+
+UnicodeProperties propertiesRD = new UnicodeProperties();
+
+propertiesRD.setProperty("displayStyle","from-level-0");
+propertiesRD.setProperty("headerType","root-layout");
+propertiesRD.setProperty("bulletStyle","dots");
+propertiesRD.setProperty("rootLayoutType","absolute");
+propertiesRD.setProperty("includedLayouts","auto");
+propertiesRD.setProperty("nestedChildren","1");
+propertiesRD.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceRD","71_INSTANCE_yDtUc5UAAhWm");
+portletResourceRD = (String)actionRequest.getAttribute("portletResourceRD");
+
+PortletPreferences portletPreferencesRD =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceRD);
+
+for (Map.Entry<String, String> entry : propertiesRD.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesRD.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutRD.getPlid(), "71_INSTANCE_yDtUc5UAAhWm",
+	portletPreferencesRD);
+
+Map<Locale, String> nameMapRA = new HashMap<Locale, String>();
+nameMapRA.put(Locale.US, "Related Assets");
+Map<Locale, String> titleMapRA = new HashMap<Locale, String>();
+titleMapRA.put(Locale.US, "");
+Map<Locale, String> descriptionMapRA = new HashMap<Locale, String>();
+descriptionMapRA.put(Locale.US, "");
+Map<Locale, String> keywordsMapRA = new HashMap<Locale, String>();
+keywordsMapRA.put(Locale.US, "");
+Map<Locale, String> robotsMapRA = new HashMap<Locale, String>();
+robotsMapRA.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapRA = new HashMap<Locale, String>();
+friendlyURLMapRA.put(Locale.US, "/related-assets");
+
+Layout layoutRA = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapRA, titleMapRA,
+	descriptionMapRA, keywordsMapRA, robotsMapRA, "portlet", null, false,
+	friendlyURLMapRA, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesRA =
+	layoutRA.getTypeSettingsProperties();
+
+typeSettingsPropertiesRA.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesRA.setProperty(
+	"column-2", "175_INSTANCE_s90usYdR23Ii,");
+typeSettingsPropertiesRA.setProperty("column-1", "71_INSTANCE_yDtUc5UAAhW4,");
+
+layoutRA.setTypeSettingsProperties(typeSettingsPropertiesRA);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutRA.getLayoutId(),
+	layoutRA.getTypeSettings());
+
+UnicodeProperties propertiesRA = new UnicodeProperties();
+
+propertiesRA.setProperty("displayStyle","from-level-0");
+propertiesRA.setProperty("headerType","root-layout");
+propertiesRA.setProperty("bulletStyle","dots");
+propertiesRA.setProperty("rootLayoutType","absolute");
+propertiesRA.setProperty("includedLayouts","auto");
+propertiesRA.setProperty("nestedChildren","1");
+propertiesRA.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceRA","71_INSTANCE_yDtUc5UAAhW4");
+portletResourceRA = (String)actionRequest.getAttribute("portletResourceRA");
+
+PortletPreferences portletPreferencesRA =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceRA);
+
+for (Map.Entry<String, String> entry : propertiesRA.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesRA.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutRA.getPlid(), "71_INSTANCE_yDtUc5UAAhW4",
+	portletPreferencesRA);
+
+Map<Locale, String> nameMapSiteM = new HashMap<Locale, String>();
+nameMapSiteM.put(Locale.US, "Site Map");
+Map<Locale, String> titleMapSiteM = new HashMap<Locale, String>();
+titleMapSiteM.put(Locale.US, "");
+Map<Locale, String> descriptionMapSiteM = new HashMap<Locale, String>();
+descriptionMapSiteM.put(Locale.US, "");
+Map<Locale, String> keywordsMapSiteM = new HashMap<Locale, String>();
+keywordsMapSiteM.put(Locale.US, "");
+Map<Locale, String> robotsMapSiteM = new HashMap<Locale, String>();
+robotsMapSiteM.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSiteM = new HashMap<Locale, String>();
+friendlyURLMapSiteM.put(Locale.US, "/site-map");
+
+Layout layoutSiteM = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapSiteM, titleMapSiteM,
+	descriptionMapSiteM, keywordsMapSiteM, robotsMapSiteM, "portlet", null,
+	false, friendlyURLMapSiteM, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesSiteM =
+	layoutSiteM.getTypeSettingsProperties();
+
+typeSettingsPropertiesSiteM.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesSiteM.setProperty("column-2", "85_INSTANCE_8ynIjUSaM1Xf");
+typeSettingsPropertiesSiteM.setProperty("column-1", "71_INSTANCE_YnegvD2AETDa,");
+
+layoutSiteM.setTypeSettingsProperties(typeSettingsPropertiesSiteM);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutSiteM.getLayoutId(),
+	layoutSiteM.getTypeSettings());
+
+UnicodeProperties propertiesSiteM = new UnicodeProperties();
+
+propertiesSiteM.setProperty("displayStyle","from-level-0");
+propertiesSiteM.setProperty("headerType","root-layout");
+propertiesSiteM.setProperty("bulletStyle","dots");
+propertiesSiteM.setProperty("rootLayoutType","absolute");
+propertiesSiteM.setProperty("includedLayouts","auto");
+propertiesSiteM.setProperty("nestedChildren","1");
+propertiesSiteM.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceSiteM","71_INSTANCE_YnegvD2AETDa");
+
+portletResourceSiteM = (String)actionRequest.getAttribute(
+	"portletResourceSiteM");
+
+PortletPreferences portletPreferencesSiteM =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceSiteM);
+
+for (Map.Entry<String, String> entry : propertiesSiteM.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesSiteM.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutSiteM.getPlid(), "71_INSTANCE_YnegvD2AETDa",
+	portletPreferencesSiteM);
+
+Map<Locale, String> nameMapTagC = new HashMap<Locale, String>();
+nameMapTagC.put(Locale.US, "Tag Cloud");
+Map<Locale, String> titleMapTagC = new HashMap<Locale, String>();
+titleMapTagC.put(Locale.US, "");
+Map<Locale, String> descriptionMapTagC = new HashMap<Locale, String>();
+descriptionMapTagC.put(Locale.US, "");
+Map<Locale, String> keywordsMapTagC = new HashMap<Locale, String>();
+keywordsMapTagC.put(Locale.US, "");
+Map<Locale, String> robotsMapTagC = new HashMap<Locale, String>();
+robotsMapTagC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapTagC = new HashMap<Locale, String>();
+friendlyURLMapTagC.put(Locale.US, "/tag-cloud");
+
+Layout layoutTagC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapTagC, titleMapTagC,
+	descriptionMapTagC, keywordsMapTagC, robotsMapTagC, "portlet", null,
+	false, friendlyURLMapTagC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesTagC =
+	layoutTagC.getTypeSettingsProperties();
+
+typeSettingsPropertiesTagC.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesTagC.setProperty(
+	"column-2", "141_INSTANCE_W3mu4VyEzpgz,148_INSTANCE_ovvJg184K1ix");
+typeSettingsPropertiesTagC.setProperty("column-1", "71_INSTANCE_LWB5t48iFqIP,");
+
+layoutTagC.setTypeSettingsProperties(typeSettingsPropertiesTagC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutTagC.getLayoutId(),
+	layoutTagC.getTypeSettings());
+
+UnicodeProperties propertiesTagC = new UnicodeProperties();
+
+propertiesTagC.setProperty("displayStyle","from-level-0");
+propertiesTagC.setProperty("headerType","root-layout");
+propertiesTagC.setProperty("bulletStyle","dots");
+propertiesTagC.setProperty("rootLayoutType","absolute");
+propertiesTagC.setProperty("includedLayouts","auto");
+propertiesTagC.setProperty("nestedChildren","1");
+propertiesTagC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceTagC","71_INSTANCE_LWB5t48iFqIP");
+
+portletResourceTagC = (String)actionRequest.getAttribute(
+	"portletResourceTagC");
+
+PortletPreferences portletPreferencesTagC =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceTagC);
+
+for (Map.Entry<String, String> entry : propertiesTagC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesTagC.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutTagC.getPlid(), "71_INSTANCE_LWB5t48iFqIP",
+	portletPreferencesTagC);
+
+Map<Locale, String> nameMapWC = new HashMap<Locale, String>();
+nameMapWC.put(Locale.US, "Web Content");
+Map<Locale, String> titleMapWC = new HashMap<Locale, String>();
+titleMapWC.put(Locale.US, "");
+Map<Locale, String> descriptionMapWC = new HashMap<Locale, String>();
+descriptionMapWC.put(Locale.US, "");
+Map<Locale, String> keywordsMapWC = new HashMap<Locale, String>();
+keywordsMapWC.put(Locale.US, "");
+Map<Locale, String> robotsMapWC = new HashMap<Locale, String>();
+robotsMapWC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapWC = new HashMap<Locale, String>();
+friendlyURLMapWC.put(Locale.US, "/web-content");
+
+Layout layoutWC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapWC, titleMapWC,
+	descriptionMapWC, keywordsMapWC, robotsMapWC, "portlet", null, false,
+	friendlyURLMapWC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesWCPage =
+	layoutWC.getTypeSettingsProperties();
+
+typeSettingsPropertiesWCPage.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesWCPage.setProperty(
+	"column-2", "77,56_INSTANCE_COxqya3VTLhr");
+typeSettingsPropertiesWCPage.setProperty(
+	"column-1", "71_INSTANCE_kcplKlFfMkj3,");
+
+layoutWC.setTypeSettingsProperties(typeSettingsPropertiesWCPage);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutWC.getLayoutId(),
+	layoutWC.getTypeSettings());
+
+UnicodeProperties propertiesWC = new UnicodeProperties();
+
+propertiesWC.setProperty("displayStyle","from-level-0");
+propertiesWC.setProperty("headerType","root-layout");
+propertiesWC.setProperty("bulletStyle","dots");
+propertiesWC.setProperty("rootLayoutType","absolute");
+propertiesWC.setProperty("includedLayouts","auto");
+propertiesWC.setProperty("nestedChildren","1");
+propertiesWC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceWC","71_INSTANCE_kcplKlFfMkj3");
+portletResourceWC = (String)actionRequest.getAttribute("portletResourceWC");
+
+PortletPreferences portletPreferencesWCPage =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceWC);
+
+for (Map.Entry<String, String> entry : propertiesWC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesWCPage.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutWC.getPlid(), "71_INSTANCE_kcplKlFfMkj3",
+	portletPreferencesWCPage);
+
+Map<Locale, String> nameMapXC = new HashMap<Locale, String>();
+nameMapXC.put(Locale.US, "XSL Content");
+Map<Locale, String> titleMapXC = new HashMap<Locale, String>();
+titleMapXC.put(Locale.US, "");
+Map<Locale, String> descriptionMapXC = new HashMap<Locale, String>();
+descriptionMapXC.put(Locale.US, "");
+Map<Locale, String> keywordsMapXC = new HashMap<Locale, String>();
+keywordsMapXC.put(Locale.US, "");
+Map<Locale, String> robotsMapXC = new HashMap<Locale, String>();
+robotsMapXC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapXC = new HashMap<Locale, String>();
+friendlyURLMapXC.put(Locale.US, "/xsl-content");
+
+Layout layoutXC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManLayoutId, nameMapXC, titleMapXC,
+	descriptionMapXC, keywordsMapXC, robotsMapXC, "portlet", null, false,
+	friendlyURLMapXC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesXC =
+	layoutXC.getTypeSettingsProperties();
+
+typeSettingsPropertiesXC.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesXC.setProperty("column-2", "102_INSTANCE_4WS583Eepz19");
+typeSettingsPropertiesXC.setProperty("column-1", "71_INSTANCE_9sS3bcUNQ2ox,");
+
+layoutXC.setTypeSettingsProperties(typeSettingsPropertiesXC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutXC.getLayoutId(),
+	layoutXC.getTypeSettings());
+
+UnicodeProperties propertiesXC = new UnicodeProperties();
+
+propertiesXC.setProperty("displayStyle","from-level-0");
+propertiesXC.setProperty("headerType","root-layout");
+propertiesXC.setProperty("bulletStyle","dots");
+propertiesXC.setProperty("rootLayoutType","absolute");
+propertiesXC.setProperty("includedLayouts","auto");
+propertiesXC.setProperty("nestedChildren","1");
+propertiesXC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceXC","71_INSTANCE_9sS3bcUNQ2ox");
+
+portletResourceXC = (String)actionRequest.getAttribute("portletResourceXC");
+
+PortletPreferences portletPreferencesXC =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				actionRequest, portletResourceXC);
+
+for (Map.Entry<String, String> entry : propertiesXC.entrySet()) {
+			String name = entry.getKey();
+			String value = entry.getValue();
+
+			portletPreferencesXC.setValue(name, value);
+		}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutXC.getPlid(), "71_INSTANCE_9sS3bcUNQ2ox",
+	portletPreferencesXC);
+
+//Content Management page link to Asset Publish page.
+
+UnicodeProperties typeSettingsPropertiesContentMan =
+	contentManLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesContentMan.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesContentMan.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesContentMan.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesContentMan.setProperty(
+	"linkToLayoutId", String.valueOf(layoutAS.getLayoutId()));
+typeSettingsPropertiesContentMan.setProperty("sitemap-include", "1");
+typeSettingsPropertiesContentMan.setProperty("layout-template-id", "2_columns_ii");
+
+contentManLayout.setTypeSettingsProperties(typeSettingsPropertiesContentMan);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, contentManLayoutId,
+	contentManLayout.getTypeSettings());
+
+//Add Finance Part
+
+Map<Locale, String> nameMapFinance = new HashMap<Locale, String>();
+nameMapFinance.put(Locale.US, "Finance");
+Map<Locale, String> titleMapFinance = new HashMap<Locale, String>();
+titleMapFinance.put(Locale.US, "");
+Map<Locale, String> descriptionMapFinance = new HashMap<Locale, String>();
+descriptionMapFinance.put(Locale.US, "");
+Map<Locale, String> keywordsMapFinance = new HashMap<Locale, String>();
+keywordsMapFinance.put(Locale.US, "");
+Map<Locale, String> robotsMapFinance = new HashMap<Locale, String>();
+robotsMapFinance.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapFinance = new HashMap<Locale, String>();
+friendlyURLMapFinance.put(Locale.US, "/finance");
+
+Layout FinanceLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapFinance, titleMapFinance,
+	descriptionMapFinance, keywordsMapFinance, robotsMapFinance,
+	"link_to_layout", null, false, friendlyURLMapFinance, serviceContext);
+
+financeLayoutId = FinanceLayout.getLayoutId();
+
+Map<Locale, String> nameMapCC = new HashMap<Locale, String>();
+nameMapCC.put(Locale.US, "Currency Converter");
+Map<Locale, String> titleMapCC = new HashMap<Locale, String>();
+titleMapCC.put(Locale.US, "");
+Map<Locale, String> descriptionMapCC = new HashMap<Locale, String>();
+descriptionMapCC.put(Locale.US, "");
+Map<Locale, String> keywordsMapCC = new HashMap<Locale, String>();
+keywordsMapCC.put(Locale.US, "");
+Map<Locale, String> robotsMapCC = new HashMap<Locale, String>();
+robotsMapCC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapCC = new HashMap<Locale, String>();
+friendlyURLMapCC.put(Locale.US, "/currency-converter");
+
+Layout layoutCC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, financeLayoutId, nameMapCC, titleMapCC,
+	descriptionMapCC, keywordsMapCC, robotsMapCC, "portlet", null, false,
+	friendlyURLMapCC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesCC =
+	layoutCC.getTypeSettingsProperties();
+
+typeSettingsPropertiesCC.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesCC.setProperty("column-2", "16");
+typeSettingsPropertiesCC.setProperty("column-1", "71_INSTANCE_ah14nyR4ghXD,");
+
+layoutCC.setTypeSettingsProperties(typeSettingsPropertiesCC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutCC.getLayoutId(),
+	layoutCC.getTypeSettings());
+
+UnicodeProperties propertiesCC = new UnicodeProperties();
+
+propertiesCC.setProperty("displayStyle","from-level-0");
+propertiesCC.setProperty("headerType","root-layout");
+propertiesCC.setProperty("bulletStyle","dots");
+propertiesCC.setProperty("rootLayoutType","absolute");
+propertiesCC.setProperty("includedLayouts","auto");
+propertiesCC.setProperty("nestedChildren","1");
+propertiesCC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceCC","71_INSTANCE_ah14nyR4ghXD");
+
+portletResourceCC = (String)actionRequest.getAttribute("portletResourceCC");
+
+PortletPreferences portletPreferencesCC =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceCC);
+
+for (Map.Entry<String, String> entry : propertiesCC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesCC.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutCC.getPlid(), "71_INSTANCE_ah14nyR4ghXD",
+	portletPreferencesCC);
+
+Map<Locale, String> nameMapLC = new HashMap<Locale, String>();
+nameMapLC.put(Locale.US, "Loan Calculator");
+Map<Locale, String> titleMapLC = new HashMap<Locale, String>();
+titleMapLC.put(Locale.US, "");
+Map<Locale, String> descriptionMapLC = new HashMap<Locale, String>();
+descriptionMapLC.put(Locale.US, "");
+Map<Locale, String> keywordsMapLC = new HashMap<Locale, String>();
+keywordsMapLC.put(Locale.US, "");
+Map<Locale, String> robotsMapLC = new HashMap<Locale, String>();
+robotsMapLC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapLC = new HashMap<Locale, String>();
+friendlyURLMapLC.put(Locale.US, "/loan-calculator");
+
+Layout layoutLC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, financeLayoutId, nameMapLC, titleMapLC,
+	descriptionMapLC, keywordsMapLC, robotsMapLC, "portlet", null,
+	false, friendlyURLMapLC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesLC =
+	layoutLC.getTypeSettingsProperties();
+
+typeSettingsPropertiesLC.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesLC.setProperty("column-2", "61");
+typeSettingsPropertiesLC.setProperty("column-1", "71_INSTANCE_ALJ5IzR8JFe3,");
+
+layoutLC.setTypeSettingsProperties(typeSettingsPropertiesLC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutLC.getLayoutId(),
+	layoutLC.getTypeSettings());
+
+UnicodeProperties propertiesLC = new UnicodeProperties();
+
+propertiesLC.setProperty("displayStyle","from-level-0");
+propertiesLC.setProperty("headerType","root-layout");
+propertiesLC.setProperty("bulletStyle","dots");
+propertiesLC.setProperty("rootLayoutType","absolute");
+propertiesLC.setProperty("includedLayouts","auto");
+propertiesLC.setProperty("nestedChildren","1");
+propertiesLC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceLC","71_INSTANCE_ALJ5IzR8JFe3");
+portletResourceLC = (String)actionRequest.getAttribute("portletResourceLC");
+
+PortletPreferences portletPreferencesLC =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceLC);
+
+for (Map.Entry<String, String> entry : propertiesLC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesLC.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutLC.getPlid(), "71_INSTANCE_ALJ5IzR8JFe3",
+	portletPreferencesLC);
+
+//Finance page links to Currency Converter page.
+
+UnicodeProperties typeSettingsPropertiesFinance =
+	FinanceLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesFinance.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesFinance.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesFinance.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesFinance.setProperty(
+	"linkToLayoutId", String.valueOf(layoutCC.getLayoutId()));
+typeSettingsPropertiesFinance.setProperty("sitemap-include", "1");
+typeSettingsPropertiesFinance.setProperty(
+	"layout-template-id", "2_columns_ii");
+
+FinanceLayout.setTypeSettingsProperties(typeSettingsPropertiesFinance);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, financeLayoutId,
+	FinanceLayout.getTypeSettings());
+
+//Add News Part
+
+Map<Locale, String> nameMapNews = new HashMap<Locale, String>();
+nameMapNews.put(Locale.US, "News");
+Map<Locale, String> titleMapNews = new HashMap<Locale, String>();
+titleMapNews.put(Locale.US, "");
+Map<Locale, String> descriptionMapNews = new HashMap<Locale, String>();
+descriptionMapNews.put(Locale.US, "");
+Map<Locale, String> keywordsMapNews = new HashMap<Locale, String>();
+keywordsMapNews.put(Locale.US, "");
+Map<Locale, String> robotsMapNews = new HashMap<Locale, String>();
+robotsMapNews.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapNews = new HashMap<Locale, String>();
+friendlyURLMapNews.put(Locale.US, "/news");
+
+Layout newsLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapNews, titleMapNews,
+	descriptionMapNews, keywordsMapNews, robotsMapNews, "link_to_layout", 
+	null, false, friendlyURLMapNews, serviceContext);
+
+newsLayoutId = newsLayout.getLayoutId();
+
+Map<Locale, String> nameMapAlerts = new HashMap<Locale, String>();
+nameMapAlerts.put(Locale.US, "Alerts");
+Map<Locale, String> titleMapAlerts = new HashMap<Locale, String>();
+titleMapAlerts.put(Locale.US, "");
+Map<Locale, String> descriptionMapAlerts = new HashMap<Locale, String>();
+descriptionMapAlerts.put(Locale.US, "");
+Map<Locale, String> keywordsMapAlerts = new HashMap<Locale, String>();
+keywordsMapAlerts.put(Locale.US, "");
+Map<Locale, String> robotsMapAlerts = new HashMap<Locale, String>();
+robotsMapAlerts.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapAlerts = new HashMap<Locale, String>();
+friendlyURLMapAlerts.put(Locale.US, "/alerts");
+
+Layout layoutAlerts = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, newsLayoutId, nameMapAlerts, titleMapAlerts,
+	descriptionMapAlerts, keywordsMapAlerts, robotsMapAlerts, "portlet",
+	null, false, friendlyURLMapAlerts, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesAlerts =
+	layoutAlerts.getTypeSettingsProperties();
+
+typeSettingsPropertiesAlerts.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesAlerts.setProperty("column-2", "83");
+typeSettingsPropertiesAlerts.setProperty("column-1", "71_INSTANCE_ceopyQMpL4Tj,");
+
+layoutAlerts.setTypeSettingsProperties(typeSettingsPropertiesAlerts);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutAlerts.getLayoutId(),
+	layoutAlerts.getTypeSettings());
+
+UnicodeProperties propertiesAlerts = new UnicodeProperties();
+
+propertiesAlerts.setProperty("displayStyle","from-level-0");
+propertiesAlerts.setProperty("headerType","root-layout");
+propertiesAlerts.setProperty("bulletStyle","dots");
+propertiesAlerts.setProperty("rootLayoutType","absolute");
+propertiesAlerts.setProperty("includedLayouts","auto");
+propertiesAlerts.setProperty("nestedChildren","1");
+propertiesAlerts.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceAlerts","71_INSTANCE_ceopyQMpL4Tj");
+
+portletResourceAlerts = (String)actionRequest.getAttribute(
+	"portletResourceAlerts");
+
+PortletPreferences portletPreferencesAlerts =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceAlerts);
+
+for (Map.Entry<String, String> entry : propertiesAlerts.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesAlerts.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutAlerts.getPlid(), "71_INSTANCE_ceopyQMpL4Tj",
+	portletPreferencesAlerts);
+
+Map<Locale, String> nameMapAnnouncement = new HashMap<Locale, String>();
+nameMapAnnouncement.put(Locale.US, "Announcements");
+Map<Locale, String> titleMapAnnouncement = new HashMap<Locale, String>();
+titleMapAnnouncement.put(Locale.US, "");
+Map<Locale, String> descriptionMapAnnouncement = new HashMap<Locale, String>();
+descriptionMapAnnouncement.put(Locale.US, "");
+Map<Locale, String> keywordsMapAnnouncement = new HashMap<Locale, String>();
+keywordsMapAnnouncement.put(Locale.US, "");
+Map<Locale, String> robotsMapAnnouncement = new HashMap<Locale, String>();
+robotsMapAnnouncement.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapAnnouncement = new HashMap<Locale, String>();
+friendlyURLMapAnnouncement.put(Locale.US, "/announcements");
+
+Layout layoutAnnouncement = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, newsLayoutId, nameMapAnnouncement,
+	titleMapAnnouncement, descriptionMapAnnouncement,
+	keywordsMapAnnouncement, robotsMapAnnouncement, "portlet", null, false,
+	friendlyURLMapAnnouncement, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesAnnouncement =
+	layoutAnnouncement.getTypeSettingsProperties();
+
+typeSettingsPropertiesAnnouncement.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesAnnouncement.setProperty("column-2", "84");
+typeSettingsPropertiesAnnouncement.setProperty(
+	"column-1", "71_INSTANCE_9svey4gIknoo,");
+
+layoutAnnouncement.setTypeSettingsProperties(
+	typeSettingsPropertiesAnnouncement);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutAnnouncement.getLayoutId(),
+	layoutAnnouncement.getTypeSettings());
+
+UnicodeProperties propertiesAnnouncement = new UnicodeProperties();
+
+propertiesAnnouncement.setProperty("displayStyle","from-level-0");
+propertiesAnnouncement.setProperty("headerType","root-layout");
+propertiesAnnouncement.setProperty("bulletStyle","dots");
+propertiesAnnouncement.setProperty("rootLayoutType","absolute");
+propertiesAnnouncement.setProperty("includedLayouts","auto");
+propertiesAnnouncement.setProperty("nestedChildren","1");
+propertiesAnnouncement.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceAnnouncement","71_INSTANCE_9svey4gIknoo");
+
+portletResourceAnnouncement = (String)actionRequest.getAttribute(
+	"portletResourceAnnouncement");
+
+PortletPreferences portletPreferencesAnnouncement =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceAnnouncement);
+
+for (Map.Entry<String, String> entry : propertiesAnnouncement.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesAnnouncement.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutAnnouncement.getPlid(), "71_INSTANCE_9svey4gIknoo",
+	portletPreferencesAnnouncement);
+
+Map<Locale, String> nameMapRSS = new HashMap<Locale, String>();
+nameMapRSS.put(Locale.US, "RSS");
+Map<Locale, String> titleMapRSS = new HashMap<Locale, String>();
+titleMapRSS.put(Locale.US, "");
+Map<Locale, String> descriptionMapRSS = new HashMap<Locale, String>();
+descriptionMapRSS.put(Locale.US, "");
+Map<Locale, String> keywordsMapRSS = new HashMap<Locale, String>();
+keywordsMapRSS.put(Locale.US, "");
+Map<Locale, String> robotsMapRSS = new HashMap<Locale, String>();
+robotsMapRSS.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapRSS = new HashMap<Locale, String>();
+friendlyURLMapRSS.put(Locale.US, "/rss");
+
+Layout layoutRSS = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, newsLayoutId, nameMapRSS, titleMapRSS,
+	descriptionMapRSS, keywordsMapRSS, robotsMapRSS, "portlet", null,
+	false, friendlyURLMapRSS, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesRSSPage =
+	layoutRSS.getTypeSettingsProperties();
+
+typeSettingsPropertiesRSSPage.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesRSSPage.setProperty(
+	"column-2", "39_INSTANCE_vn59KhKI7Y2w");
+typeSettingsPropertiesRSSPage.setProperty(
+	"column-1", "71_INSTANCE_uxxsIbKD2cfQ,");
+
+layoutRSS.setTypeSettingsProperties(typeSettingsPropertiesRSSPage);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutRSS.getLayoutId(),
+	layoutRSS.getTypeSettings());
+
+UnicodeProperties propertiesRSS = new UnicodeProperties();
+
+propertiesRSS.setProperty("displayStyle","from-level-0");
+propertiesRSS.setProperty("headerType","root-layout");
+propertiesRSS.setProperty("bulletStyle","dots");
+propertiesRSS.setProperty("rootLayoutType","absolute");
+propertiesRSS.setProperty("includedLayouts","auto");
+propertiesRSS.setProperty("nestedChildren","1");
+propertiesRSS.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceRSS","71_INSTANCE_uxxsIbKD2cfQ");
+portletResourceRSS = (String)actionRequest.getAttribute("portletResourceRSS");
+
+PortletPreferences portletPreferencesRSSPage =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceRSS);
+
+for (Map.Entry<String, String> entry : propertiesRSS.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesRSSPage.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutRSS.getPlid(), "71_INSTANCE_uxxsIbKD2cfQ",
+	portletPreferencesRSSPage);
+
+//News page links to Alert Converter page.
+
+UnicodeProperties typeSettingsPropertiesNews =
+	newsLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesNews.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesNews.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesNews.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesNews.setProperty(
+	"linkToLayoutId", String.valueOf(layoutAlerts.getLayoutId()));
+typeSettingsPropertiesNews.setProperty("sitemap-include", "1");
+typeSettingsPropertiesNews.setProperty("layout-template-id", "2_columns_ii");
+
+newsLayout.setTypeSettingsProperties(typeSettingsPropertiesNews);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, newsLayoutId, newsLayout.getTypeSettings());
+
+//Add Sample Part
+
+Map<Locale, String> nameMapSample = new HashMap<Locale, String>();
+nameMapSample.put(Locale.US, "Sample");
+Map<Locale, String> titleMapSample = new HashMap<Locale, String>();
+titleMapSample.put(Locale.US, "");
+Map<Locale, String> descriptionMapSample = new HashMap<Locale, String>();
+descriptionMapSample.put(Locale.US, "");
+Map<Locale, String> keywordsMapSample = new HashMap<Locale, String>();
+keywordsMapSample.put(Locale.US, "");
+Map<Locale, String> robotsMapSample = new HashMap<Locale, String>();
+robotsMapSample.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSample = new HashMap<Locale, String>();
+friendlyURLMapSample.put(Locale.US, "/sample");
+
+Layout sampleLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapSample, titleMapSample,
+	descriptionMapSample, keywordsMapSample, robotsMapSample,
+	"link_to_layout", null, false, friendlyURLMapSample, serviceContext);
+
+sampleLayoutId = sampleLayout.getLayoutId();
+
+Map<Locale, String> nameMapHV = new HashMap<Locale, String>();
+nameMapHV.put(Locale.US, "Hello Velocity");
+Map<Locale, String> titleMapHV = new HashMap<Locale, String>();
+titleMapHV.put(Locale.US, "");
+Map<Locale, String> descriptionMapHV = new HashMap<Locale, String>();
+descriptionMapHV.put(Locale.US, "");
+Map<Locale, String> keywordsMapHV = new HashMap<Locale, String>();
+keywordsMapHV.put(Locale.US, "");
+Map<Locale, String> robotsMapHV = new HashMap<Locale, String>();
+robotsMapHV.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapHV = new HashMap<Locale, String>();
+friendlyURLMapHV.put(Locale.US, "/hello-velocity");
+
+Layout layoutHV = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, sampleLayoutId, nameMapHV, titleMapHV,
+	descriptionMapHV, keywordsMapHV, robotsMapHV, "portlet", null, false,
+	friendlyURLMapHV, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesHV =
+	layoutHV.getTypeSettingsProperties();
+
+typeSettingsPropertiesHV.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesHV.setProperty("column-2", "50");
+typeSettingsPropertiesHV.setProperty("column-1", "71_INSTANCE_pfxMm9207AWV,");
+
+layoutHV.setTypeSettingsProperties(typeSettingsPropertiesHV);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutHV.getLayoutId(),
+	layoutHV.getTypeSettings());
+
+UnicodeProperties propertiesHV = new UnicodeProperties();
+
+propertiesHV.setProperty("displayStyle","from-level-0");
+propertiesHV.setProperty("headerType","root-layout");
+propertiesHV.setProperty("bulletStyle","dots");
+propertiesHV.setProperty("rootLayoutType","absolute");
+propertiesHV.setProperty("includedLayouts","auto");
+propertiesHV.setProperty("nestedChildren","1");
+propertiesHV.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceHV","71_INSTANCE_pfxMm9207AWV");
+
+portletResourceHV = (String)actionRequest.getAttribute("portletResourceHV");
+
+PortletPreferences portletPreferencesHV =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceHV);
+
+for (Map.Entry<String, String> entry : propertiesHV.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesHV.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutHV.getPlid(), "71_INSTANCE_pfxMm9207AWV",
+	portletPreferencesHV);
+
+Map<Locale, String> nameMapHW = new HashMap<Locale, String>();
+nameMapHW.put(Locale.US, "Hello World");
+Map<Locale, String> titleMapHW = new HashMap<Locale, String>();
+titleMapHW.put(Locale.US, "");
+Map<Locale, String> descriptionMapHW = new HashMap<Locale, String>();
+descriptionMapHW.put(Locale.US, "");
+Map<Locale, String> keywordsMapHW = new HashMap<Locale, String>();
+keywordsMapHW.put(Locale.US, "");
+Map<Locale, String> robotsMapHW = new HashMap<Locale, String>();
+robotsMapHW.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapHW = new HashMap<Locale, String>();
+friendlyURLMapHW.put(Locale.US, "/hello-world");
+
+Layout layoutHW = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, sampleLayoutId, nameMapHW, titleMapHW,
+	descriptionMapHW, keywordsMapHW, robotsMapHW, "portlet", null, false,
+	friendlyURLMapHW, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesHW =
+	layoutHW.getTypeSettingsProperties();
+
+typeSettingsPropertiesHW.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesHW.setProperty("column-2", "47");
+typeSettingsPropertiesHW.setProperty("column-1", "71_INSTANCE_bs3KJ4i88GbQ,");
+
+layoutHW.setTypeSettingsProperties(typeSettingsPropertiesHW);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutHW.getLayoutId(),
+	layoutHW.getTypeSettings());
+
+UnicodeProperties propertiesHW = new UnicodeProperties();
+
+propertiesHW.setProperty("displayStyle","from-level-0");
+propertiesHW.setProperty("headerType","root-layout");
+propertiesHW.setProperty("bulletStyle","dots");
+propertiesHW.setProperty("rootLayoutType","absolute");
+propertiesHW.setProperty("includedLayouts","auto");
+propertiesHW.setProperty("nestedChildren","1");
+propertiesHW.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceHW","71_INSTANCE_bs3KJ4i88GbQ");
+
+portletResourceHW = (String)actionRequest.getAttribute("portletResourceHW");
+
+PortletPreferences portletPreferencesHW =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceHW);
+
+for (Map.Entry<String, String> entry : propertiesHW.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesHW.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutHW.getPlid(), "71_INSTANCE_bs3KJ4i88GbQ",
+	portletPreferencesHW);
+
+Map<Locale, String> nameMapIFrame = new HashMap<Locale, String>();
+nameMapIFrame.put(Locale.US, "IFrame");
+Map<Locale, String> titleMapIFrame = new HashMap<Locale, String>();
+titleMapIFrame.put(Locale.US, "");
+Map<Locale, String> descriptionMapIFrame = new HashMap<Locale, String>();
+descriptionMapIFrame.put(Locale.US, "");
+Map<Locale, String> keywordsMapIFrame = new HashMap<Locale, String>();
+keywordsMapIFrame.put(Locale.US, "");
+Map<Locale, String> robotsMapIFrame = new HashMap<Locale, String>();
+robotsMapIFrame.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapIFrame = new HashMap<Locale, String>();
+friendlyURLMapIFrame.put(Locale.US, "/iFrame");
+
+Layout layoutIFrame = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, sampleLayoutId, nameMapIFrame, titleMapIFrame,
+	descriptionMapIFrame, keywordsMapIFrame, robotsMapIFrame, "portlet",
+	null, false, friendlyURLMapIFrame, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesIFramePage =
+	layoutIFrame.getTypeSettingsProperties();
+
+typeSettingsPropertiesIFramePage.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesIFramePage.setProperty(
+	"column-2", "48_INSTANCE_mpN1u52gzmbO");
+typeSettingsPropertiesIFramePage.setProperty(
+	"column-1", "71_INSTANCE_5tPfn8V7Z2Sy,");
+
+layoutIFrame.setTypeSettingsProperties(typeSettingsPropertiesIFramePage);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutIFrame.getLayoutId(),
+	layoutIFrame.getTypeSettings());
+
+UnicodeProperties propertiesIFrame = new UnicodeProperties();
+
+propertiesIFrame.setProperty("displayStyle","from-level-0");
+propertiesIFrame.setProperty("headerType","root-layout");
+propertiesIFrame.setProperty("bulletStyle","dots");
+propertiesIFrame.setProperty("rootLayoutType","absolute");
+propertiesIFrame.setProperty("includedLayouts","auto");
+propertiesIFrame.setProperty("nestedChildren","1");
+propertiesIFrame.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceIFrame","71_INSTANCE_5tPfn8V7Z2Sy");
+portletResourceIFrame = (String)actionRequest.getAttribute(
+	"portletResourceIFrame");
+
+PortletPreferences portletPreferencesIFramePage =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceIFrame);
+
+for (Map.Entry<String, String> entry : propertiesIFrame.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesIFramePage.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutIFrame.getPlid(), "71_INSTANCE_5tPfn8V7Z2Sy",
+	portletPreferencesIFramePage);
+
+Map<Locale, String> nameMapWebP = new HashMap<Locale, String>();
+nameMapWebP.put(Locale.US, "Web Proxy");
+Map<Locale, String> titleMapWebP = new HashMap<Locale, String>();
+titleMapWebP.put(Locale.US, "");
+Map<Locale, String> descriptionMapWebP = new HashMap<Locale, String>();
+descriptionMapWebP.put(Locale.US, "");
+Map<Locale, String> keywordsMapWebP = new HashMap<Locale, String>();
+keywordsMapWebP.put(Locale.US, "");
+Map<Locale, String> robotsMapWebP = new HashMap<Locale, String>();
+robotsMapWebP.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapWebP = new HashMap<Locale, String>();
+friendlyURLMapWebP.put(Locale.US, "/web-proxy");
+
+Layout layoutWebP = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, sampleLayoutId, nameMapWebP, titleMapWebP,
+	descriptionMapWebP, keywordsMapWebP, robotsMapWebP, "portlet", null,
+	false, friendlyURLMapWebP, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesWebP =
+	layoutWebP.getTypeSettingsProperties();
+
+typeSettingsPropertiesWebP.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesWebP.setProperty("column-2", "66_INSTANCE_BM7GHtVBl6df");
+typeSettingsPropertiesWebP.setProperty(
+	"column-1", "71_INSTANCE_y5f1MxkIhKvm,");
+
+layoutWebP.setTypeSettingsProperties(typeSettingsPropertiesWebP);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutWebP.getLayoutId(),
+	layoutWebP.getTypeSettings());
+
+UnicodeProperties propertiesWebP = new UnicodeProperties();
+
+propertiesWebP.setProperty("displayStyle","from-level-0");
+propertiesWebP.setProperty("headerType","root-layout");
+propertiesWebP.setProperty("bulletStyle","dots");
+propertiesWebP.setProperty("rootLayoutType","absolute");
+propertiesWebP.setProperty("includedLayouts","auto");
+propertiesWebP.setProperty("nestedChildren","1");
+propertiesWebP.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceWebP","71_INSTANCE_y5f1MxkIhKvm");
+
+portletResourceWebP = (String)actionRequest.getAttribute(
+	"portletResourceWebP");
+
+PortletPreferences portletPreferencesWebP =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceWebP);
+
+for (Map.Entry<String, String> entry : propertiesWebP.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesWebP.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutWebP.getPlid(), "71_INSTANCE_y5f1MxkIhKvm",
+	portletPreferencesWebP);
+
+//Sample page link to Hello Velocity page.
+
+UnicodeProperties typeSettingsPropertiesSample =
+	sampleLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesSample.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesSample.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesSample.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesSample.setProperty(
+	"linkToLayoutId", String.valueOf(layoutHV.getLayoutId()));
+typeSettingsPropertiesSample.setProperty("sitemap-include", "1");
+typeSettingsPropertiesSample.setProperty("layout-template-id", "2_columns_ii");
+
+sampleLayout.setTypeSettingsProperties(typeSettingsPropertiesSample);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, sampleLayoutId, sampleLayout.getTypeSettings());
+
+//Add Shopping
+
+Map<Locale, String> nameMapShopping = new HashMap<Locale, String>();
+nameMapShopping.put(Locale.US, "Shopping");
+Map<Locale, String> titleMapShopping = new HashMap<Locale, String>();
+titleMapShopping.put(Locale.US, "");
+Map<Locale, String> descriptionMapShopping = new HashMap<Locale, String>();
+descriptionMapShopping.put(Locale.US, "");
+Map<Locale, String> keywordsMapShopping = new HashMap<Locale, String>();
+keywordsMapShopping.put(Locale.US, "");
+Map<Locale, String> robotsMapShopping = new HashMap<Locale, String>();
+robotsMapShopping.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapShopping = new HashMap<Locale, String>();
+friendlyURLMapShopping.put(Locale.US, "/shopping");
+
+Layout shoppingLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapShopping, titleMapShopping,
+	descriptionMapShopping, keywordsMapShopping, robotsMapShopping,
+	"link_to_layout", null, false, friendlyURLMapShopping, serviceContext);
+
+shoppingLayoutId = shoppingLayout.getLayoutId();
+
+Map<Locale, String> nameMapAmazonR = new HashMap<Locale, String>();
+nameMapAmazonR.put(Locale.US, "Amazon Rankings");
+Map<Locale, String> titleMapAmazonR = new HashMap<Locale, String>();
+titleMapAmazonR.put(Locale.US, "");
+Map<Locale, String> descriptionMapAmazonR = new HashMap<Locale, String>();
+descriptionMapAmazonR.put(Locale.US, "");
+Map<Locale, String> keywordsMapAmazonR = new HashMap<Locale, String>();
+keywordsMapAmazonR.put(Locale.US, "");
+Map<Locale, String> robotsMapAmazonR = new HashMap<Locale, String>();
+robotsMapAmazonR.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapAmazonR = new HashMap<Locale, String>();
+friendlyURLMapAmazonR.put(Locale.US, "/amazon-rankings");
+
+Layout layoutAmazonR = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, shoppingLayoutId, nameMapAmazonR,
+	titleMapAmazonR, descriptionMapAmazonR, keywordsMapAmazonR,
+	robotsMapAmazonR, "portlet", null, false, friendlyURLMapAmazonR,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesAmazonR =
+	layoutAmazonR.getTypeSettingsProperties();
+
+typeSettingsPropertiesAmazonR.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesAmazonR.setProperty("column-2", "67");
+typeSettingsPropertiesAmazonR.setProperty(
+	"column-1", "71_INSTANCE_uixmz2y3dFa6,");
+
+layoutAmazonR.setTypeSettingsProperties(typeSettingsPropertiesAmazonR);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutAmazonR.getLayoutId(),
+	layoutAmazonR.getTypeSettings());
+
+UnicodeProperties propertiesAmazonR = new UnicodeProperties();
+
+propertiesAmazonR.setProperty("displayStyle","from-level-0");
+propertiesAmazonR.setProperty("headerType","root-layout");
+propertiesAmazonR.setProperty("bulletStyle","dots");
+propertiesAmazonR.setProperty("rootLayoutType","absolute");
+propertiesAmazonR.setProperty("includedLayouts","auto");
+propertiesAmazonR.setProperty("nestedChildren","1");
+propertiesAmazonR.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceAmazonR","71_INSTANCE_uixmz2y3dFa6");
+
+portletResourceAmazonR = (String)actionRequest.getAttribute(
+	"portletResourceAmazonR");
+
+PortletPreferences portletPreferencesAmazonR =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceAmazonR);
+
+for (Map.Entry<String, String> entry : propertiesAmazonR.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesAmazonR.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutAmazonR.getPlid(), "71_INSTANCE_uixmz2y3dFa6",
+	portletPreferencesAmazonR);
+
+Map<Locale, String> nameMapShoppingP = new HashMap<Locale, String>();
+nameMapShoppingP.put(Locale.US, "Shopping Portlet");
+Map<Locale, String> titleMapShoppingP = new HashMap<Locale, String>();
+titleMapShoppingP.put(Locale.US, "");
+Map<Locale, String> descriptionMapShoppingP = new HashMap<Locale, String>();
+descriptionMapShoppingP.put(Locale.US, "");
+Map<Locale, String> keywordsMapShoppingP = new HashMap<Locale, String>();
+keywordsMapShoppingP.put(Locale.US, "");
+Map<Locale, String> robotsMapShoppingP = new HashMap<Locale, String>();
+robotsMapShoppingP.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapShoppingP = new HashMap<Locale, String>();
+friendlyURLMapShoppingP.put(Locale.US, "/shopping-portlet");
+
+Layout layoutShoppingP = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, shoppingLayoutId, nameMapShoppingP,
+	titleMapShoppingP, descriptionMapShoppingP, keywordsMapShoppingP,
+	robotsMapShoppingP, "portlet", null, false, friendlyURLMapShoppingP,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesShoppingP =
+	layoutShoppingP.getTypeSettingsProperties();
+
+typeSettingsPropertiesShoppingP.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesShoppingP.setProperty("column-2", "34");
+typeSettingsPropertiesShoppingP.setProperty(
+	"column-1", "71_INSTANCE_uixmz6y3dFa6,");
+
+layoutShoppingP.setTypeSettingsProperties(typeSettingsPropertiesShoppingP);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutShoppingP.getLayoutId(),
+	layoutShoppingP.getTypeSettings());
+
+UnicodeProperties propertiesShoppingP = new UnicodeProperties();
+
+propertiesShoppingP.setProperty("displayStyle","from-level-0");
+propertiesShoppingP.setProperty("headerType","root-layout");
+propertiesShoppingP.setProperty("bulletStyle","dots");
+propertiesShoppingP.setProperty("rootLayoutType","absolute");
+propertiesShoppingP.setProperty("includedLayouts","auto");
+propertiesShoppingP.setProperty("nestedChildren","1");
+propertiesShoppingP.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceShoppingP","71_INSTANCE_uixmz6y3dFa6");
+
+portletResourceShoppingP = (String)actionRequest.getAttribute(
+	"portletResourceShoppingP");
+
+PortletPreferences portletPreferencesShoppingP =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceShoppingP);
+
+for (Map.Entry<String, String> entry : propertiesShoppingP.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesShoppingP.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutShoppingP.getPlid(), "71_INSTANCE_uixmz6y3dFa6",
+	portletPreferencesShoppingP);
+
+//Shopping page links to Amazon Rankings page.
+
+UnicodeProperties typeSettingsPropertiesShopping =
+	shoppingLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesShopping.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesShopping.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesShopping.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesShopping.setProperty(
+	"linkToLayoutId", String.valueOf(layoutAmazonR.getLayoutId()));
+typeSettingsPropertiesShopping.setProperty("sitemap-include", "1");
+typeSettingsPropertiesShopping.setProperty(
+	"layout-template-id", "2_columns_ii");
+
+shoppingLayout.setTypeSettingsProperties(typeSettingsPropertiesShopping);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, shoppingLayoutId, shoppingLayout.getTypeSettings());
+
+//Add Social Part
+
+Map<Locale, String> nameMapSocial = new HashMap<Locale, String>();
+nameMapSocial.put(Locale.US, "Social");
+Map<Locale, String> titleMapSocial = new HashMap<Locale, String>();
+titleMapSocial.put(Locale.US, "");
+Map<Locale, String> descriptionMapSocial = new HashMap<Locale, String>();
+descriptionMapSocial.put(Locale.US, "");
+Map<Locale, String> keywordsMapSocial = new HashMap<Locale, String>();
+keywordsMapSocial.put(Locale.US, "");
+Map<Locale, String> robotsMapSocial = new HashMap<Locale, String>();
+robotsMapSocial.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSocial = new HashMap<Locale, String>();
+friendlyURLMapSocial.put(Locale.US, "/social");
+
+Layout socialLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapSocial, titleMapSocial,
+	descriptionMapSocial, keywordsMapSocial, robotsMapSocial,
+	"link_to_layout", null, false, friendlyURLMapSocial, serviceContext);
+
+socialLayoutId = socialLayout.getLayoutId();
+
+Map<Locale, String> nameMapActivities = new HashMap<Locale, String>();
+nameMapActivities.put(Locale.US, "Activities");
+Map<Locale, String> titleMapActivities = new HashMap<Locale, String>();
+titleMapActivities.put(Locale.US, "");
+Map<Locale, String> descriptionMapActivities = new HashMap<Locale, String>();
+descriptionMapActivities.put(Locale.US, "");
+Map<Locale, String> keywordsMapActivities = new HashMap<Locale, String>();
+keywordsMapActivities.put(Locale.US, "");
+Map<Locale, String> robotsMapActivities = new HashMap<Locale, String>();
+robotsMapActivities.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapActivities = new HashMap<Locale, String>();
+friendlyURLMapActivities.put(Locale.US, "/activities");
+
+Layout layoutActivities = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, socialLayoutId, nameMapActivities,
+	titleMapActivities, descriptionMapActivities, keywordsMapActivities,
+	robotsMapActivities, "portlet", null, false, friendlyURLMapActivities,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesActivities =
+	layoutActivities.getTypeSettingsProperties();
+
+typeSettingsPropertiesActivities.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesActivities.setProperty("column-2", "116");
+typeSettingsPropertiesActivities.setProperty(
+	"column-1", "71_INSTANCE_uixmz6y3dFa7,");
+
+layoutActivities.setTypeSettingsProperties(typeSettingsPropertiesActivities);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutActivities.getLayoutId(),
+	layoutActivities.getTypeSettings());
+
+UnicodeProperties propertiesActivities = new UnicodeProperties();
+
+propertiesActivities.setProperty("displayStyle","from-level-0");
+propertiesActivities.setProperty("headerType","root-layout");
+propertiesActivities.setProperty("bulletStyle","dots");
+propertiesActivities.setProperty("rootLayoutType","absolute");
+propertiesActivities.setProperty("includedLayouts","auto");
+propertiesActivities.setProperty("nestedChildren","1");
+propertiesActivities.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceActivities","71_INSTANCE_uixmz6y3dFa7");
+
+portletResourceActivities = (String)actionRequest.getAttribute(
+	"portletResourceActivities");
+
+PortletPreferences portletPreferencesActivities =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceActivities);
+
+for (Map.Entry<String, String> entry : propertiesActivities.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesActivities.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutActivities.getPlid(), "71_INSTANCE_uixmz6y3dFa7",
+	portletPreferencesActivities);
+
+Map<Locale, String> nameMapStatistics = new HashMap<Locale, String>();
+nameMapStatistics.put(Locale.US, "Statistics");
+Map<Locale, String> titleMapStatistics = new HashMap<Locale, String>();
+titleMapStatistics.put(Locale.US, "");
+Map<Locale, String> descriptionMapStatistics = new HashMap<Locale, String>();
+descriptionMapStatistics.put(Locale.US, "");
+Map<Locale, String> keywordsMapStatistics = new HashMap<Locale, String>();
+keywordsMapStatistics.put(Locale.US, "");
+Map<Locale, String> robotsMapStatistics = new HashMap<Locale, String>();
+robotsMapStatistics.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapStatistics = new HashMap<Locale, String>();
+friendlyURLMapStatistics.put(Locale.US, "/statistics");
+
+Layout layoutStatistics = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, socialLayoutId, nameMapStatistics,
+	titleMapStatistics, descriptionMapStatistics, keywordsMapStatistics,
+	robotsMapStatistics, "portlet", null, false, friendlyURLMapStatistics,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesStatistics =
+	layoutStatistics.getTypeSettingsProperties();
+
+typeSettingsPropertiesStatistics.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesStatistics.setProperty("column-2", "180,181,");
+typeSettingsPropertiesStatistics.setProperty(
+	"column-1", "71_INSTANCE_7aLiwAW9pz6q,");
+
+layoutStatistics.setTypeSettingsProperties(typeSettingsPropertiesStatistics);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutStatistics.getLayoutId(),
+	layoutStatistics.getTypeSettings());
+
+UnicodeProperties propertiesStatistics = new UnicodeProperties();
+
+propertiesStatistics.setProperty("displayStyle","from-level-0");
+propertiesStatistics.setProperty("headerType","root-layout");
+propertiesStatistics.setProperty("bulletStyle","dots");
+propertiesStatistics.setProperty("rootLayoutType","absolute");
+propertiesStatistics.setProperty("includedLayouts","auto");
+propertiesStatistics.setProperty("nestedChildren","1");
+propertiesStatistics.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceStatistics","71_INSTANCE_7aLiwAW9pz6q");
+
+portletResourceStatistics = (String)actionRequest.getAttribute(
+	"portletResourceStatistics");
+
+PortletPreferences portletPreferencesStatistics =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceStatistics);
+
+for (Map.Entry<String, String> entry : propertiesStatistics.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesStatistics.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutStatistics.getPlid(), "71_INSTANCE_7aLiwAW9pz6q",
+	portletPreferencesStatistics);
+
+Map<Locale, String> nameMapRequests = new HashMap<Locale, String>();
+nameMapRequests.put(Locale.US, "Requests");
+Map<Locale, String> titleMapRequests = new HashMap<Locale, String>();
+titleMapRequests.put(Locale.US, "");
+Map<Locale, String> descriptionMapRequests = new HashMap<Locale, String>();
+descriptionMapRequests.put(Locale.US, "");
+Map<Locale, String> keywordsMapRequests = new HashMap<Locale, String>();
+keywordsMapRequests.put(Locale.US, "");
+Map<Locale, String> robotsMapRequests = new HashMap<Locale, String>();
+robotsMapRequests.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapRequests = new HashMap<Locale, String>();
+friendlyURLMapRequests.put(Locale.US, "/requests");
+
+Layout layoutRequests = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, socialLayoutId, nameMapRequests,
+	titleMapRequests, descriptionMapRequests, keywordsMapRequests,
+	robotsMapRequests, "portlet", null, false, friendlyURLMapRequests,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesRequests =
+	layoutRequests.getTypeSettingsProperties();
+
+typeSettingsPropertiesRequests.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesRequests.setProperty("column-2", "121");
+typeSettingsPropertiesRequests.setProperty(
+	"column-1", "71_INSTANCE_Nk6uVxsVxeRo,");
+
+layoutRequests.setTypeSettingsProperties(typeSettingsPropertiesRequests);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutRequests.getLayoutId(),
+	layoutRequests.getTypeSettings());
+
+UnicodeProperties propertiesRequests = new UnicodeProperties();
+
+propertiesRequests.setProperty("displayStyle","from-level-0");
+propertiesRequests.setProperty("headerType","root-layout");
+propertiesRequests.setProperty("bulletStyle","dots");
+propertiesRequests.setProperty("rootLayoutType","absolute");
+propertiesRequests.setProperty("includedLayouts","auto");
+propertiesRequests.setProperty("nestedChildren","1");
+propertiesRequests.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceRequests","71_INSTANCE_Nk6uVxsVxeRo");
+
+portletResourceRequests = (String)actionRequest.getAttribute(
+	"portletResourceRequests");
+
+PortletPreferences portletPreferencesRequests =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceRequests);
+
+for (Map.Entry<String, String> entry : propertiesRequests.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesRequests.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutRequests.getPlid(), "71_INSTANCE_Nk6uVxsVxeRo",
+	portletPreferencesRequests);
+
+//Social page links to Activities page.
+
+UnicodeProperties typeSettingsPropertiesSocial =
+	socialLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesSocial.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesSocial.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesSocial.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesSocial.setProperty(
+	"linkToLayoutId", String.valueOf(layoutActivities.getLayoutId()));
+typeSettingsPropertiesSocial.setProperty("sitemap-include", "1");
+typeSettingsPropertiesSocial.setProperty("layout-template-id", "2_columns_ii");
+
+socialLayout.setTypeSettingsProperties(typeSettingsPropertiesSocial);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, socialLayoutId, socialLayout.getTypeSettings());
+
+//Add Tools Part
+
+Map<Locale, String> nameMapTools = new HashMap<Locale, String>();
+nameMapTools.put(Locale.US, "Tools");
+Map<Locale, String> titleMapTools = new HashMap<Locale, String>();
+titleMapTools.put(Locale.US, "");
+Map<Locale, String> descriptionMapTools = new HashMap<Locale, String>();
+descriptionMapTools.put(Locale.US, "");
+Map<Locale, String> keywordsMapTools = new HashMap<Locale, String>();
+keywordsMapTools.put(Locale.US, "");
+Map<Locale, String> robotsMapTools = new HashMap<Locale, String>();
+robotsMapTools.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapTools = new HashMap<Locale, String>();
+friendlyURLMapTools.put(Locale.US, "/tools");
+
+Layout toolsLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapTools, titleMapTools,
+	descriptionMapTools, keywordsMapTools, robotsMapTools,
+	"link_to_layout", null, false, friendlyURLMapTools, serviceContext);
+
+toolsLayoutId = toolsLayout.getLayoutId();
+
+Map<Locale, String> nameMapDictionary = new HashMap<Locale, String>();
+nameMapDictionary.put(Locale.US, "Dictionary");
+Map<Locale, String> titleMapDictionary = new HashMap<Locale, String>();
+titleMapDictionary.put(Locale.US, "");
+Map<Locale, String> descriptionMapDictionary = new HashMap<Locale, String>();
+descriptionMapDictionary.put(Locale.US, "");
+Map<Locale, String> keywordsMapDictionary = new HashMap<Locale, String>();
+keywordsMapDictionary.put(Locale.US, "");
+Map<Locale, String> robotsMapDictionary = new HashMap<Locale, String>();
+robotsMapDictionary.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapDictionary = new HashMap<Locale, String>();
+friendlyURLMapDictionary.put(Locale.US, "/dictionary");
+
+Layout layoutDictionary = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapDictionary,
+	titleMapDictionary, descriptionMapDictionary, keywordsMapDictionary,
+	robotsMapDictionary, "portlet", null, false, friendlyURLMapDictionary,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesDictionary =
+	layoutDictionary.getTypeSettingsProperties();
+
+typeSettingsPropertiesDictionary.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesDictionary.setProperty("column-2", "23");
+typeSettingsPropertiesDictionary.setProperty(
+	"column-1", "71_INSTANCE_CUiKVFT7IRBd,");
+
+layoutDictionary.setTypeSettingsProperties(typeSettingsPropertiesDictionary);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutDictionary.getLayoutId(),
+	layoutDictionary.getTypeSettings());
+
+UnicodeProperties propertiesDictionary = new UnicodeProperties();
+
+propertiesDictionary.setProperty("displayStyle","from-level-0");
+propertiesDictionary.setProperty("headerType","root-layout");
+propertiesDictionary.setProperty("bulletStyle","dots");
+propertiesDictionary.setProperty("rootLayoutType","absolute");
+propertiesDictionary.setProperty("includedLayouts","auto");
+propertiesDictionary.setProperty("nestedChildren","1");
+propertiesDictionary.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceDictionary","71_INSTANCE_CUiKVFT7IRBd");
+portletResourceDictionary = (String)actionRequest.getAttribute(
+	"portletResourceDictionary");
+
+PortletPreferences portletPreferencesDictionary =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceDictionary);
+
+for (Map.Entry<String, String> entry : propertiesDictionary.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesDictionary.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutDictionary.getPlid(), "71_INSTANCE_CUiKVFT7IRBd",
+	portletPreferencesDictionary);
+
+Map<Locale, String> nameMapLanguageP = new HashMap<Locale, String>();
+nameMapLanguageP.put(Locale.US, "Language Portlet");
+Map<Locale, String> titleMapLanguageP = new HashMap<Locale, String>();
+titleMapLanguageP.put(Locale.US, "");
+Map<Locale, String> descriptionMapLanguageP = new HashMap<Locale, String>();
+descriptionMapLanguageP.put(Locale.US, "");
+Map<Locale, String> keywordsMapLanguageP = new HashMap<Locale, String>();
+keywordsMapLanguageP.put(Locale.US, "");
+Map<Locale, String> robotsMapLanguageP = new HashMap<Locale, String>();
+robotsMapLanguageP.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapLanguageP = new HashMap<Locale, String>();
+friendlyURLMapLanguageP.put(Locale.US, "/language-portlet");
+
+Layout layoutLanguageP = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapLanguageP,
+	titleMapLanguageP, descriptionMapLanguageP, keywordsMapLanguageP,
+	robotsMapLanguageP, "portlet", null, false, friendlyURLMapLanguageP,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesLanguageP =
+	layoutLanguageP.getTypeSettingsProperties();
+
+typeSettingsPropertiesLanguageP.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesLanguageP.setProperty("column-2", "82");
+typeSettingsPropertiesLanguageP.setProperty(
+	"column-1", "71_INSTANCE_7h25Ypo7Byd4,");
+
+layoutLanguageP.setTypeSettingsProperties(typeSettingsPropertiesLanguageP);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutLanguageP.getLayoutId(),
+	layoutLanguageP.getTypeSettings());
+
+UnicodeProperties propertiesLanguageP = new UnicodeProperties();
+
+propertiesLanguageP.setProperty("displayStyle","from-level-0");
+propertiesLanguageP.setProperty("headerType","root-layout");
+propertiesLanguageP.setProperty("bulletStyle","dots");
+propertiesLanguageP.setProperty("rootLayoutType","absolute");
+propertiesLanguageP.setProperty("includedLayouts","auto");
+propertiesLanguageP.setProperty("nestedChildren","1");
+propertiesLanguageP.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceLanguageP","71_INSTANCE_7h25Ypo7Byd4");
+
+portletResourceLanguageP = (String)actionRequest.getAttribute(
+	"portletResourceLanguageP");
+
+PortletPreferences portletPreferencesLanguageP =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceLanguageP);
+
+for (Map.Entry<String, String> entry : propertiesLanguageP.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesLanguageP.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutLanguageP.getPlid(), "71_INSTANCE_7h25Ypo7Byd4",
+	portletPreferencesLanguageP);
+
+Map<Locale, String> nameMapNetworkU = new HashMap<Locale, String>();
+nameMapNetworkU.put(Locale.US, "Network Utilities");
+Map<Locale, String> titleMapNetworkU = new HashMap<Locale, String>();
+titleMapNetworkU.put(Locale.US, "");
+Map<Locale, String> descriptionMapNetworkU = new HashMap<Locale, String>();
+descriptionMapNetworkU.put(Locale.US, "");
+Map<Locale, String> keywordsMapNetworkU = new HashMap<Locale, String>();
+keywordsMapNetworkU.put(Locale.US, "");
+Map<Locale, String> robotsMapNetworkU = new HashMap<Locale, String>();
+robotsMapNetworkU.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapNetworkU = new HashMap<Locale, String>();
+friendlyURLMapNetworkU.put(Locale.US, "/network-utilities");
+
+Layout layoutNetworkU = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapNetworkU,
+	titleMapNetworkU, descriptionMapNetworkU, keywordsMapNetworkU,
+	robotsMapNetworkU, "portlet", null, false, friendlyURLMapNetworkU,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesNetworkU =
+	layoutNetworkU.getTypeSettingsProperties();
+
+typeSettingsPropertiesNetworkU.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesNetworkU.setProperty("column-2", "30");
+typeSettingsPropertiesNetworkU.setProperty(
+	"column-1", "71_INSTANCE_rT4G4vSmVqOL,");
+
+layoutNetworkU.setTypeSettingsProperties(typeSettingsPropertiesNetworkU);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutNetworkU.getLayoutId(),
+	layoutNetworkU.getTypeSettings());
+
+UnicodeProperties propertiesNetworkU = new UnicodeProperties();
+
+propertiesNetworkU.setProperty("displayStyle","from-level-0");
+propertiesNetworkU.setProperty("headerType","root-layout");
+propertiesNetworkU.setProperty("bulletStyle","dots");
+propertiesNetworkU.setProperty("rootLayoutType","absolute");
+propertiesNetworkU.setProperty("includedLayouts","auto");
+propertiesNetworkU.setProperty("nestedChildren","1");
+propertiesNetworkU.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceNetworkU","71_INSTANCE_rT4G4vSmVqOL");
+
+portletResourceNetworkU = (String)actionRequest.getAttribute(
+	"portletResourceNetworkU");
+
+PortletPreferences portletPreferencesNetworkU =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceNetworkU);
+
+for (Map.Entry<String, String> entry : propertiesNetworkU.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesNetworkU.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutNetworkU.getPlid(), "71_INSTANCE_rT4G4vSmVqOL",
+	portletPreferencesNetworkU);
+
+Map<Locale, String> nameMapPG = new HashMap<Locale, String>();
+nameMapPG.put(Locale.US, "Password Generator");
+Map<Locale, String> titleMapPG = new HashMap<Locale, String>();
+titleMapPG.put(Locale.US, "");
+Map<Locale, String> descriptionMapPG = new HashMap<Locale, String>();
+descriptionMapPG.put(Locale.US, "");
+Map<Locale, String> keywordsMapPG = new HashMap<Locale, String>();
+keywordsMapPG.put(Locale.US, "");
+Map<Locale, String> robotsMapPG = new HashMap<Locale, String>();
+robotsMapPG.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapPG = new HashMap<Locale, String>();
+friendlyURLMapPG.put(Locale.US, "/password-generator");
+
+Layout layoutPG = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapPG, titleMapPG,
+	descriptionMapPG, keywordsMapPG, robotsMapPG, "portlet", null,
+	false, friendlyURLMapPG, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesPG =
+	layoutPG.getTypeSettingsProperties();
+
+typeSettingsPropertiesPG.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesPG.setProperty("column-2", "70");
+typeSettingsPropertiesPG.setProperty("column-1", "71_INSTANCE_U1NyroFwJGZ4,");
+
+layoutPG.setTypeSettingsProperties(typeSettingsPropertiesPG);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutPG.getLayoutId(),
+	layoutPG.getTypeSettings());
+
+UnicodeProperties propertiesPG = new UnicodeProperties();
+
+propertiesPG.setProperty("displayStyle","from-level-0");
+propertiesPG.setProperty("headerType","root-layout");
+propertiesPG.setProperty("bulletStyle","dots");
+propertiesPG.setProperty("rootLayoutType","absolute");
+propertiesPG.setProperty("includedLayouts","auto");
+propertiesPG.setProperty("nestedChildren","1");
+propertiesPG.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourcePG","71_INSTANCE_U1NyroFwJGZ4");
+portletResourcePG = (String)actionRequest.getAttribute("portletResourcePG");
+
+PortletPreferences portletPreferencesPG =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourcePG);
+
+for (Map.Entry<String, String> entry : propertiesPG.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesPG.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutPG.getPlid(), "71_INSTANCE_U1NyroFwJGZ4",
+	portletPreferencesPG);
+
+Map<Locale, String> nameMapQN = new HashMap<Locale, String>();
+nameMapQN.put(Locale.US, "Quick Note");
+Map<Locale, String> titleMapQN = new HashMap<Locale, String>();
+titleMapQN.put(Locale.US, "");
+Map<Locale, String> descriptionMapQN = new HashMap<Locale, String>();
+descriptionMapQN.put(Locale.US, "");
+Map<Locale, String> keywordsMapQN = new HashMap<Locale, String>();
+keywordsMapQN.put(Locale.US, "");
+Map<Locale, String> robotsMapQN = new HashMap<Locale, String>();
+robotsMapQN.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapQN = new HashMap<Locale, String>();
+friendlyURLMapQN.put(Locale.US, "/quick-note");
+
+Layout layoutQN = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapQN, titleMapQN,
+	descriptionMapQN, keywordsMapQN, robotsMapQN, "portlet", null, false,
+	friendlyURLMapQN, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesQN =
+	layoutQN.getTypeSettingsProperties();
+
+typeSettingsPropertiesQN.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesQN.setProperty("column-2", "97_INSTANCE_a1SJg50KuLFc");
+typeSettingsPropertiesQN.setProperty("column-1", "71_INSTANCE_FPD3mqOPjU8G,");
+
+layoutQN.setTypeSettingsProperties(typeSettingsPropertiesQN);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutQN.getLayoutId(),
+	layoutQN.getTypeSettings());
+
+UnicodeProperties propertiesQN = new UnicodeProperties();
+
+propertiesQN.setProperty("displayStyle","from-level-0");
+propertiesQN.setProperty("headerType","root-layout");
+propertiesQN.setProperty("bulletStyle","dots");
+propertiesQN.setProperty("rootLayoutType","absolute");
+propertiesQN.setProperty("includedLayouts","auto");
+propertiesQN.setProperty("nestedChildren","1");
+propertiesQN.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceQN","71_INSTANCE_FPD3mqOPjU8G");
+
+portletResourceQN = (String)actionRequest.getAttribute("portletResourceQN");
+
+PortletPreferences portletPreferencesQN =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceQN);
+
+for (Map.Entry<String, String> entry : propertiesQN.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesQN.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutQN.getPlid(), "71_INSTANCE_FPD3mqOPjU8G",
+	portletPreferencesQN);
+
+Map<Locale, String> nameMapSearch = new HashMap<Locale, String>();
+nameMapSearch.put(Locale.US, "Search");
+Map<Locale, String> titleMapSearch = new HashMap<Locale, String>();
+titleMapSearch.put(Locale.US, "");
+Map<Locale, String> descriptionMapSearch = new HashMap<Locale, String>();
+descriptionMapSearch.put(Locale.US, "");
+Map<Locale, String> keywordsMapSearch = new HashMap<Locale, String>();
+keywordsMapSearch.put(Locale.US, "");
+Map<Locale, String> robotsMapSearch = new HashMap<Locale, String>();
+robotsMapSearch.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSearch = new HashMap<Locale, String>();
+friendlyURLMapSearch.put(Locale.US, "/search");
+
+Layout layoutSearch = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapSearch, titleMapSearch,
+	descriptionMapSearch, keywordsMapSearch, robotsMapSearch, "portlet",
+	null, false, friendlyURLMapSearch, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesSearch =
+	layoutSearch.getTypeSettingsProperties();
+
+typeSettingsPropertiesSearch.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesSearch.setProperty("column-2", "3");
+typeSettingsPropertiesSearch.setProperty(
+	"column-1", "71_INSTANCE_7rd4A6QxGxX8,");
+
+layoutSearch.setTypeSettingsProperties(typeSettingsPropertiesSearch);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutSearch.getLayoutId(),
+	layoutSearch.getTypeSettings());
+
+UnicodeProperties propertiesSearch = new UnicodeProperties();
+
+propertiesSearch.setProperty("displayStyle","from-level-0");
+propertiesSearch.setProperty("headerType","root-layout");
+propertiesSearch.setProperty("bulletStyle","dots");
+propertiesSearch.setProperty("rootLayoutType","absolute");
+propertiesSearch.setProperty("includedLayouts","auto");
+propertiesSearch.setProperty("nestedChildren","1");
+propertiesSearch.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceSearch","71_INSTANCE_7rd4A6QxGxX8");
+portletResourceSearch = (String)actionRequest.getAttribute("portletResourceSearch");
+
+PortletPreferences portletPreferencesSearch =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				actionRequest, portletResourceSearch);
+
+for (Map.Entry<String, String> entry : propertiesSearch.entrySet()) {
+			String name = entry.getKey();
+			String value = entry.getValue();
+
+			portletPreferencesSearch.setValue(name, value);
+		}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutSearch.getPlid(), "71_INSTANCE_7rd4A6QxGxX8",
+	portletPreferencesSearch);
+
+Map<Locale, String> nameMapSIn = new HashMap<Locale, String>();
+nameMapSIn.put(Locale.US, "Sign In");
+Map<Locale, String> titleMapSIn = new HashMap<Locale, String>();
+titleMapSIn.put(Locale.US, "");
+Map<Locale, String> descriptionMapSIn = new HashMap<Locale, String>();
+descriptionMapSIn.put(Locale.US, "");
+Map<Locale, String> keywordsMapSIn = new HashMap<Locale, String>();
+keywordsMapSIn.put(Locale.US, "");
+Map<Locale, String> robotsMapSIn = new HashMap<Locale, String>();
+robotsMapSIn.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSIn = new HashMap<Locale, String>();
+friendlyURLMapSIn.put(Locale.US, "/sign-in");
+
+Layout layoutSIn = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapSIn, titleMapSIn,
+	descriptionMapSIn, keywordsMapSIn, robotsMapSIn, "portlet", null, false,
+	friendlyURLMapSIn, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesSIn =
+	layoutSIn.getTypeSettingsProperties();
+
+typeSettingsPropertiesSIn.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesSIn.setProperty("column-2", "58");
+typeSettingsPropertiesSIn.setProperty("column-1", "71_INSTANCE_shdK63UBb9yk,");
+
+layoutSIn.setTypeSettingsProperties(typeSettingsPropertiesSIn);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutSIn.getLayoutId(),
+	layoutSIn.getTypeSettings());
+
+UnicodeProperties propertiesSIn = new UnicodeProperties();
+
+propertiesSIn.setProperty("displayStyle","from-level-0");
+propertiesSIn.setProperty("headerType","root-layout");
+propertiesSIn.setProperty("bulletStyle","dots");
+propertiesSIn.setProperty("rootLayoutType","absolute");
+propertiesSIn.setProperty("includedLayouts","auto");
+propertiesSIn.setProperty("nestedChildren","1");
+propertiesSIn.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceSIn","71_INSTANCE_shdK63UBb9yk");
+
+portletResourceSIn = (String)actionRequest.getAttribute("portletResourceSIn");
+
+PortletPreferences portletPreferencesSIn =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceSIn);
+
+for (Map.Entry<String, String> entry : propertiesSIn.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesSIn.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutSIn.getPlid(), "71_INSTANCE_shdK63UBb9yk",
+	portletPreferencesSIn);
+
+Map<Locale, String> nameMapSoftwareC = new HashMap<Locale, String>();
+nameMapSoftwareC.put(Locale.US, "Software Catalog");
+Map<Locale, String> titleMapSoftwareC = new HashMap<Locale, String>();
+titleMapSoftwareC.put(Locale.US, "");
+Map<Locale, String> descriptionMapSoftwareC = new HashMap<Locale, String>();
+descriptionMapSoftwareC.put(Locale.US, "");
+Map<Locale, String> keywordsMapSoftwareC = new HashMap<Locale, String>();
+keywordsMapSoftwareC.put(Locale.US, "");
+Map<Locale, String> robotsMapSoftwareC = new HashMap<Locale, String>();
+robotsMapSoftwareC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapSoftwareC = new HashMap<Locale, String>();
+friendlyURLMapSoftwareC.put(Locale.US, "/software-catalog");
+
+Layout layoutSoftwareC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapSoftwareC,
+	titleMapSoftwareC, descriptionMapSoftwareC, keywordsMapSoftwareC,
+	robotsMapSoftwareC, "portlet", null, false, friendlyURLMapSoftwareC,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesSoftwareC =
+	layoutSoftwareC.getTypeSettingsProperties();
+
+typeSettingsPropertiesSoftwareC.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesSoftwareC.setProperty("column-2", "98");
+typeSettingsPropertiesSoftwareC.setProperty(
+	"column-1", "71_INSTANCE_X6zDk2NRQIS0,");
+
+layoutSoftwareC.setTypeSettingsProperties(typeSettingsPropertiesSoftwareC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutSoftwareC.getLayoutId(),
+	layoutSoftwareC.getTypeSettings());
+
+UnicodeProperties propertiesSoftwareC = new UnicodeProperties();
+
+propertiesSoftwareC.setProperty("displayStyle","from-level-0");
+propertiesSoftwareC.setProperty("headerType","root-layout");
+propertiesSoftwareC.setProperty("bulletStyle","dots");
+propertiesSoftwareC.setProperty("rootLayoutType","absolute");
+propertiesSoftwareC.setProperty("includedLayouts","auto");
+propertiesSoftwareC.setProperty("nestedChildren","1");
+propertiesSoftwareC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceSoftwareC","71_INSTANCE_X6zDk2NRQIS0");
+
+portletResourceSoftwareC = (String)actionRequest.getAttribute(
+	"portletResourceSoftwareC");
+
+PortletPreferences portletPreferencesSoftwareC =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceSoftwareC);
+
+for (Map.Entry<String, String> entry : propertiesSoftwareC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesSoftwareC.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutSoftwareC.getPlid(), "71_INSTANCE_X6zDk2NRQIS0",
+	portletPreferencesSoftwareC);
+
+Map<Locale, String> nameMapTranslator = new HashMap<Locale, String>();
+nameMapTranslator.put(Locale.US, "Translator");
+Map<Locale, String> titleMapTranslator = new HashMap<Locale, String>();
+titleMapTranslator.put(Locale.US, "");
+Map<Locale, String> descriptionMapTranslator = new HashMap<Locale, String>();
+descriptionMapTranslator.put(Locale.US, "");
+Map<Locale, String> keywordsMapTranslator = new HashMap<Locale, String>();
+keywordsMapTranslator.put(Locale.US, "");
+Map<Locale, String> robotsMapTranslator = new HashMap<Locale, String>();
+robotsMapTranslator.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapTranslator = new HashMap<Locale, String>();
+friendlyURLMapTranslator.put(Locale.US, "/translator");
+
+Layout layoutTranslator = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapTranslator,
+	titleMapTranslator, descriptionMapTranslator, keywordsMapTranslator,
+	robotsMapTranslator, "portlet", null, false, friendlyURLMapTranslator,
+	serviceContext);
+
+UnicodeProperties typeSettingsPropertiesTranslator =
+	layoutTranslator.getTypeSettingsProperties();
+
+typeSettingsPropertiesTranslator.setProperty(
+	"layout-template-id", "2_columns_ii");
+typeSettingsPropertiesTranslator.setProperty("column-2", "26");
+typeSettingsPropertiesTranslator.setProperty(
+	"column-1", "71_INSTANCE_3mDQzC5CSJCA,");
+
+layoutTranslator.setTypeSettingsProperties(typeSettingsPropertiesTranslator);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutTranslator.getLayoutId(),
+	layoutTranslator.getTypeSettings());
+
+UnicodeProperties propertiesTranslator = new UnicodeProperties();
+
+propertiesTranslator.setProperty("displayStyle","from-level-0");
+propertiesTranslator.setProperty("headerType","root-layout");
+propertiesTranslator.setProperty("bulletStyle","dots");
+propertiesTranslator.setProperty("rootLayoutType","absolute");
+propertiesTranslator.setProperty("includedLayouts","auto");
+propertiesTranslator.setProperty("nestedChildren","1");
+propertiesTranslator.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceTranslator","71_INSTANCE_3mDQzC5CSJCA");
+portletResourceTranslator = (String)actionRequest.getAttribute(
+	"portletResourceTranslator");
+
+PortletPreferences portletPreferencesTranslator =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceTranslator);
+
+for (Map.Entry<String, String> entry : propertiesTranslator.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesTranslator.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutTranslator.getPlid(), "71_INSTANCE_3mDQzC5CSJCA",
+	portletPreferencesTranslator);
+
+Map<Locale, String> nameMapUC = new HashMap<Locale, String>();
+nameMapUC.put(Locale.US, "Unit Converter");
+Map<Locale, String> titleMapUC = new HashMap<Locale, String>();
+titleMapUC.put(Locale.US, "");
+Map<Locale, String> descriptionMapUC = new HashMap<Locale, String>();
+descriptionMapUC.put(Locale.US, "");
+Map<Locale, String> keywordsMapUC = new HashMap<Locale, String>();
+keywordsMapUC.put(Locale.US, "");
+Map<Locale, String> robotsMapUC = new HashMap<Locale, String>();
+robotsMapUC.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapUC = new HashMap<Locale, String>();
+friendlyURLMapUC.put(Locale.US, "/unit-converter");
+
+Layout layoutUC = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, toolsLayoutId, nameMapUC, titleMapUC,
+	descriptionMapUC, keywordsMapUC, robotsMapUC, "portlet", null, false,
+	friendlyURLMapUC, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesUC =
+	layoutUC.getTypeSettingsProperties();
+
+typeSettingsPropertiesUC.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesUC.setProperty("column-2", "27");
+typeSettingsPropertiesUC.setProperty("column-1", "71_INSTANCE_vMl8RSCKxaP8,");
+
+layoutUC.setTypeSettingsProperties(typeSettingsPropertiesUC);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutUC.getLayoutId(),
+	layoutUC.getTypeSettings());
+
+UnicodeProperties propertiesUC = new UnicodeProperties();
+
+propertiesUC.setProperty("displayStyle","from-level-0");
+propertiesUC.setProperty("headerType","root-layout");
+propertiesUC.setProperty("bulletStyle","dots");
+propertiesUC.setProperty("rootLayoutType","absolute");
+propertiesUC.setProperty("includedLayouts","auto");
+propertiesUC.setProperty("nestedChildren","1");
+propertiesUC.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute("portletResourceUC","71_INSTANCE_vMl8RSCKxaP8");
+
+portletResourceUC = (String)actionRequest.getAttribute("portletResourceUC");
+
+PortletPreferences portletPreferencesUC =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceUC);
+
+for (Map.Entry<String, String> entry : propertiesUC.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesUC.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutUC.getPlid(), "71_INSTANCE_vMl8RSCKxaP8",
+	portletPreferencesUC);
+
+//Tools page links to Dictionary page.
+
+UnicodeProperties typeSettingsPropertiesTools =
+	toolsLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesTools.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesTools.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesTools.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesTools.setProperty(
+	"linkToLayoutId", String.valueOf(layoutDictionary.getLayoutId()));
+typeSettingsPropertiesTools.setProperty("sitemap-include", "1");
+typeSettingsPropertiesTools.setProperty("layout-template-id", "2_columns_ii");
+
+toolsLayout.setTypeSettingsProperties(typeSettingsPropertiesTools);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, toolsLayoutId, toolsLayout.getTypeSettings());
+
+//Add Wiki Part
+
+Map<Locale, String> nameMapWikiP = new HashMap<Locale, String>();
+nameMapWikiP.put(Locale.US, "Wiki Page");
+Map<Locale, String> titleMapWikiP = new HashMap<Locale, String>();
+titleMapWikiP.put(Locale.US, "");
+Map<Locale, String> descriptionMapWikiP = new HashMap<Locale, String>();
+descriptionMapWikiP.put(Locale.US, "");
+Map<Locale, String> keywordsMapWikiP = new HashMap<Locale, String>();
+keywordsMapWikiP.put(Locale.US, "");
+Map<Locale, String> robotsMapWikiP = new HashMap<Locale, String>();
+robotsMapWikiP.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapWikiP = new HashMap<Locale, String>();
+friendlyURLMapWikiP.put(Locale.US, "/wiki-page");
+
+Layout wikiLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, nameMapWikiP, titleMapWikiP,
+	descriptionMapWikiP, keywordsMapWikiP, robotsMapWikiP,
+	"link_to_layout", null, false, friendlyURLMapWikiP, serviceContext);
+
+wikiLayoutId = wikiLayout.getLayoutId();
+
+Map<Locale, String> nameMapWikiD = new HashMap<Locale, String>();
+nameMapWikiD.put(Locale.US, "Wiki Display");
+Map<Locale, String> titleMapWikiD = new HashMap<Locale, String>();
+titleMapWikiD.put(Locale.US, "");
+Map<Locale, String> descriptionMapWikiD = new HashMap<Locale, String>();
+descriptionMapWikiD.put(Locale.US, "");
+Map<Locale, String> keywordsMapWikiD = new HashMap<Locale, String>();
+keywordsMapWikiD.put(Locale.US, "");
+Map<Locale, String> robotsMapWikiD = new HashMap<Locale, String>();
+robotsMapWikiD.put(Locale.US, "");
+Map<Locale, String> friendlyURLMapWikiD = new HashMap<Locale, String>();
+friendlyURLMapWikiD.put(Locale.US, "/wiki-dispaly");
+
+Layout layoutWikiD = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, wikiLayoutId, nameMapWikiD, titleMapWikiD,
+	descriptionMapWikiD, keywordsMapWikiD, robotsMapWikiD, "portlet", null,
+	false, friendlyURLMapWikiD, serviceContext);
+
+UnicodeProperties typeSettingsPropertiesWikiD =
+	layoutWikiD.getTypeSettingsProperties();
+
+typeSettingsPropertiesWikiD.setProperty("layout-template-id", "2_columns_ii");
+typeSettingsPropertiesWikiD.setProperty(
+	"column-2", "54_INSTANCE_p6Z9AOc8mPgb,36");
+typeSettingsPropertiesWikiD.setProperty(
+	"column-1", "71_INSTANCE_7RY8M8EY5eT3,");
+
+layoutWikiD.setTypeSettingsProperties(typeSettingsPropertiesWikiD);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, layoutWikiD.getLayoutId(),
+	layoutWikiD.getTypeSettings());
+
+UnicodeProperties propertiesWikiD = new UnicodeProperties();
+
+propertiesWikiD.setProperty("displayStyle","from-level-0");
+propertiesWikiD.setProperty("headerType","root-layout");
+propertiesWikiD.setProperty("bulletStyle","dots");
+propertiesWikiD.setProperty("rootLayoutType","absolute");
+propertiesWikiD.setProperty("includedLayouts","auto");
+propertiesWikiD.setProperty("nestedChildren","1");
+propertiesWikiD.setProperty("rootLayoutLevel","1");
+
+actionRequest.setAttribute(
+	"portletResourceWikiD","71_INSTANCE_7RY8M8EY5eT3");
+portletResourceWikiD = (String)actionRequest.getAttribute(
+	"portletResourceWikiD");
+
+PortletPreferences portletPreferencesWikiD =
+	PortletPreferencesFactoryUtil.getPortletSetup(
+	actionRequest, portletResourceWikiD);
+
+for (Map.Entry<String, String> entry : propertiesWikiD.entrySet()) {
+	String name = entry.getKey();
+	String value = entry.getValue();
+
+	portletPreferencesWikiD.setValue(name, value);
+}
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, 3, layoutWikiD.getPlid(), "71_INSTANCE_7RY8M8EY5eT3",
+	portletPreferencesWikiD);
+
+//Wiki page links to Wiki Portlet page.
+
+UnicodeProperties typeSettingsPropertiesWikis =
+	wikiLayout.getTypeSettingsProperties();
+
+typeSettingsPropertiesWikis.setProperty("groupId", String.valueOf(groupId));
+typeSettingsPropertiesWikis.setProperty("show-alternate-links", "true");
+typeSettingsPropertiesWikis.setProperty("sitemap-changefreq", "daily");
+typeSettingsPropertiesWiki.setProperty(
+	"linkToLayoutId", String.valueOf(layoutWikiD.getLayoutId()));
+typeSettingsPropertiesWiki.setProperty("sitemap-include", "1");
+typeSettingsPropertiesWiki.setProperty("layout-template-id", "2_columns_ii");
+
+wikiLayout.setTypeSettingsProperties(typeSettingsPropertiesWiki);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, wikiLayoutId, wikiLayout.getTypeSettings());
