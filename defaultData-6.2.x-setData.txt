@@ -95,7 +95,7 @@ groupId = group.getGroupId();
 ServiceContext serviceContext = ServiceContextFactory.getInstance(
 	Group.class.getName(), actionRequest);
 
-//ADD BLOG 
+//Add Blog 
 
 serviceContext.setScopeGroupId(groupId);
 
@@ -119,7 +119,7 @@ AssetEntryLocalServiceUtil.updateEntry(
 	blogEntry.getTitle(), blogEntry.getDescription(), null, null, null,
 	0, 0, null, false);
 
-//ADD Dynamic Data List
+//Add Dynamic Data List
 
 Layout layoutDD = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/dynamic-data");
@@ -130,8 +130,11 @@ long scopeClassNameId = PortalUtil.getClassNameId(
 	ddmDisplay.getStructureType());
 
 Map<Locale, String> ddmStructureNameMap1 = new HashMap<Locale, String>();
+
 ddmStructureNameMap1.put(Locale.US, "definitionData1");
+
 Map<Locale, String> ddmStructureDescription1 = new HashMap<Locale, String>();
+
 ddmStructureDescription1.put(Locale.US, "definition for person");
 
 String xsd1 = "<?xml version='1.0'?><root available-locales='en_US' default-locale='en_US'><dynamic-element dataType='string' indexType='keyword' name='name' readOnly='false' repeatable='false' required='false' showLabel='true' type='text' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[Name]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='string' indexType='keyword' name='school' readOnly='false' repeatable='false' required='false' showLabel='true' type='text' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[School]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='string' indexType='keyword' multiple='false' name='major' readOnly='false' repeatable='false' required='false' showLabel='true' type='select' width=''><dynamic-element name='option7283' type='option' value='computer'><meta-data locale='en_US'><entry name='label'><![CDATA[Computer]]></entry></meta-data></dynamic-element><dynamic-element name='option7284' type='option' value='english'><meta-data locale='en_US'><entry name='label'><![CDATA[English]]></entry></meta-data></dynamic-element><meta-data locale='en_US'><entry name='label'><![CDATA[Major]]></entry><entry name='predefinedValue'><![CDATA[['']]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element></root>";
@@ -141,8 +144,11 @@ DDMStructure ddmstructure1 = DDMStructureLocalServiceUtil.addStructure(
 	ddmStructureDescription1, xsd1, "xml", 0, serviceContext);
 
 Map<Locale, String> ddmStructureNameMap2 = new HashMap<Locale, String>();
+
 ddmStructureNameMap2.put(Locale.US, "definitionData2");
+
 Map<Locale, String> ddmStructureDescription2 = new HashMap<Locale, String>();
+
 ddmStructureDescription2.put(Locale.US, "definition for book");
 
 String xsd2 = "<root available-locales='en_US' default-locale='en_US'><dynamic-element dataType='string' indexType='keyword' name='name' readOnly='false' repeatable='false' required='false' showLabel='true' type='text' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[Name]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='date' fieldNamespace='ddm' indexType='keyword' name='publicdata' readOnly='false' repeatable='false' required='false' showLabel='true' type='ddm-date' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[PublicData]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='string' indexType='keyword' name='tax' readOnly='false' repeatable='false' required='false' showLabel='true' type='radio' width=''><dynamic-element name='option6794' type='option' value='0'><meta-data locale='en_US'><entry name='label'><![CDATA[without Tax]]></entry></meta-data></dynamic-element><dynamic-element name='option6795' type='option' value='1'><meta-data locale='en_US'><entry name='label'><![CDATA[with Tax]]></entry></meta-data></dynamic-element><meta-data locale='en_US'><entry name='label'><![CDATA[Tax]]></entry><entry name='predefinedValue'><![CDATA[['']]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element></root>";
@@ -152,8 +158,11 @@ DDMStructure ddmstructure2 = DDMStructureLocalServiceUtil.addStructure(
 	ddmStructureDescription2, xsd2, "xml", 0, serviceContext);
 
 Map<Locale, String> recordNameMap = new HashMap<Locale, String>();
+
 recordNameMap.put(Locale.US, "ddl1");
+
 Map<Locale, String> recordDescription = new HashMap<Locale, String>();
+
 recordDescription.put(Locale.US, "ddl1");
 
 DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
@@ -161,8 +170,11 @@ DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
 	recordDescription, 20, 0, serviceContext);
 
 Map<Locale, String> recordNameMap2 = new HashMap<Locale, String>();
+
 recordNameMap2.put(Locale.US, "ddl2");
+
 Map<Locale, String> recordDescription2 = new HashMap<Locale, String>();
+
 recordDescription2.put(Locale.US, "ddl2");
 
 DDLRecordSet recordSet2 = DDLRecordSetLocalServiceUtil.addRecordSet(
@@ -190,13 +202,13 @@ UnicodeProperties propertiesDDL = new UnicodeProperties();
 propertiesDDL.setProperty(
 	"recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
-actionRequest.setAttribute("portletResourceDDL","169_INSTANCE_yOInr1Ynqt0S");
+actionRequest.setAttribute("portletResourceDDL", "169_INSTANCE_yOInr1Ynqt0S");
 
 portletResourceDDL = (String)actionRequest.getAttribute("portletResourceDDL");
 
 PortletPreferences portletPreferencesDDL =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceDDL);
+		actionRequest, portletResourceDDL);
 
 for (Map.Entry<String, String> entry : propertiesDDL.entrySet()) {
 	String name = entry.getKey();
@@ -209,7 +221,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutDD.getPlid(), "169_INSTANCE_yOInr1Ynqt0S",
 	portletPreferencesDDL);
 
-//ADD WIKI
+//Add Wiki
 
 Layout layoutWikiD = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/wiki-dispaly");
@@ -243,14 +255,14 @@ typeSettingsPropertiesWiki.setProperty(
 	"nodeId", String.valueOf(wikiNode.getNodeId()));
 typeSettingsPropertiesWiki.setProperty("title", "FrontPage");
 
-actionRequest.setAttribute("portletResourceWiki","54_INSTANCE_p6Z9AOc8mPgb");
+actionRequest.setAttribute("portletResourceWiki", "54_INSTANCE_p6Z9AOc8mPgb");
 
 portletResourceWiki = (String)actionRequest.getAttribute(
 	"portletResourceWiki");
 
 PortletPreferences portletPreferencesWiki =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceWiki);
+		actionRequest, portletResourceWiki);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesWiki.entrySet()) {
 	String name = entry.getKey();
@@ -263,7 +275,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutWikiD.getPlid(), "54_INSTANCE_p6Z9AOc8mPgb",
 	portletPreferencesWiki);
 
-//ADD MESSAGE BOARD
+//Add Message Board
 
 parentCategoryId = 0;
 
@@ -295,10 +307,10 @@ if(question){
 	MBThreadLocalServiceUtil.updateQuestion(message.getThreadId(), true);
 }
 
-//ADD BOOKMARKS
+//Add Bookmards
 
 BookmarksFolder bookmarkFolder = BookmarksFolderLocalServiceUtil.addFolder(
-	 userId, 0, "Folder1", "the first folder", serviceContext);
+	userId, 0, "Folder1", "the first folder", serviceContext);
 
 BookmarksEntry bookmarksEntry1 = BookmarksEntryLocalServiceUtil.addEntry(
 	userId, groupId, bookmarkFolder.getFolderId(), "bookmark1",
@@ -332,7 +344,7 @@ AssetEntryLocalServiceUtil.updateEntry(
 	bookmarksEntry2.getName(), bookmarksEntry2.getDescription(), null,
 	bookmarksEntry2.getUrl(), null, 0, 0, null, false);
 
-//ADD Page Comments
+//Add Page Comments
 
 Layout layoutPComment = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/page-comments");
@@ -349,14 +361,17 @@ MBMessageLocalServiceUtil.addDiscussionMessage(
 	classPK, commentMessage.getThreadId(), commentMessage.getMessageId(),
 	"", "cool!", serviceContext);
 
-//ADD Poll
+//Add Poll
 
 Layout layoutPD = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/polls-display");
 
 Map<Locale, String> titleMapP = new HashMap<Locale, String>();
+
 titleMapP.put(Locale.US, "question1");
+
 Map<Locale, String> descriptionMapP = new HashMap<Locale, String>();
+
 descriptionMapP.put(Locale.US, "Do you like Chinese food?");
 
 expirationDateMonth = 0;
@@ -376,6 +391,7 @@ String id = "a";
 String choiceName = "a";
 
 Map<Locale, String> localeChoiceDescriptionMap = new HashMap<Locale, String>();
+
 localeChoiceDescriptionMap.put(Locale.US, "yes");
 
 PollsChoice choice = PollsChoiceUtil.create(0);
@@ -390,6 +406,7 @@ String id2 = "b";
 String choiceName2 = "b";
 
 Map<Locale, String> localeChoiceDescriptionMapb = new HashMap<Locale, String>();
+
 localeChoiceDescriptionMapb.put(Locale.US, "no");
 
 PollsChoice choice2 = PollsChoiceUtil.create(0);
@@ -414,7 +431,7 @@ portletResourcePoll = (String)actionRequest.getAttribute("portletResourcePoll");
 
 PortletPreferences portletPreferencesPoll =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourcePoll);
+		actionRequest, portletResourcePoll);
 
 for (Map.Entry<String, String> entry : propertiesPoll.entrySet()) {
 	String name = entry.getKey();
@@ -427,7 +444,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutPD.getPlid(), "59_INSTANCE_TbzT9KKPaRFZ",
 	portletPreferencesPoll);
 
-//ADD ALERTS
+//Add Alerts
 
 announcementsClassNameId = 10001;
 
@@ -439,14 +456,14 @@ AnnouncementsEntryLocalServiceUtil.addEntry(
 	"http://baike.baidu.com/view/78799.htm", "general", 0, 0, 0, 0, 0,
 	true, 8, 4, 2013, 3, 30, 0, true);
 
-//ADD ANNOUNCEMENTS
+//Add Announcements
 
 AnnouncementsEntryLocalServiceUtil.addEntry(
 	userId, announcementsClassNameId, classPKAnnouncements, "Meeting",
 	"Tech- Talk Meeting : 2-4 PM today.", "", "general", 0, 0, 0, 0, 0,
 	true, 7, 5, 2013, 3, 30, 1, false);
 
-//ADD RSS
+//Add Rss
 
 Layout layoutRSS = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/rss");
@@ -457,12 +474,13 @@ typeSettingsPropertiesRSS.setProperty(
 	"urls", "http://news.baidu.com/n?cmd=1&class=shizheng&tn=rss&sub=0");
 typeSettingsPropertiesRSS.setProperty("titles", "baidu");
 
-actionRequest.setAttribute("portletResourceRSS","39_INSTANCE_vn59KhKI7Y2w");
+actionRequest.setAttribute("portletResourceRSS", "39_INSTANCE_vn59KhKI7Y2w");
+
 portletResourceRSS = (String)actionRequest.getAttribute("portletResourceRSS");
 
 PortletPreferences portletPreferencesRSS =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceRSS);
+		actionRequest, portletResourceRSS);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesRSS.entrySet()) {
 	String name = entry.getKey();
@@ -475,7 +493,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutRSS.getPlid(), "39_INSTANCE_vn59KhKI7Y2w",
 	portletPreferencesRSS);
 
-//ADD IFRAME
+//Add Iframe
 
 Layout layoutIFrame = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/iFrame");
@@ -484,13 +502,14 @@ UnicodeProperties typeSettingsPropertiesIFrame = new UnicodeProperties();
 
 typeSettingsPropertiesIFrame.setProperty("src", "http://www.baidu.com.cn");
 
-actionRequest.setAttribute("portletResourceIFrame","48_INSTANCE_mpN1u52gzmbO");
+actionRequest.setAttribute("portletResourceIFrame", "48_INSTANCE_mpN1u52gzmbO");
+
 portletResourceIFrame = (String)actionRequest.getAttribute(
 	"portletResourceIFrame");
 
 PortletPreferences portletPreferencesIFrame =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceIFrame);
+		actionRequest, portletResourceIFrame);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesIFrame.entrySet()) {
 	String name = entry.getKey();
@@ -503,7 +522,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutIFrame.getPlid(), "48_INSTANCE_mpN1u52gzmbO",
 	portletPreferencesIFrame);
 
-//ADD Quick Note
+//Add Quick Note
 
 Layout layoutQN = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/quick-note");
@@ -518,7 +537,7 @@ portletResourceNote = (String)actionRequest.getAttribute(
 
 PortletPreferences portletPreferencesNote =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceNote);
+		actionRequest, portletResourceNote);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesNote.entrySet()) {
 	String name = entry.getKey();
@@ -531,15 +550,17 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutQN.getPlid(), "97_INSTANCE_a1SJg50KuLFc",
 	portletPreferencesNote);
 
-//ADD Web Content
+//Add Web Content
 
 Layout layoutWC = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
 	groupId, false, "/web-content");
 
 Map<Locale, String> WCTitleMap1 = new HashMap<Locale, String>();
+
 WCTitleMap1.put(Locale.US, "Web Content1");
 
 Map<Locale, String> WCDescriptionMap1 = new HashMap<Locale, String>();
+
 WCDescriptionMap1.put(Locale.US, "Test Web Content1");
 
 String webCContent1 = "<?xml version='1.0' encoding='UTF-8'?><root available-locales='en_US' default-locale='en_US'><static-content language-id='en_US'><![CDATA[Test Web Content]]></static-content></root>";
@@ -561,8 +582,11 @@ long WCScopeClassNameId = PortalUtil.getClassNameId(WCddmDisplay.getStructureTyp
 parentStructureId = 0;
 
 Map<Locale, String> nameMapStructure1 = new HashMap<Locale, String>();
+
 nameMapStructure1.put(Locale.US, "Web Content Structure1");
+
 Map<Locale, String> nameDescriptionStructure1 = new HashMap<Locale, String>();
+
 nameDescriptionStructure1.put(Locale.US, "Web Content Structure1");
 
 xsd = "<root available-locales='en_US' default-locale='en_US'><dynamic-element dataType='string' indexType='keyword' name='name' readOnly='false' repeatable='false' required='false' showLabel='true' type='text' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[Name]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='date' fieldNamespace='ddm' indexType='keyword' name='birthday' readOnly='false' repeatable='false' required='false' showLabel='true' type='ddm-date' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[Birthday]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='number' fieldNamespace='ddm' indexType='keyword' name='number3798' readOnly='false' repeatable='false' required='false' showLabel='true' type='ddm-number' width='small'><meta-data locale='en_US'><entry name='label'><![CDATA[Number]]></entry><entry name='predefinedValue'><![CDATA[]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element><dynamic-element dataType='string' indexType='keyword' name='gender' readOnly='false' repeatable='false' required='false' showLabel='true' type='radio' width=''><dynamic-element name='option8579' type='option' value='0'><meta-data locale='en_US'><entry name='label'><![CDATA[male]]></entry></meta-data></dynamic-element><dynamic-element name='option8580' type='option' value='1'><meta-data locale='en_US'><entry name='label'><![CDATA[female]]></entry></meta-data></dynamic-element><meta-data locale='en_US'><entry name='label'><![CDATA[Gender]]></entry><entry name='predefinedValue'><![CDATA[['']]]></entry><entry name='tip'><![CDATA[]]></entry></meta-data></dynamic-element></root>";
@@ -579,8 +603,11 @@ templateClassNameId = 10102;
 templateClassPK = structure.getStructureId();
 
 Map<Locale, String> nameMapTemplete1 = new HashMap<Locale, String>()
+
 nameMapTemplete1.put(Locale.US, "Web Content Template1");
+
 Map<Locale, String> DescriptionTemplete1 = new HashMap<Locale, String>();
+
 DescriptionTemplete1.put(Locale.US, "Web Content Template1");
 
 script = '''<#--Web content templates are used to lay out the fields defined in a web content structure. Please use the left panel to quickly add commonly used variables.Autocomplete is also available and can be invoked by typing '${.'-->''';
@@ -594,12 +621,16 @@ DDMTemplate template = DDMTemplateLocalServiceUtil.addTemplate(
 
 WCClassNameId = 0;
 WCClassPK = 0;
+
 articleId = "";
 autoArticleId = true;
 
 Map<Locale, String> WCTitleMap2 = new HashMap<Locale, String>();
+
 WCTitleMap2.put(Locale.US, "Web Content with structure");
+
 Map<Locale, String> WCDecriptionMap2 = new HashMap<Locale, String>();
+
 WCDecriptionMap2.put(Locale.US, "Web Content with structure");
 
 content2 = "<?xml version='1.0'?><root available-locales='en_US' default-locale='en_US'><dynamic-element name='name' index='0' type='text' index-type='keyword'><dynamic-content language-id='en_US'><![CDATA[web content2]]></dynamic-content></dynamic-element><dynamic-element name='birthday' index='0' index-type='keyword'><dynamic-content language-id='en_US'><![CDATA[1373328000000]]></dynamic-content></dynamic-element><dynamic-element name='number3798' index='0' index-type='keyword'><dynamic-content language-id='en_US'><![CDATA[null]]></dynamic-content></dynamic-element><dynamic-element name='gender' index='0' index-type='keyword'><dynamic-content language-id='en_US'><![CDATA[['0']]]></dynamic-content></dynamic-element></root>";
@@ -625,12 +656,13 @@ UnicodeProperties typeSettingsPropertiesWC = new UnicodeProperties();
 typeSettingsPropertiesWC.setProperty("articleId", article.getArticleId());
 typeSettingsPropertiesWC.setProperty("groupId", String.valueOf(groupId));
 
-actionRequest.setAttribute("portletResourceWC","56_INSTANCE_COxqya3VTLhr");
+actionRequest.setAttribute("portletResourceWC", "56_INSTANCE_COxqya3VTLhr");
+
 portletResourceWC = (String)actionRequest.getAttribute("portletResourceWC");
 
 PortletPreferences portletPreferencesWC =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceWC);
+		actionRequest, portletResourceWC);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesWC.entrySet()) {
 	String name = entry.getKey();
@@ -647,13 +679,14 @@ UnicodeProperties typeSettingsPropertiesWCList = new UnicodeProperties();
 
 typeSettingsPropertiesWCList.setProperty("groupId", String.valueOf(groupId));
 
-actionRequest.setAttribute("portletResourceWCList","62_INSTANCE_ffagnWrlaM2y");
+actionRequest.setAttribute("portletResourceWCList", "62_INSTANCE_ffagnWrlaM2y");
+
 portletResourceWCList = (String)actionRequest.getAttribute(
 	"portletResourceWCList");
 
 PortletPreferences portletPreferencesWCList =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceWCList);
+		actionRequest, portletResourceWCList);
 
 for (Map.Entry<String, String> entry : typeSettingsPropertiesWCList.entrySet()) {
 	String name = entry.getKey();
@@ -666,7 +699,7 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, 3, layoutWC.getPlid(), "62_INSTANCE_ffagnWrlaM2y",
 	portletPreferencesWCList);
 
-//ADD Shopping
+//Add Shopping
 
 ShoppingCategory shoppingCategory =
 	ShoppingCategoryLocalServiceUtil.addCategory(
@@ -712,11 +745,14 @@ ShoppingItemLocalServiceUtil.addItem(
 	1000, false, null, false, "", smallFileShopping, false, "", mediumFile,
 	false, "", largeFileShopping, itemFields, itemPrices, serviceContext);
 
-//ADD Categories
+//Add Categories
 
 Map<Locale, String> titleMapVocabulary1 = new HashMap<Locale, String>();
+
 titleMapVocabulary1.put(Locale.US, "Book");
+
 Map<Locale, String> decriptionMapVocabulary1 = new HashMap<Locale, String>();
+
 decriptionMapVocabulary1.put(Locale.US, "Book");
 
 UnicodeProperties settingPropertiesVocabulary1 = new UnicodeProperties();
@@ -731,8 +767,11 @@ AssetVocabulary vocabulary1 = AssetVocabularyLocalServiceUtil.addVocabulary(
 	serviceContext);
 
 Map<Locale, String> titleMapCategory1 = new HashMap<Locale, String>();
+
 titleMapCategory1.put(Locale.US, "Novel");
+
 Map<Locale, String> decriptionMapCategory1 = new HashMap<Locale, String>();
+
 decriptionMapCategory1.put(Locale.US, "novel");
 
 String[] categoryProperties = null;
@@ -756,13 +795,13 @@ UnicodeProperties propertiesTagN = new UnicodeProperties();
 propertiesTagN.setProperty("showAssetCount","true");
 propertiesTagN.setProperty("showZeroAssetCount","true");
 
-actionRequest.setAttribute("propertiesTagN","141_INSTANCE_W3mu4VyEzpgz");
+actionRequest.setAttribute("propertiesTagN", "141_INSTANCE_W3mu4VyEzpgz");
 
 portletResourceTagN = (String)actionRequest.getAttribute("propertiesTagN");
 
 PortletPreferences portletPreferencesTagN =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceTagN);
+		actionRequest, portletResourceTagN);
 
 for (Map.Entry<String, String> entry : propertiesTagN.entrySet()) {
 	String name = entry.getKey();
@@ -780,15 +819,16 @@ UnicodeProperties propertiesTagCloud = new UnicodeProperties();
 propertiesTagCloud.setProperty("showAssetCount","true");
 propertiesTagCloud.setProperty("showZeroAssetCount","true");
 
-actionRequest.setAttribute("propertiesTagCloud","148_INSTANCE_ovvJg184K1ix");
+actionRequest.setAttribute("propertiesTagCloud", "148_INSTANCE_ovvJg184K1ix");
+
 portletResourceTagCloud = (String)actionRequest.getAttribute(
 	"propertiesTagCloud");
 
 PortletPreferences portletPreferencesTagCloud =
 	PortletPreferencesFactoryUtil.getPortletSetup(
-	actionRequest, portletResourceTagCloud);
+		actionRequest, portletResourceTagCloud);
 
-for (Map.Entry<String, String> entry : propertiesTagCloud.entrySet()) {
+for (Map.Entry<String, String> entry : propertiesTagCloud.entrySet()) { 
 	String name = entry.getKey();
 	String value = entry.getValue();
 
