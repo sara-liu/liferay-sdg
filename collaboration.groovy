@@ -13,7 +13,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
@@ -58,14 +57,14 @@ serviceContext.setScopeGroupId(groupId);
 // Collaboration
 
 Layout collaborationLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, 0, "Collaboration", "", "", "link_to_layout",
-	false, "/collaboration", serviceContext);
+	userId, groupId, false, 0, "Collaboration", "", "", "link_to_layout", false,
+	"/collaboration", serviceContext);
 
 // Blogs
 
 Layout blogsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(), "Blogs", "",
-	"", "portlet", false, "/blogs", serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "Blogs", "", "",
+	"portlet", false, "/blogs", serviceContext);
 
 LayoutTypePortlet blogsLayoutTypePortlet =
 	(LayoutTypePortlet)blogsLayout.getLayoutType();
@@ -75,8 +74,7 @@ blogsLayoutTypePortlet.addPortletId(
 blogsLayoutTypePortlet.addPortletId(userId, "33", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, blogsLayout.getLayoutId(),
-	blogsLayout.getTypeSettings());
+	groupId, false, blogsLayout.getLayoutId(), blogsLayout.getTypeSettings());
 
 BlogsEntryLocalServiceUtil.addEntry(
 	userId, "Blog Title", "Blog description",
@@ -107,9 +105,8 @@ LayoutLocalServiceUtil.updateLayout(
 // Dynamic Data List Display 
 
 Layout ddlDisplayLayout1 = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(),
-	"DDL Display 1", "", "", "portlet", false, "/ddl-display-1",
-	serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "DDL Display 1",
+	"", "", "portlet", false, "/ddl-display-1", serviceContext);
 
 LayoutTypePortlet ddlDisplayLayoutTypePortlet1 =
 	(LayoutTypePortlet)ddlDisplayLayout1.getLayoutType();
@@ -138,15 +135,14 @@ Map<Locale, String> ddmRecordSetDescriptionMap = new HashMap<Locale, String>();
 ddmRecordSetDescriptionMap.put(Locale.US, "DDL record set description");
 
 DDLRecordSet ddlRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
-	userId, groupId, ddmStructure.getStructureId(), null,
-	ddmRecordSetNameMap, ddmRecordSetDescriptionMap, 10, 0,
-	serviceContext);
+	userId, groupId, ddmStructure.getStructureId(), null, ddmRecordSetNameMap,
+	ddmRecordSetDescriptionMap, 10, 0, serviceContext);
 
-Fields fields = DDMUtil.getFields(
+Fields ddmFields = DDMUtil.getFields(
 	ddmStructure.getStructureId(), serviceContext);
 
-DDLRecord record = DDLRecordLocalServiceUtil.addRecord(
-	userId, groupId, ddlRecordSet.getRecordSetId(), 0, fields,
+DDLRecordLocalServiceUtil.addRecord(
+	userId, groupId, ddlRecordSet.getRecordSetId(), 0, ddmFields,
 	serviceContext);
 
 PortletPreferences ddlDisplayPortletPreferences1 =
@@ -165,9 +161,8 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 // Dynamic Data List Display (Spreadsheet View)
 
 Layout ddlDisplayLayout2 = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(),
-	"DDL Display 2", "", "", "portlet", false, "/ddl-display-2",
-	serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "DDL Display 2",
+	"", "", "portlet", false, "/ddl-display-2", serviceContext);
 
 LayoutTypePortlet ddlDisplayLayoutTypePortlet2 =
 	(LayoutTypePortlet)ddlDisplayLayout2.getLayoutType();
@@ -198,9 +193,8 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 // Message Boards
 
 Layout mbLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(),
-	"Message Boards", "", "", "portlet", false, "/message-boards",
-	serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "Message Boards",
+	"", "", "portlet", false, "/message-boards", serviceContext);
 
 LayoutTypePortlet mbLayoutTypePortlet =
 	(LayoutTypePortlet)mbLayout.getLayoutType();
@@ -212,28 +206,27 @@ mbLayoutTypePortlet.addPortletId(userId, "19", "column-2", -1, false);
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mbLayout.getLayoutId(), mbLayout.getTypeSettings());
 
-MBCategory category = MBCategoryLocalServiceUtil.addCategory(
-	userId, 0, "MB Category Name", "MB category description",
-	serviceContext);
-
-MBCategory questionCategory = MBCategoryLocalServiceUtil.addCategory(
-	userId, 0, "MB Question Category Name",
-	"MB question category description", "question", "", "pop3", "", 110,
-	false, "test@liferay.com", "test", 5, "", false, "", 25, false, "", "",
-	false, false, serviceContext);
+MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
+	userId, 0, "MB Category Name", "MB category description", serviceContext);
 
 MBMessageLocalServiceUtil.addMessage(
-	userId, "Test Test", groupId, category.getCategoryId(),
+	userId, "Test Test", groupId, mbCategory.getCategoryId(),
 	"MB Message Subject",
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"bbcode", new ArrayList(), false, 0.0, true, serviceContext);
 
+MBCategory mbQuestionCategory = MBCategoryLocalServiceUtil.addCategory(
+	userId, 0, "MB Question Category Name", "MB question category description",
+	"question", null, null, null, 0, false, null, null, 0, null, false, null, 0,
+	false, null, null, false, false, serviceContext);
+
 MBMessage questionMessage = MBMessageLocalServiceUtil.addMessage(
-	userId, "Test Test", groupId, questionCategory.getCategoryId(),
+	userId, "Test Test", groupId, mbQuestionCategory.getCategoryId(),
 	"MB Question Message Subject",
-	"This is a question message", "bbcode", new ArrayList(), false,
-	0.0, true, serviceContext);
+	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	"bbcode", new ArrayList(), false, 0.0, true, serviceContext);
 
 MBThreadLocalServiceUtil.updateQuestion(questionMessage.getThreadId(), true);
 
@@ -259,34 +252,33 @@ LayoutLocalServiceUtil.updateLayout(
 // Wiki
 
 Layout wikiLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(), "Wiki", "",
-	"", "portlet", false, "/wiki", serviceContext);
-
-WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
-	userId, "wikiNode", "wiki", serviceContext);
-
-WikiPage wikiPage = WikiPageLocalServiceUtil.addPage(
-	userId, wikiNode.getNodeId(), "Wiki Page Name", "Wiki page content",
-	"", false, serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "Wiki", "", "",
+	"portlet", false, "/wiki", serviceContext);
 
 LayoutTypePortlet wikiLayoutTypePortlet =
 	(LayoutTypePortlet)wikiLayout.getLayoutType();
 
 wikiLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_CollabSM0007", "column-1", -1, false);
-wikiLayoutTypePortlet.addPortletId(
-	userId, "36", "column-2", -1, false);
+wikiLayoutTypePortlet.addPortletId(userId, "36", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, wikiLayout.getLayoutId(),
-	wikiLayout.getTypeSettings());
+	groupId, false, wikiLayout.getLayoutId(), wikiLayout.getTypeSettings());
+
+WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
+	userId, "Main", "", serviceContext);
+
+WikiPageLocalServiceUtil.updatePage(
+	userId, wikiNode.getNodeId(), "FrontPage", 1.0,
+	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	"Wiki page change summary", false, "creole", "", "", serviceContext);
 
 // Wiki Display
 
 Layout wikiDisplayLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, collaborationLayout.getLayoutId(),
-	"Wiki Display", "", "", "portlet", false, "/wiki-display",
-	serviceContext);
+	userId, groupId, false, collaborationLayout.getLayoutId(), "Wiki Display",
+	"", "", "portlet", false, "/wiki-display", serviceContext);
 
 LayoutTypePortlet wikiDisplayLayoutTypePortlet =
 	(LayoutTypePortlet)wikiDisplayLayout.getLayoutType();
@@ -294,11 +286,25 @@ LayoutTypePortlet wikiDisplayLayoutTypePortlet =
 wikiDisplayLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_CollabSM0008", "column-1", -1, false);
 wikiDisplayLayoutTypePortlet.addPortletId(
-	userId, "54_INSTANCE_CollabWikiD1", "column-2", -1, false);
+	userId, "54_INSTANCE_CollabWD0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, wikiDisplayLayout.getLayoutId(),
 	wikiDisplayLayout.getTypeSettings());
+
+PortletPreferences wikiDisplayPortletPreferences =
+	PortletPreferencesLocalServiceUtil.getPreferences(
+		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+		wikiDisplayLayout.getPlid(), "54_INSTANCE_CollabWD0001",
+		PortletConstants.DEFAULT_PREFERENCES);
+
+wikiDisplayPortletPreferences.setValue(
+	"nodeId", String.valueOf(wikiNode.getNodeId()));
+wikiDisplayPortletPreferences.setValue("title", "FrontPage");
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, wikiDisplayLayout.getPlid(),
+	"54_INSTANCE_CollabWD0001", wikiDisplayPortletPreferences);
 
 // Link parent page with first child page
 
