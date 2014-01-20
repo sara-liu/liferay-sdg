@@ -65,7 +65,7 @@ BookmarksFolder bookmarkFolder = BookmarksFolderLocalServiceUtil.addFolder(
 
 BookmarksEntryLocalServiceUtil.addEntry(
 	userId, groupId, bookmarkFolder.getFolderId(), "Bookmark Name",
-	"http://www.google.com", "Bookmark description", serviceContext);
+	"http://www.example.com", "Bookmark description", serviceContext);
 
 // Friends Directory
 
@@ -88,8 +88,8 @@ LayoutLocalServiceUtil.updateLayout(
 // Invitation
 
 Layout invitationLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "Invitation",
-	"", "", "portlet", false, "/invitation", serviceContext);
+	userId, groupId, false, communityLayout.getLayoutId(), "Invitation", "", "",
+	"portlet", false, "/invitation", serviceContext);
 
 LayoutTypePortlet invitationLayoutTypePortlet =
 	(LayoutTypePortlet)invitationLayout.getLayoutType();
@@ -105,8 +105,8 @@ LayoutLocalServiceUtil.updateLayout(
 // My Sites
 
 Layout mySitesLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "My Sites",
-	"", "", "portlet", false, "/my-sites", serviceContext);
+	userId, groupId, false, communityLayout.getLayoutId(), "My Sites", "", "",
+	"portlet", false, "/my-sites", serviceContext);
 
 LayoutTypePortlet mySitesLayoutTypePortlet =
 	(LayoutTypePortlet)mySitesLayout.getLayoutType();
@@ -137,19 +137,11 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mySitesDirectoryLayout.getLayoutId(),
 	mySitesDirectoryLayout.getTypeSettings());
 
-OrganizationLocalServiceUtil.addOrganization(
-	userId, 0, "Organizations Name", "regular-organization", 0, 0,
-	ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, null, false, serviceContext);
-
-UserGroupLocalServiceUtil.addUserGroup(
-	userId, companyId, "User Group Name", "User group description",
-	serviceContext);
-
 // Page Comments
 
 Layout pageCommentsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "Page Comments",
-	"", "", "portlet", false, "/page-comments", serviceContext);
+	userId, groupId, false, communityLayout.getLayoutId(), "Page Comments", "",
+	"", "portlet", false, "/page-comments", serviceContext);
 
 LayoutTypePortlet pageCommentsLayoutTypePortlet =
 	(LayoutTypePortlet)pageCommentsLayout.getLayoutType();
@@ -163,24 +155,26 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, pageCommentsLayout.getLayoutId(),
 	pageCommentsLayout.getTypeSettings());
 
-MBMessageDisplay messageDisplay = 
+MBMessageDisplay discussionMessageDisplay = 
 	MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
 		userId, groupId, "com.liferay.portal.model.Layout",
 		pageCommentsLayout.getPlid(), 0);
 
-MBMessage commentMessage = messageDisplay.getMessage();
+MBMessage commentMessage = discussionMessageDisplay.getMessage();
 
 MBMessageLocalServiceUtil.addDiscussionMessage(
 	userId, null, groupId, "com.liferay.portal.model.Layout",
 	pageCommentsLayout.getPlid(), commentMessage.getThreadId(),
-	commentMessage.getMessageId(), "Page Comment Subject", "Page Comment Body",
+	commentMessage.getMessageId(), "Page Comment Subject",
+	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	serviceContext);
 
 // Page Flags
 
 Layout pageFlagsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "Page Flags",
-	"", "", "portlet", false, "/page-flags", serviceContext);
+	userId, groupId, false, communityLayout.getLayoutId(), "Page Flags", "", "",
+	"portlet", false, "/page-flags", serviceContext);
 
 LayoutTypePortlet pageFlagsLayoutTypePortlet =
 	(LayoutTypePortlet)pageFlagsLayout.getLayoutType();
@@ -196,8 +190,8 @@ LayoutLocalServiceUtil.updateLayout(
 // Page Ratings
 
 Layout pageRatingsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "Page Ratings",
-	"", "", "portlet", false, "/page-ratings", serviceContext);
+	userId, groupId, false, communityLayout.getLayoutId(), "Page Ratings", "",
+	"", "portlet", false, "/page-ratings", serviceContext);
 
 LayoutTypePortlet pageRatingsLayoutTypePortlet =
 	(LayoutTypePortlet)pageRatingsLayout.getLayoutType();
@@ -232,22 +226,32 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, portalDirectoryLayout.getLayoutId(),
 	portalDirectoryLayout.getTypeSettings());
 
+OrganizationLocalServiceUtil.addOrganization(
+	userId, 0, "Organizations Name", "regular-organization", 0, 0,
+	ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, null, false, serviceContext);
+
+UserGroupLocalServiceUtil.addUserGroup(
+	userId, companyId, "User Group Name", "User group description",
+	serviceContext);
+
 // Site Members Directory
 
-Layout siteMembersLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, communityLayout.getLayoutId(), "Site Members",
-	"", "", "portlet", false, "/site-members", serviceContext);
+Layout siteMembersDirectoryLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayout.getLayoutId(),
+	"Site Members Directory", "", "", "portlet", false,
+	"/site-members-directory", serviceContext);
 
-LayoutTypePortlet siteMembersLayoutTypePortlet =
-	(LayoutTypePortlet)siteMembersLayout.getLayoutType();
+LayoutTypePortlet siteMembersDirectoryLayoutTypePortlet =
+	(LayoutTypePortlet)siteMembersDirectoryLayout.getLayoutType();
 
-siteMembersLayoutTypePortlet.addPortletId(
+siteMembersDirectoryLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_CommunSM0010", "column-1", -1, false);
-siteMembersLayoutTypePortlet.addPortletId(userId, "187", "column-2", -1, false);
+siteMembersDirectoryLayoutTypePortlet.addPortletId(
+	userId, "187", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, siteMembersLayout.getLayoutId(),
-	siteMembersLayout.getTypeSettings());
+	groupId, false, siteMembersDirectoryLayout.getLayoutId(),
+	siteMembersDirectoryLayout.getTypeSettings());
 
 // Link parent page with first child page
 
