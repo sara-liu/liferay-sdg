@@ -228,7 +228,8 @@ LayoutLocalServiceUtil.updateLayout(
 
 OrganizationLocalServiceUtil.addOrganization(
 	userId, 0, "Organizations Name", "regular-organization", 0, 0,
-	ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, null, false, serviceContext);
+	ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, null, false,
+	serviceContext);
 
 UserGroupLocalServiceUtil.addUserGroup(
 	userId, companyId, "User Group Name", "User group description",
