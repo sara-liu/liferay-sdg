@@ -12,21 +12,16 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
-import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
+import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -68,7 +63,7 @@ LayoutTypePortlet assetPublisherLayoutTypePortlet =
 assetPublisherLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0001", "column-1", -1, false);
 assetPublisherLayoutTypePortlet.addPortletId(
-	userId, "101_INSTANCE_AssetPub0001", "column-2", -1, false);
+	userId, "101_INSTANCE_ConManAP0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, assetPublisherLayout.getLayoutId(),
@@ -86,7 +81,7 @@ LayoutTypePortlet breadcrumbLayoutTypePortlet =
 breadcrumbLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0002", "column-1", -1, false);
 breadcrumbLayoutTypePortlet.addPortletId(
-	userId, "73_INSTANCE_ConManBre01", "column-2", -1, false);
+	userId, "73_INSTANCE_ConManBC0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, breadcrumbLayout.getLayoutId(),
@@ -95,7 +90,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Categories Navigation
 
 Layout categoriesNavigationLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Categories Navigation", "", "", "portlet", false, "/categories-navigation",
 	serviceContext);
 
@@ -105,27 +100,20 @@ LayoutTypePortlet categoriesNavigationLayoutTypePortlet =
 categoriesNavigationLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0002", "column-1", -1, false);
 categoriesNavigationLayoutTypePortlet.addPortletId(
-	userId, "122_INSTANCE_ConManCaNa01", "column-2", -1, false);
+	userId, "122_INSTANCE_ConManCN0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, categoriesNavigationLayout.getLayoutId(),
 	categoriesNavigationLayout.getTypeSettings());
 
-AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-	userId, "Vocabulary Title", serviceContext);
-
-AssetCategoryLocalServiceUtil.addCategory(
-	userId, "Category Title", assetVocabulary.getVocabularyId(),
-	serviceContext);
-
 // Documents and Media
 
 Layout dmLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Document and Media", "", "", "portlet", false, "/document-and-media",
 	serviceContext);
 
-LayoutTypePortlet dmLayoutTypePortlet = 
+LayoutTypePortlet dmLayoutTypePortlet =
 	(LayoutTypePortlet)dmLayout.getLayoutType();
 
 dmLayoutTypePortlet.addPortletId(
@@ -138,7 +126,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Documents and Media Display
 
 Layout dmDisplayLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Document and Media Display", "", "", "portlet", false,
 	"/document-and-media-display", serviceContext);
 
@@ -157,7 +145,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Highest Rated Assets
 
 Layout highestRatedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Highest Rated Assets", "", "", "portlet", false, "/highest-rated-assets",
 	serviceContext);
 
@@ -167,7 +155,7 @@ LayoutTypePortlet highestRatedAssetsLayoutTypePortlet =
 highestRatedAssetsLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0005", "column-1", -1, false);
 highestRatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "194_INSTANCE_ConManHiRaA1", "column-2", -1, false);
+	userId, "194_INSTANCE_ConManHRA001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, highestRatedAssetsLayout.getLayoutId(),
@@ -176,7 +164,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Media Gallery
 
 Layout mediaGalleryLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Media Gallery", "", "", "portlet", false, "/media-gallery",
 	serviceContext);
 
@@ -186,7 +174,7 @@ LayoutTypePortlet mediaGalleryLayoutTypePortlet =
 mediaGalleryLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0006", "column-1", -1, false);
 mediaGalleryLayoutTypePortlet.addPortletId(
-	userId, "31_INSTANCE_ConManMeGa01", "column-2", -1, false);
+	userId, "31_INSTANCE_ConManMG0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mediaGalleryLayout.getLayoutId(),
@@ -195,7 +183,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Most Viewed Assets
 
 Layout mostViewedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Most Viewed Assets", "", "", "portlet", false, "/most-viewed-assets",
 	serviceContext);
 
@@ -205,7 +193,7 @@ LayoutTypePortlet mostViewedAssetsLayoutTypePortlet =
 mostViewedAssetsLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0007", "column-1", -1, false);
 mostViewedAssetsLayoutTypePortlet.addPortletId(
-	userId, "193_INSTANCE_ConManMoAs01", "column-2", -1, false);
+	userId, "193_INSTANCE_ConManMVA001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mostViewedAssetsLayout.getLayoutId(),
@@ -214,7 +202,7 @@ LayoutLocalServiceUtil.updateLayout(
 // Navigation
 
 Layout navigationLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
 	"Navigation", "", "", "portlet", false, "/navigation", serviceContext);
 
 LayoutTypePortlet navigationLayoutTypePortlet =
@@ -223,7 +211,7 @@ LayoutTypePortlet navigationLayoutTypePortlet =
 navigationLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0008", "column-1", -1, false);
 navigationLayoutTypePortlet.addPortletId(
-	userId, "71_INSTANCE_ConManNavi01", "column-2", -1, false);
+	userId, "71_INSTANCE_ConManNav001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, navigationLayout.getLayoutId(),
@@ -232,28 +220,21 @@ LayoutLocalServiceUtil.updateLayout(
 // Nested Portlets
 
 Layout nestedPortletsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(), 
-	"Nested Portlet", "", "", "portlet", false, "/nested-portlet",
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
+	"Nested Portlets", "", "", "portlet", false, "/nested-portlets",
 	serviceContext);
 
-LayoutTypePortlet nestedPortletLayoutTypePortlet =
+LayoutTypePortlet nestedPortletsLayoutTypePortlet =
 	(LayoutTypePortlet)nestedPortletsLayout.getLayoutType();
 
-nestedPortletLayoutTypePortlet.addPortletId(
+nestedPortletsLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0009", "column-1", -1, false);
-nestedPortletLayoutTypePortlet.addPortletId(
-	userId, "118_INSTANCE_ConManNePo01", "column-2", -1, false);
-
-UnicodeProperties nestedPortletTypeSettingsProperties =
-	nestedPortletsLayout.getTypeSettingsProperties();
-
-nestedPortletTypeSettingsProperties.setProperty(
-	"_118_INSTANCE_ConManNePo01__column-1", "47,");
-nestedPortletTypeSettingsProperties.setProperty(
-	"_118_INSTANCE_ConManNePo01__column-2", "50,");
-
-nestedPortletsLayout.setTypeSettingsProperties(
-	nestedPortletTypeSettingsProperties);
+nestedPortletsLayoutTypePortlet.addPortletId(
+	userId, "118_INSTANCE_ConManNP0001", "column-2", -1, false);
+nestedPortletsLayoutTypePortlet.addPortletId(
+	userId, "47", "_118_INSTANCE_ConManNP0001__column-1", -1, false);
+nestedPortletsLayoutTypePortlet.addPortletId(
+	userId, "50", "_118_INSTANCE_ConManNP0001__column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, nestedPortletsLayout.getLayoutId(),
@@ -272,39 +253,39 @@ LayoutTypePortlet pollsDisplayLayoutTypePortlet =
 pollsDisplayLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0010", "column-1", -1, false);
 pollsDisplayLayoutTypePortlet.addPortletId(
-	userId, "59_INSTANCE_ConManPoDi01", "column-2", -1, false);
+	userId, "59_INSTANCE_ConManPD0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, pollsDisplayLayout.getLayoutId(),
 	pollsDisplayLayout.getTypeSettings());
 
-Map<Locale, String> pollsDisplayNameMap = new HashMap<Locale, String>();
+Map<Locale, String> pollsDisplayTitleMap = new HashMap<Locale, String>();
 
-pollsDisplayNameMap.put(Locale.US, "Polls Display Name");
+pollsDisplayTitleMap.put(Locale.US, "Polls Display Title");
 
 Map<Locale, String> pollsDisplayDescriptionMap = new HashMap<Locale, String>();
 
 pollsDisplayDescriptionMap.put(
-	Locale.US, "Is this a polls display description ?");
+	Locale.US, "No sapientem conceptam voluptatibus mel?");
 
 List<PollsChoice> choices = new ArrayList<PollsChoice>();
 
-PollsChoice pollChoiceA = PollsChoiceUtil.create(0);
-
 Map<Locale, String> pollChoiceDescriptionMapA = new HashMap<Locale, String>();
 
-pollChoiceDescriptionMapA.put(Locale.US, "yes");
+pollChoiceDescriptionMapA.put(Locale.US, "Yes");
+
+PollsChoice pollChoiceA = PollsChoiceUtil.create(0);
 
 pollChoiceA.setName("a");
 pollChoiceA.setDescriptionMap(pollChoiceDescriptionMapA);
 
 choices.add(pollChoiceA);
 
-PollsChoice pollChoiceB = PollsChoiceUtil.create(0);
-
 Map<Locale, String> pollChoiceDescriptionMapB = new HashMap<Locale, String>();
 
-pollChoiceDescriptionMapB.put(Locale.US, "no");
+pollChoiceDescriptionMapB.put(Locale.US, "No");
+
+PollsChoice pollChoiceB = PollsChoiceUtil.create(0);
 
 pollChoiceB.setName("b");
 pollChoiceB.setDescriptionMap(pollChoiceDescriptionMapB);
@@ -312,13 +293,13 @@ pollChoiceB.setDescriptionMap(pollChoiceDescriptionMapB);
 choices.add(pollChoiceB);
 
 PollsQuestion pollsQuestion = PollsQuestionLocalServiceUtil.addQuestion(
-	userId, pollsDisplayNameMap, pollsDisplayDescriptionMap, 0, 0, 0, 0, 0,
+	userId, pollsDisplayTitleMap, pollsDisplayDescriptionMap, 0, 0, 0, 0, 0,
 	true, choices, serviceContext)
 
 PortletPreferences pollsDisplayPortletPreferences =
 	PortletPreferencesLocalServiceUtil.getPreferences(
 		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-		pollsDisplayLayout.getPlid(), "59_INSTANCE_ConManPoDi01",
+		pollsDisplayLayout.getPlid(), "59_INSTANCE_ConManPD0001",
 		PortletConstants.DEFAULT_PREFERENCES);
 
 pollsDisplayPortletPreferences.setValue(
@@ -326,7 +307,7 @@ pollsDisplayPortletPreferences.setValue(
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, pollsDisplayLayout.getPlid(),
-	"59_INSTANCE_ConManPoDi01", pollsDisplayPortletPreferences);
+	"59_INSTANCE_ConManPD0001", pollsDisplayPortletPreferences);
 
 // Recent Downloads
 
@@ -360,7 +341,7 @@ LayoutTypePortlet relatedAssetsLayoutTypePortlet =
 relatedAssetsLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0012", "column-1", -1, false);
 relatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "175_INSTANCE_ConManReAs01", "column-2", -1, false);
+	userId, "175_INSTANCE_ConManRA0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, relatedAssetsLayout.getLayoutId(),
@@ -386,7 +367,7 @@ LayoutLocalServiceUtil.updateLayout(
 
 Layout sitesDirectoryLayout = LayoutLocalServiceUtil.addLayout(
 	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Sites Directory", "", "", "portlet", false, "/site-directory",
+	"Sites Directory", "", "", "portlet", false, "/sites-directory",
 	serviceContext);
 
 LayoutTypePortlet sitesDirectoryLayoutTypePortlet =
@@ -395,7 +376,7 @@ LayoutTypePortlet sitesDirectoryLayoutTypePortlet =
 sitesDirectoryLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0014", "column-1", -1, false);
 sitesDirectoryLayoutTypePortlet.addPortletId(
-	userId, "184_INSTANCE_ConManSiDi01", "column-2", -1, false);
+	userId, "184_INSTANCE_ConManSD0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, sitesDirectoryLayout.getLayoutId(),
@@ -413,57 +394,30 @@ LayoutTypePortlet tagCloudLayoutTypePortlet =
 tagCloudLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0015", "column-1", -1, false);
 tagCloudLayoutTypePortlet.addPortletId(
-	userId, "148_INSTANCE_ConManTagC01", "column-2", -1, false);
+	userId, "148_INSTANCE_ConManTC0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, tagCloudLayout.getLayoutId(),
 	tagCloudLayout.getTypeSettings());
 
-AssetTagLocalServiceUtil.addTag(
-	userId, "Test Tag", null, serviceContext);
-
-PortletPreferences tagCloudPortletPreferences =
-	PortletPreferencesLocalServiceUtil.getPreferences(
-		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-		tagCloudLayout.getPlid(), "148_INSTANCE_ConManTagC01",
-		PortletConstants.DEFAULT_PREFERENCES);
-
-tagCloudPortletPreferences.setValue("showZeroAssetCount", "true");
-
-PortletPreferencesLocalServiceUtil.updatePreferences(
-	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, tagCloudLayout.getPlid(),
-	"148_INSTANCE_ConManTagC01", tagCloudPortletPreferences);
-
 // Tags Navigation
 
-Layout tagNavigationLayout = LayoutLocalServiceUtil.addLayout(
+Layout tagsNavigationLayout = LayoutLocalServiceUtil.addLayout(
 	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Tag Navigation", "", "", "portlet", false, "/tag-navigation",
+	"Tags Navigation", "", "", "portlet", false, "/tags-navigation",
 	serviceContext);
 
-LayoutTypePortlet tagNavigationLayoutTypePortlet =
-	(LayoutTypePortlet)tagNavigationLayout.getLayoutType();
+LayoutTypePortlet tagsNavigationLayoutTypePortlet =
+	(LayoutTypePortlet)tagsNavigationLayout.getLayoutType();
 
-tagNavigationLayoutTypePortlet.addPortletId(
+tagsNavigationLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0016", "column-1", -1, false);
-tagNavigationLayoutTypePortlet.addPortletId(
-	userId, "141_INSTANCE_ConManTagN01", "column-2", -1, false);
+tagsNavigationLayoutTypePortlet.addPortletId(
+	userId, "141_INSTANCE_ConManTN0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, tagNavigationLayout.getLayoutId(),
-	tagNavigationLayout.getTypeSettings());
-
-PortletPreferences tagNavigationPortletPreferences =
-	PortletPreferencesLocalServiceUtil.getPreferences(
-		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-		tagNavigationLayout.getPlid(), "141_INSTANCE_ConManTagN01",
-		PortletConstants.DEFAULT_PREFERENCES);
-
-tagNavigationPortletPreferences.setValue("showZeroAssetCount", "true");
-
-PortletPreferencesLocalServiceUtil.updatePreferences(
-	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, tagNavigationLayout.getPlid(),
-	"141_INSTANCE_ConManTagN01", tagNavigationPortletPreferences);
+	groupId, false, tagsNavigationLayout.getLayoutId(),
+	tagsNavigationLayout.getTypeSettings());
 
 // Web Content Display
 
@@ -478,40 +432,37 @@ LayoutTypePortlet webContentDisplayLayoutTypePortlet =
 webContentDisplayLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0017", "column-1", -1, false);
 webContentDisplayLayoutTypePortlet.addPortletId(
-	userId, "56_INSTANCE_ConManWCDi01", "column-2", -1, false);
+	userId, "56_INSTANCE_ConManWCD001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, webContentDisplayLayout.getLayoutId(),
 	webContentDisplayLayout.getTypeSettings());
 
-Map<Locale, String> WebContentDisplayTitleMap = new HashMap<Locale, String>();
+Map<Locale, String> webContentArticleTitleMap = new HashMap<Locale, String>();
 
-WebContentDisplayTitleMap.put(Locale.US, "Web Content Article Title");
+webContentArticleTitleMap.put(Locale.US, "Web Content Article Title");
 
-Map<Locale, String> WebContentDisplayDescriptionMap = 
+Map<Locale, String> webContentArticleDescriptionMap =
 	new HashMap<Locale, String>();
 
-WebContentDisplayDescriptionMap.put(
+webContentArticleDescriptionMap.put(
 	Locale.US, "Web content article description");
 
-String webContentContent = "<?xml version='1.0'?>" +
-	"<root available-locales='en_US' default-locale='en_US'>" +
-		"<static-content language-id='en_US'>" +
-			"<![CDATA[Lorem ipsum dolor sit amet, consectetur adipisicing " +
-				"elit,sed do eiusmod tempor incididunt ut labore et dolore " +
-				"magna aliqua.]]>" +
-		"</static-content>" +
-	"</root>"
+String webContentContent = "<?xml version=\"1.0\"?><root " +
+	"available-locales=\"en_US\" default-locale=\"en_US\"><static-content " +
+	"language-id=\"en_US\"><![CDATA[Lorem ipsum dolor sit amet, consectetur " +
+	"adipisicing elit,sed do eiusmod tempor incididunt ut labore et dolore " +
+	"magna aliqua.]]></static-content></root>";
 
 JournalArticle webContentArticle = JournalArticleLocalServiceUtil.addArticle(
-	userId, groupId, 0, WebContentDisplayTitleMap,
-	WebContentDisplayDescriptionMap, webContentContent, null, null,
+	userId, groupId, 0, webContentArticleTitleMap,
+	webContentArticleDescriptionMap, webContentContent, null, null,
 	serviceContext);
 
 PortletPreferences webContentDisplayPortletPreferences =
 	PortletPreferencesLocalServiceUtil.getPreferences(
 		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-		webContentDisplayLayout.getPlid(), "56_INSTANCE_ConManWCDi01",
+		webContentDisplayLayout.getPlid(), "56_INSTANCE_ConManWCD001",
 		PortletConstants.DEFAULT_PREFERENCES);
 
 webContentDisplayPortletPreferences.setValue(
@@ -519,7 +470,7 @@ webContentDisplayPortletPreferences.setValue(
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, webContentDisplayLayout.getPlid(),
-	"56_INSTANCE_ConManWCDi01", webContentDisplayPortletPreferences);
+	"56_INSTANCE_ConManWCD001", webContentDisplayPortletPreferences);
 
 // Web Content Search
 
@@ -558,7 +509,7 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, xslContentLayout.getLayoutId(),
 	xslContentLayout.getTypeSettings());
 
-//  Link parent page with first child page
+// Link parent page with first child page
 
 UnicodeProperties contentManagementTypeSettingsProperties =
 	contentManagementLayout.getTypeSettingsProperties();
