@@ -95,7 +95,8 @@ LayoutTypePortlet userStatisticsLayoutTypePortlet =
 
 userStatisticsLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_SocialSM0004", "column-1", -1, false);
-userStatisticsLayoutTypePortlet.addPortletId(userId, "67", "column-2", -1, false);
+userStatisticsLayoutTypePortlet.addPortletId(
+	userId, "180", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, userStatisticsLayout.getLayoutId(),

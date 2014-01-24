@@ -47,7 +47,7 @@ LayoutTypePortlet dictionaryLayoutTypePortlet =
 	(LayoutTypePortlet)dictionaryLayout.getLayoutType();
 
 dictionaryLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00001", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0001", "column-1", -1, false);
 dictionaryLayoutTypePortlet.addPortletId(userId, "23", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -64,7 +64,7 @@ LayoutTypePortlet languageLayoutTypePortlet =
 	(LayoutTypePortlet)languageLayout.getLayoutType();
 
 languageLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00002", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0002", "column-1", -1, false);
 languageLayoutTypePortlet.addPortletId(userId, "82", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -81,7 +81,7 @@ LayoutTypePortlet networkUtilitiesLayoutTypePortlet =
 	(LayoutTypePortlet)networkUtilitiesLayout.getLayoutType();
 
 networkUtilitiesLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00003", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0003", "column-1", -1, false);
 networkUtilitiesLayoutTypePortlet.addPortletId(
 	userId, "30", "column-2", -1, false);
 
@@ -99,7 +99,7 @@ LayoutTypePortlet passwordGeneratorLayoutTypePortlet =
 	(LayoutTypePortlet)passwordGenertorLayout.getLayoutType();
 
 passwordGeneratorLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00004", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0004", "column-1", -1, false);
 passwordGeneratorLayoutTypePortlet.addPortletId(
 	userId, "70", "column-2", -1, false);
 
@@ -117,9 +117,9 @@ LayoutTypePortlet quickNoteLayoutTypePortlet =
 	(LayoutTypePortlet)quickNoteLayout.getLayoutType();
 
 quickNoteLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00005", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0005", "column-1", -1, false);
 quickNoteLayoutTypePortlet.addPortletId(
-	userId, "97_INSTANCE_ToolsQN00001", "column-2", -1, false);
+	userId, "97_INSTANCE_ToolszQN0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, quickNoteLayout.getLayoutId(),
@@ -128,16 +128,17 @@ LayoutLocalServiceUtil.updateLayout(
 PortletPreferences quickNotePortletPreferences =
 	PortletPreferencesLocalServiceUtil.getPreferences(
 		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-		quickNoteLayout.getPlid(), "97_INSTANCE_ToolsQN00001",
+		quickNoteLayout.getPlid(), "97_INSTANCE_ToolszQN0001",
 		PortletConstants.DEFAULT_PREFERENCES);
 
 quickNotePortletPreferences.setValue(
-	"data", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed " +
+	"data",
+	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed " +
 		" do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, quickNoteLayout.getPlid(),
-	"97_INSTANCE_ToolsQN00001", quickNotePortletPreferences);
+	"97_INSTANCE_ToolszQN0001", quickNotePortletPreferences);
 
 // Search
 
@@ -149,7 +150,7 @@ LayoutTypePortlet searchLayoutTypePortlet =
 	(LayoutTypePortlet)searchLayout.getLayoutType();
 
 searchLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00006", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0006", "column-1", -1, false);
 searchLayoutTypePortlet.addPortletId(userId, "3", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -165,7 +166,7 @@ LayoutTypePortlet translatorLayoutTypePortlet =
 	(LayoutTypePortlet)translatorLayout.getLayoutType();
 
 translatorLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00007", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0007", "column-1", -1, false);
 translatorLayoutTypePortlet.addPortletId(userId, "26", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -182,7 +183,7 @@ LayoutTypePortlet unitConverterLayoutTypePortlet =
 	(LayoutTypePortlet)unitConverterLayout.getLayoutType();
 
 unitConverterLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ToolsSM00008", "column-1", -1, false);
+	userId, "85_INSTANCE_ToolszSM0008", "column-1", -1, false);
 unitConverterLayoutTypePortlet.addPortletId(
 	userId, "27", "column-2", -1, false);
 

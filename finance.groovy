@@ -42,7 +42,7 @@ LayoutTypePortlet currencyConverterLayoutTypePortlet =
 	(LayoutTypePortlet)currencyConverterLayout.getLayoutType();
 
 currencyConverterLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_FinanceSM001", "column-1", -1, false);
+	userId, "85_INSTANCE_FinancSM0001", "column-1", -1, false);
 currencyConverterLayoutTypePortlet.addPortletId(
 	userId, "16", "column-2", -1, false);
 
@@ -60,7 +60,7 @@ LayoutTypePortlet loanCalculatorLayoutTypePortlet =
 	(LayoutTypePortlet)loanCalculatorLayout.getLayoutType();
 
 loanCalculatorLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_FinanceSM002", "column-1", -1, false);
+	userId, "85_INSTANCE_FinancSM0002", "column-1", -1, false);
 loanCalculatorLayoutTypePortlet.addPortletId(
 	userId, "61", "column-2", -1, false);
 

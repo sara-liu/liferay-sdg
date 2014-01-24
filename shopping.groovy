@@ -13,6 +13,8 @@ import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.portlet.shopping.service.ShoppingItemLocalServiceUtil;
 
+import java.util.ArrayList;
+
 ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 	WebKeys.THEME_DISPLAY);
 
@@ -29,29 +31,29 @@ ServiceContext serviceContext = ServiceContextFactory.getInstance(
 
 serviceContext.setScopeGroupId(groupId);
 
+// Shopping Category
+
+Layout shoppingCategoryLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, 0, "Shopping", "", "", "link_to_layout", false,
+	"/shopping-category", serviceContext);
+
 // Shopping
 
 Layout shoppingLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, 0, "Shopping", "", "", "link_to_layout", false,
-	"/shopping", serviceContext);
+	userId, groupId, false, shoppingCategoryLayout.getLayoutId(), "Shopping",
+	"", "", "portlet", false, "/shopping", serviceContext);
 
-// Shopping
+LayoutTypePortlet shoppingLayoutTypePortlet =
+	(LayoutTypePortlet)shoppingLayout.getLayoutType();
 
-Layout shoppingPortletLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, shoppingLayout.getLayoutId(), "Shopping Portlet",
-	"", "", "portlet", false, "/shopping-portlet", serviceContext);
-
-LayoutTypePortlet shoppingPortletLayoutTypePortlet =
-	(LayoutTypePortlet)shoppingPortletLayout.getLayoutType();
-
-shoppingPortletLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ShoppingSM01", "column-1", -1, false);
-shoppingPortletLayoutTypePortlet.addPortletId(
+shoppingLayoutTypePortlet.addPortletId(
+	userId, "85_INSTANCE_ShoppiSM0001", "column-1", -1, false);
+shoppingLayoutTypePortlet.addPortletId(
 	userId, "34", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, shoppingPortletLayout.getLayoutId(),
-	shoppingPortletLayout.getTypeSettings());
+	groupId, false, shoppingLayout.getLayoutId(),
+	shoppingLayout.getTypeSettings());
 
 ShoppingCategory shoppingCategory =
 	ShoppingCategoryLocalServiceUtil.addCategory(
@@ -68,14 +70,15 @@ ShoppingItemLocalServiceUtil.addItem(
 // Amazon Rankings
 
 Layout amazonRankingsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, shoppingLayout.getLayoutId(), "Amazon Rankings", "",
-	"", "portlet", false, "/amazon-rankings", serviceContext);
+	userId, groupId, false, shoppingCategoryLayout.getLayoutId(),
+	"Amazon Rankings", "", "", "portlet", false, "/amazon-rankings",
+	serviceContext);
 
 LayoutTypePortlet amazonRankingsLayoutTypePortlet =
 	(LayoutTypePortlet)amazonRankingsLayout.getLayoutType();
 
 amazonRankingsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ShoppingSM02", "column-1", -1, false);
+	userId, "85_INSTANCE_ShoppiSM0002", "column-1", -1, false);
 amazonRankingsLayoutTypePortlet.addPortletId(
 	userId, "67", "column-2", -1, false);
 
@@ -85,14 +88,15 @@ LayoutLocalServiceUtil.updateLayout(
 
 // Link parent page with first child page
 
-UnicodeProperties shoppingTypeSettingsProperties =
-	shoppingLayout.getTypeSettingsProperties();
+UnicodeProperties shoppingCategoryTypeSettingsProperties =
+	shoppingCategoryLayout.getTypeSettingsProperties();
 
-shoppingTypeSettingsProperties.setProperty(
-	"linkToLayoutId", String.valueOf(shoppingPortletLayout.getLayoutId()));
+shoppingCategoryTypeSettingsProperties.setProperty(
+	"linkToLayoutId", String.valueOf(shoppingLayout.getLayoutId()));
 
-shoppingLayout.setTypeSettingsProperties(shoppingTypeSettingsProperties);
+shoppingCategoryLayout.setTypeSettingsProperties(
+	shoppingCategoryTypeSettingsProperties);
 
 LayoutLocalServiceUtil.updateLayout(
-	groupId, false, shoppingLayout.getLayoutId(),
-	shoppingLayout.getTypeSettings());
+	groupId, false, shoppingCategoryLayout.getLayoutId(),
+	shoppingCategoryLayout.getTypeSettings());

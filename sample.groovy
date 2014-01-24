@@ -95,7 +95,7 @@ PortletPreferences iframePortletPreferences =
 		iframeLayout.getPlid(), "48_INSTANCE_SampleIF0001",
 		PortletConstants.DEFAULT_PREFERENCES);
 
-iframePortletPreferences.setValue("src", "http://baidu.com");
+iframePortletPreferences.setValue("src", "http://in.liferay.com");
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, iframeLayout.getPlid(),
