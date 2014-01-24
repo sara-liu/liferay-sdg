@@ -2,13 +2,18 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+
+import javax.portlet.PortletPreferences;
 
 ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 	WebKeys.THEME_DISPLAY);
@@ -67,6 +72,21 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, groupStatisticsLayout.getLayoutId(),
 	groupStatisticsLayout.getTypeSettings());
 
+PortletPreferences groupStatisticsPortletPreferences =
+	PortletPreferencesLocalServiceUtil.getPreferences(
+		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+		groupStatisticsLayout.getPlid(), "181",
+		PortletConstants.DEFAULT_PREFERENCES);
+
+groupStatisticsPortletPreferences.setValue(
+	"displayActivityCounterName0", "user.blogs");
+groupStatisticsPortletPreferences.setValue(
+	"displayActivityCounterNameIndexes", "0");
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, groupStatisticsLayout.getPlid(),
+	"181", groupStatisticsPortletPreferences);
+
 // Requests
 
 Layout requestsLayout = LayoutLocalServiceUtil.addLayout(
@@ -101,6 +121,21 @@ userStatisticsLayoutTypePortlet.addPortletId(
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, userStatisticsLayout.getLayoutId(),
 	userStatisticsLayout.getTypeSettings());
+
+PortletPreferences userStatisticsPortletPreferences =
+	PortletPreferencesLocalServiceUtil.getPreferences(
+		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+		userStatisticsLayout.getPlid(), "180",
+		PortletConstants.DEFAULT_PREFERENCES);
+
+userStatisticsPortletPreferences.setValue(
+	"displayActivityCounterName0", "creator.comments");
+userStatisticsPortletPreferences.setValue(
+	"rankByContribution", "true");
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, userStatisticsLayout.getPlid(),
+	"180", userStatisticsPortletPreferences);
 
 // Link parent page with first child page
 

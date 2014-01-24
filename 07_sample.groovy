@@ -119,6 +119,18 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, webProxyLayout.getLayoutId(),
 	webProxyLayout.getTypeSettings());
 
+PortletPreferences webProxytPreferences =
+	PortletPreferencesLocalServiceUtil.getPreferences(
+		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+		webProxyLayout.getPlid(), "66_INSTANCE_SampleWP0001",
+		PortletConstants.DEFAULT_PREFERENCES);
+
+webProxytPreferences.setValue("initUrl", "http://in.liferay.com");
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, webProxyLayout.getPlid(),
+	"66_INSTANCE_SampleWP0001", webProxytPreferences);
+
 // Link parent page with first child page
 
 UnicodeProperties sampleTypeSettingsProperties =
