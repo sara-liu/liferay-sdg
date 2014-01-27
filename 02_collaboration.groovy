@@ -12,6 +12,14 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
@@ -76,12 +84,35 @@ blogsLayoutTypePortlet.addPortletId(userId, "33", "column-2", -1, false);
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, blogsLayout.getLayoutId(), blogsLayout.getTypeSettings());
 
-BlogsEntryLocalServiceUtil.addEntry(
+BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 	userId, "Blog Title", "Blog description",
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	0, 1, 2010, 12, 0, true, false, new String[0], false, "", "", null,
 	serviceContext);
+
+// Add categories
+
+AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+	userId, "Vocabulary Title", serviceContext);
+
+AssetCategory assetCategory1 = AssetCategoryLocalServiceUtil.addCategory(
+	userId, "category1", assetVocabulary.getVocabularyId(),
+	serviceContext);
+
+AssetCategory assetCategory2 = AssetCategoryLocalServiceUtil.addCategory(
+	userId, "category2", assetVocabulary.getVocabularyId(),
+	serviceContext);
+
+// Add tags and categories for blogs
+
+String[] blogsTags = ["tag1", "tag2"];
+
+long[] blogsCategoryIds = [assetCategory1.getCategoryId()];
+
+AssetEntryLocalServiceUtil.updateEntry(
+	userId, groupId, "com.liferay.portlet.blogs.model.BlogsEntry",
+	blogsEntry.getEntryId(), blogsCategoryIds, blogsTags);
 
 // Blogs Aggregator
 
@@ -209,7 +240,7 @@ LayoutLocalServiceUtil.updateLayout(
 MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
 	userId, 0, "MB Category Name", "MB category description", serviceContext);
 
-MBMessageLocalServiceUtil.addMessage(
+MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
 	userId, "Test Test", groupId, mbCategory.getCategoryId(),
 	"MB Message Subject",
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
@@ -229,6 +260,14 @@ MBMessage questionMessage = MBMessageLocalServiceUtil.addMessage(
 	"bbcode", new ArrayList(), false, 0.0, true, serviceContext);
 
 MBThreadLocalServiceUtil.updateQuestion(questionMessage.getThreadId(), true);
+
+// Add tags And categories for message boards
+
+String[] mbMessageTags = ["tag1"];
+
+AssetEntryLocalServiceUtil.updateEntry(
+	userId, groupId, "com.liferay.portlet.messageboards.model.MBMessage",
+	mbMessage.getMessageId(), null, mbMessageTags);
 
 // Recent Bloggers
 
@@ -268,11 +307,22 @@ LayoutLocalServiceUtil.updateLayout(
 WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
 	userId, "Main", "", serviceContext);
 
-WikiPageLocalServiceUtil.updatePage(
+WikiPage wikiPage = WikiPageLocalServiceUtil.updatePage(
 	userId, wikiNode.getNodeId(), "FrontPage", 1.0,
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"Wiki page change summary", false, "creole", "", "", serviceContext);
+
+// Add tags and cagegories for wiki
+
+String[] wikiPageTags = ["tag2"];
+
+long[] wikiPageCategoryIds =
+	[assetCategory1.getCategoryId(), assetCategory2.getCategoryId()];
+
+AssetEntryLocalServiceUtil.updateEntry(
+	userId, groupId, "com.liferay.portlet.wiki.model.WikiPage",
+	wikiPage.getResourcePrimKey(), wikiPageCategoryIds, wikiPageTags);
 
 // Wiki Display
 
@@ -320,3 +370,27 @@ collaborationLayout.setTypeSettingsProperties(
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, collaborationLayout.getLayoutId(),
 	collaborationLayout.getTypeSettings());
+
+// Add related assets
+
+AssetEntry blogsAssetEntry = AssetEntryLocalServiceUtil.getEntry(
+	"com.liferay.portlet.blogs.model.BlogsEntry", blogsEntry.getEntryId());
+
+AssetEntry messageBoardsAssetEntry = AssetEntryLocalServiceUtil.getEntry(
+	"com.liferay.portlet.messageboards.model.MBMessage",
+	mbMessage.getMessageId());
+
+AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.getEntry(
+	"com.liferay.portlet.wiki.model.WikiPage", wikiPage.getResourcePrimKey());
+
+// Related between blogs & message boards
+
+AssetLinkLocalServiceUtil.addLink(
+	userId, blogsAssetEntry.getEntryId(),
+	messageBoardsAssetEntry.getEntryId(), 0, 0);
+
+// Related between blogs & wiki
+
+AssetLinkLocalServiceUtil.addLink(
+	userId, blogsAssetEntry.getEntryId(),
+	wikiPageAssetEntry.getEntryId(), 0, 0);

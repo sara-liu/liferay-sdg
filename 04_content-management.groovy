@@ -19,7 +19,6 @@ import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,7 +135,7 @@ LayoutTypePortlet dmDisplayLayoutTypePortlet =
 dmDisplayLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_ConManSM0004", "column-1", -1, false);
 dmDisplayLayoutTypePortlet.addPortletId(
-	userId, "169_INSTANCE_ConManDMDi01", "column-2", -1, false);
+	userId, "110_INSTANCE_ConManDMDi01", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, dmDisplayLayout.getLayoutId(),
