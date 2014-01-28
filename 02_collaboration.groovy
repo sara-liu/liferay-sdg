@@ -34,6 +34,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.wiki.DuplicateNodeNameException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
@@ -62,6 +63,19 @@ ServiceContext serviceContext = ServiceContextFactory.getInstance(
 	actionRequest);
 
 serviceContext.setScopeGroupId(groupId);
+
+AssetVocabulary assetVocabulary = null;
+List<AssetCategory> assetCategories = null;
+
+try {
+	assetVocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+		groupId, "Topic");
+
+	assetCategories = AssetCategoryLocalServiceUtil.getVocabularyCategories(
+		assetVocabulary.getVocabularyId(), -1, -1, null);
+}
+catch (Exception e) {
+}
 
 // Collaboration
 
@@ -92,34 +106,17 @@ BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 	0, 1, 2010, 12, 0, true, false, new String[0], false, "", "", null,
 	serviceContext);
 
-// Add tags and categories for blogs
-
-AssetVocabulary assetVocabulary = null;
-
-List<AssetCategory> assetCategorys = new ArrayList<AssetCategory>();
-
 long[] blogsCategoryIds = null;
 
-try {
-	assetVocabulary =
-		AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-			groupId, "Topic");
-
-	assetCategorys =
-		AssetCategoryLocalServiceUtil.getVocabularyCategories(
-			assetVocabulary.getVocabularyId(), -1, -1, null);
-
-	if (!assetCategorys.isEmpty()) {
-		blogsCategoryIds = [assetCategorys[0].getCategoryId()];
-	}
+if (assetCategories != null) {
+	blogsCategoryIds = [assetCategories[0].getCategoryId()];
 }
-catch (Exception e){}
 
-String[] blogsTags = ["tag1", "tag2"];
+String[] blogsTagNames = ["tag1", "tag2"];
 
 AssetEntryLocalServiceUtil.updateEntry(
 	userId, groupId, "com.liferay.portlet.blogs.model.BlogsEntry",
-	blogsEntry.getEntryId(), blogsCategoryIds, blogsTags);
+	blogsEntry.getEntryId(), blogsCategoryIds, blogsTagNames);
 
 // Blogs Aggregator
 
@@ -254,27 +251,25 @@ MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"bbcode", new ArrayList(), false, 0.0, true, serviceContext);
 
+String[] mbMessageTagNames = ["tag1"];
+
+AssetEntryLocalServiceUtil.updateEntry(
+	userId, groupId, "com.liferay.portlet.messageboards.model.MBMessage",
+	mbMessage.getMessageId(), null, mbMessageTagNames);
+
 MBCategory mbQuestionCategory = MBCategoryLocalServiceUtil.addCategory(
 	userId, 0, "MB Question Category Name", "MB question category description",
 	"question", null, null, null, 0, false, null, null, 0, null, false, null, 0,
 	false, null, null, false, false, serviceContext);
 
-MBMessage questionMessage = MBMessageLocalServiceUtil.addMessage(
+MBMessage mbQuestionMessage = MBMessageLocalServiceUtil.addMessage(
 	userId, "Test Test", groupId, mbQuestionCategory.getCategoryId(),
 	"MB Question Message Subject",
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"bbcode", new ArrayList(), false, 0.0, true, serviceContext);
 
-MBThreadLocalServiceUtil.updateQuestion(questionMessage.getThreadId(), true);
-
-// Add tags And categories for message boards
-
-String[] mbMessageTags = ["tag1"];
-
-AssetEntryLocalServiceUtil.updateEntry(
-	userId, groupId, "com.liferay.portlet.messageboards.model.MBMessage",
-	mbMessage.getMessageId(), null, mbMessageTags);
+MBThreadLocalServiceUtil.updateQuestion(mbQuestionMessage.getThreadId(), true);
 
 // Recent Bloggers
 
@@ -311,28 +306,46 @@ wikiLayoutTypePortlet.addPortletId(userId, "36", "column-2", -1, false);
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, wikiLayout.getLayoutId(), wikiLayout.getTypeSettings());
 
-WikiNode wikiNode = WikiNodeLocalServiceUtil.addNode(
-	userId, "Main", "", serviceContext);
+WikiNode wikiNode = null;
 
-WikiPage wikiPage = WikiPageLocalServiceUtil.updatePage(
-	userId, wikiNode.getNodeId(), "FrontPage", 1.0,
+try {
+	wikiNode = WikiNodeLocalServiceUtil.addNode(
+		userId, "Main", "", serviceContext);
+}
+catch (DuplicateNodeNameException dnne) {
+	wikiNode = WikiNodeLocalServiceUtil.getNode(groupId, "Main");
+}
+
+double wikiPageVersion = 1.0;
+
+WikiPage wikiPage = null;
+
+try {
+	wikiPage = WikiPageLocalServiceUtil.getLatestPage(
+		wikiNode.getNodeId(), "FrontPage", 0, true);
+
+	wikiPageVersion = wikiPage.getVersion();
+}
+catch (Exception e) {
+}
+
+wikiPage = WikiPageLocalServiceUtil.updatePage(
+	userId, wikiNode.getNodeId(), "FrontPage", wikiPageVersion,
 	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
 		"eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"Wiki page change summary", false, "creole", "", "", serviceContext);
 
-// Add tags and cagegories for wiki
-
 long[] wikiPageCategoryIds = null;
 
-if (assetVocabulary != null && !assetCategorys.isEmpty()) {
-	wikiPageCategoryIds = [assetCategorys[1].getCategoryId()];
+if (assetCategories != null) {
+	wikiPageCategoryIds = [assetCategories[1].getCategoryId()];
 }
 
-String[] wikiPageTags = ["tag2"];
+String[] wikiPageTagNames = ["tag2"];
 
 AssetEntryLocalServiceUtil.updateEntry(
 	userId, groupId, "com.liferay.portlet.wiki.model.WikiPage",
-	wikiPage.getResourcePrimKey(), wikiPageCategoryIds, wikiPageTags);
+	wikiPage.getResourcePrimKey(), wikiPageCategoryIds, wikiPageTagNames);
 
 // Wiki Display
 
@@ -385,22 +398,15 @@ LayoutLocalServiceUtil.updateLayout(
 
 AssetEntry blogsAssetEntry = AssetEntryLocalServiceUtil.getEntry(
 	"com.liferay.portlet.blogs.model.BlogsEntry", blogsEntry.getEntryId());
-
 AssetEntry messageBoardsAssetEntry = AssetEntryLocalServiceUtil.getEntry(
 	"com.liferay.portlet.messageboards.model.MBMessage",
 	mbMessage.getMessageId());
-
 AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.getEntry(
 	"com.liferay.portlet.wiki.model.WikiPage", wikiPage.getResourcePrimKey());
 
-// Related between blogs & message boards
-
 AssetLinkLocalServiceUtil.addLink(
-	userId, blogsAssetEntry.getEntryId(),
-	messageBoardsAssetEntry.getEntryId(), 0, 0);
-
-// Related between blogs & wiki
-
+	userId, blogsAssetEntry.getEntryId(), messageBoardsAssetEntry.getEntryId(),
+	0, 0);
 AssetLinkLocalServiceUtil.addLink(
-	userId, blogsAssetEntry.getEntryId(),
-	wikiPageAssetEntry.getEntryId(), 0, 0);
+	userId, blogsAssetEntry.getEntryId(), wikiPageAssetEntry.getEntryId(), 0,
+	0);

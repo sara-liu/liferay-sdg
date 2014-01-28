@@ -42,6 +42,19 @@ ServiceContext serviceContext = ServiceContextFactory.getInstance(
 
 serviceContext.setScopeGroupId(groupId);
 
+AssetVocabulary assetVocabulary = null;
+List<AssetCategory> assetCategories = null;
+
+try {
+	assetVocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+		groupId, "Topic");
+
+	assetCategorys = AssetCategoryLocalServiceUtil.getVocabularyCategories(
+		assetVocabulary.getVocabularyId(), -1, -1, null);
+}
+catch (Exception e) {
+}
+
 // Community
 
 Layout communityLayout = LayoutLocalServiceUtil.addLayout(
@@ -73,28 +86,17 @@ BookmarksEntry bookmarksEntry = BookmarksEntryLocalServiceUtil.addEntry(
 	userId, groupId, bookmarkFolder.getFolderId(), "Bookmark Name",
 	"http://www.example.com", "Bookmark description", serviceContext);
 
-// Add categories for bookmarks
+long[] bookmarksCategoryIds = null;
 
-try {
-	AssetVocabulary assetVocabulary =
-		AssetVocabularyLocalServiceUtil.getGroupVocabulary(groupId, "Topic");
-
-	List<AssetCategory> assetCategorys =
-		AssetCategoryLocalServiceUtil.getVocabularyCategories(
-			assetVocabulary.getVocabularyId(), -1, -1, null);
-
-	if (!assetCategorys.isEmpty()) {
-		long[] bookmarksCategoryIds =
-			[assetCategorys[0].getCategoryId(),
-			assetCategorys[1].getCategoryId()];
-
-		AssetEntryLocalServiceUtil.updateEntry(
-			userId, groupId,
-			"com.liferay.portlet.bookmarks.model.BookmarksEntry",
-			bookmarksEntry.getEntryId(), bookmarksCategoryIds, null);
-	}
+if (assetCategories != null) {
+	bookmarksCategoryIds = [
+		assetCategories[0].getCategoryId(), assetCategories[1].getCategoryId()
+	];
 }
-catch (Exception e){}
+
+AssetEntryLocalServiceUtil.updateEntry(
+	userId, groupId, "com.liferay.portlet.bookmarks.model.BookmarksEntry",
+	bookmarksEntry.getEntryId(), bookmarksCategoryIds, null);
 
 // Friends Directory
 

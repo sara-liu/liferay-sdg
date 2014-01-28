@@ -38,9 +38,11 @@ LayoutTypePortlet welcomeLayoutTypePortlet =
 	(LayoutTypePortlet)welcomeLayout.getLayoutType();
 
 welcomeLayoutTypePortlet.removePortletId(userId, "47");
+
+welcomeLayoutTypePortlet.movePortletId(userId, "58", "column-2", -1);
+
 welcomeLayoutTypePortlet.addPortletId(
 	userId, "85_INSTANCE_WelcomSM0001", "column-1", -1, false);
-welcomeLayoutTypePortlet.movePortletId(userId, "58", "column-2", -1);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, welcomeLayout.getLayoutId(),
@@ -52,9 +54,7 @@ AssetVocabulary assetVocabulary =
 	AssetVocabularyLocalServiceUtil.addDefaultVocabulary(groupId);
 
 AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category1", assetVocabulary.getVocabularyId(),
-	serviceContext);
+	userId, "category1", assetVocabulary.getVocabularyId(), serviceContext);
 
 AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category2", assetVocabulary.getVocabularyId(),
-	serviceContext);
+	userId, "category2", assetVocabulary.getVocabularyId(), serviceContext);
