@@ -41,6 +41,7 @@ import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -91,24 +92,30 @@ BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 	0, 1, 2010, 12, 0, true, false, new String[0], false, "", "", null,
 	serviceContext);
 
-// Add categories
-
-AssetVocabulary assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-	userId, "Vocabulary Title", serviceContext);
-
-AssetCategory assetCategory1 = AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category1", assetVocabulary.getVocabularyId(),
-	serviceContext);
-
-AssetCategory assetCategory2 = AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category2", assetVocabulary.getVocabularyId(),
-	serviceContext);
-
 // Add tags and categories for blogs
 
-String[] blogsTags = ["tag1", "tag2"];
+AssetVocabulary assetVocabulary = null;
 
-long[] blogsCategoryIds = [assetCategory1.getCategoryId()];
+List<AssetCategory> assetCategorys = new ArrayList<AssetCategory>();
+
+long[] blogsCategoryIds = null;
+
+try {
+	assetVocabulary =
+		AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+			groupId, "Topic");
+
+	assetCategorys =
+		AssetCategoryLocalServiceUtil.getVocabularyCategories(
+			assetVocabulary.getVocabularyId(), -1, -1, null);
+
+	if (!assetCategorys.isEmpty()) {
+		blogsCategoryIds = [assetCategorys[0].getCategoryId()];
+	}
+}
+catch (Exception e){}
+
+String[] blogsTags = ["tag1", "tag2"];
 
 AssetEntryLocalServiceUtil.updateEntry(
 	userId, groupId, "com.liferay.portlet.blogs.model.BlogsEntry",
@@ -315,10 +322,13 @@ WikiPage wikiPage = WikiPageLocalServiceUtil.updatePage(
 
 // Add tags and cagegories for wiki
 
-String[] wikiPageTags = ["tag2"];
+long[] wikiPageCategoryIds = null;
 
-long[] wikiPageCategoryIds =
-	[assetCategory1.getCategoryId(), assetCategory2.getCategoryId()];
+if (assetVocabulary != null && !assetCategorys.isEmpty()) {
+	wikiPageCategoryIds = [assetCategorys[1].getCategoryId()];
+}
+
+String[] wikiPageTags = ["tag2"];
 
 AssetEntryLocalServiceUtil.updateEntry(
 	userId, groupId, "com.liferay.portlet.wiki.model.WikiPage",

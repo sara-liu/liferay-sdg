@@ -8,7 +8,10 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 	WebKeys.THEME_DISPLAY);
@@ -42,3 +45,16 @@ welcomeLayoutTypePortlet.movePortletId(userId, "58", "column-2", -1);
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, welcomeLayout.getLayoutId(),
 	welcomeLayout.getTypeSettings());
+
+// Add categories
+
+AssetVocabulary assetVocabulary =
+	AssetVocabularyLocalServiceUtil.addDefaultVocabulary(groupId);
+
+AssetCategoryLocalServiceUtil.addCategory(
+	userId, "category1", assetVocabulary.getVocabularyId(),
+	serviceContext);
+
+AssetCategoryLocalServiceUtil.addCategory(
+	userId, "category2", assetVocabulary.getVocabularyId(),
+	serviceContext);
