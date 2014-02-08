@@ -134,7 +134,7 @@ String settingsJSON = "{\"actions\":[{\"active\":true,\"activityType\"" +
 	"\"com.liferay.portlet.blogs.model.BlogsEntry\"}";
 
 JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
-		settingsJSON);
+	settingsJSON);
 
 JSONArray actionsJSONArray = settingsJSONObject.getJSONArray("actions");
 
