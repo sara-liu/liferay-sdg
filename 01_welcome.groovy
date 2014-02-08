@@ -13,6 +13,10 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 	WebKeys.THEME_DISPLAY);
 
@@ -53,8 +57,26 @@ LayoutLocalServiceUtil.updateLayout(
 AssetVocabulary assetVocabulary =
 	AssetVocabularyLocalServiceUtil.addDefaultVocabulary(groupId);
 
-AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category1", assetVocabulary.getVocabularyId(), serviceContext);
+Map<Locale, String> CategoriesTitleMap1 = new HashMap<Locale, String>();
+
+CategoriesTitleMap1.put(Locale.US, "Category1");
+
+Map<Locale, String> CategoriesDecriptionMap1 = new HashMap<Locale, String>();
+
+CategoriesDecriptionMap1.put(Locale.US, "");
 
 AssetCategoryLocalServiceUtil.addCategory(
-	userId, "category2", assetVocabulary.getVocabularyId(), serviceContext);
+	userId, 0, CategoriesTitleMap1, CategoriesDecriptionMap1,
+	assetVocabulary.getVocabularyId(), null, serviceContext);
+
+Map<Locale, String> CategoriesTitleMap2 = new HashMap<Locale, String>();
+
+CategoriesTitleMap2.put(Locale.US, "Category2");
+
+Map<Locale, String> CategoriesDecriptionMap2 = new HashMap<Locale, String>();
+
+CategoriesDecriptionMap2.put(Locale.US, "");
+
+AssetCategoryLocalServiceUtil.addCategory(
+	userId, 0, CategoriesTitleMap2, CategoriesDecriptionMap2,
+	assetVocabulary.getVocabularyId(), null, serviceContext);

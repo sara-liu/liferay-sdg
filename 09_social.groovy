@@ -1,3 +1,6 @@
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -12,6 +15,18 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.social.model.SocialActivityCounterConstants;
+import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
+import com.liferay.portlet.social.model.SocialActivityDefinition;
+import com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
+import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -87,6 +102,152 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, groupStatisticsLayout.getPlid(),
 	"181", groupStatisticsPortletPreferences);
 
+String settingsJSON = "{\"actions\":[{\"active\":true,\"activityType\"" +
+	":2,\"contributionIncrement\":0,\"contributionLimitEnabled\":false," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"ADD_ENTRY\"," +
+	"\"participationIncrement\":5,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":1},{\"active\":true,\"activityType\":10005," +
+	"\"contributionIncrement\":2,\"contributionLimitEnabled\":true," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"ADD_COMMENT\"," +
+	"\"participationIncrement\":2,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":10},{\"active\":true,\"activityType\":10001," +
+	"\"contributionIncrement\":0,\"contributionLimitEnabled\":true," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"VIEW\"," +
+	"\"participationIncrement\":1,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":0},{\"active\":true,\"activityType\":10002," +
+	"\"contributionIncrement\":2,\"contributionLimitEnabled\":false," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"SUBSCRIBE\"," +
+	"\"participationIncrement\":2,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":0},{\"active\":true,\"activityType\":10003," +
+	"\"contributionIncrement\":0,\"contributionLimitEnabled\":false," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"UNSUBSCRIBE\"," +
+	"\"participationIncrement\":0,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":0},{\"active\":true,\"activityType\":3," +
+	"\"contributionIncrement\":0,\"contributionLimitEnabled\":true," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"UPDATE_ENTRY\"," +
+	"\"participationIncrement\":1,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":10},{\"active\":true,\"activityType\":10004," +
+	"\"contributionIncrement\":5,\"contributionLimitEnabled\":false," +
+	"\"contributionLimitValue\":0,\"languageKey\":\"ADD_VOTE\"," +
+	"\"participationIncrement\":1,\"participationLimitEnabled\":true," +
+	"\"participationLimitValue\":0}],\"modelName\":" +
+	"\"com.liferay.portlet.blogs.model.BlogsEntry\"}";
+
+JSONObject settingsJSONObject = JSONFactoryUtil.createJSONObject(
+	settingsJSON);
+
+JSONArray actionsJSONArray = settingsJSONObject.getJSONArray("actions");
+
+String modelName = settingsJSONObject.getString("modelName");
+
+for (int i = 0; i < actionsJSONArray.length(); i++) {
+	JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
+
+	int activityType = actionJSONObject.getInt("activityType");
+
+	SocialActivityDefinition activityDefinition =
+		SocialActivitySettingServiceUtil.getActivityDefinition(
+			groupId, modelName, activityType);
+
+	List<SocialActivityCounterDefinition> activityCounterDefinitions =
+		new ArrayList<SocialActivityCounterDefinition>();
+
+	activityCounterDefinitions.add(
+		updateActivityCounterDefinition(
+			actionJSONObject, activityDefinition,
+			SocialActivityCounterConstants.NAME_CONTRIBUTION));
+
+	activityCounterDefinitions.add(
+		updateActivityCounterDefinition(
+			actionJSONObject, activityDefinition,
+			SocialActivityCounterConstants.NAME_PARTICIPATION));
+
+	activityCounterDefinitions.add(
+		updateActivityCounterDefinition(
+			actionJSONObject, activityDefinition,
+			SocialActivityCounterConstants.NAME_POPULARITY));
+
+	SocialActivitySettingLocalServiceUtil.updateActivitySettings(
+		groupId, modelName, activityType, activityCounterDefinitions);
+}
+
+protected SocialActivityCounterDefinition updateActivityCounterDefinition(
+		JSONObject actionJSONObject,
+		SocialActivityDefinition activityDefinition,
+		String activityCounterName) {
+
+	SocialActivityCounterDefinition activityCounterDefinition =
+		activityDefinition.getActivityCounterDefinition(
+			activityCounterName);
+
+	if (activityCounterDefinition == null) {
+		activityCounterDefinition = new SocialActivityCounterDefinition();
+
+		activityCounterDefinition.setName(activityCounterName);
+	}
+
+	if (activityCounterName.equals(
+		SocialActivityCounterConstants.NAME_CONTRIBUTION)) {
+
+		activityCounterDefinition.setOwnerType(
+			SocialActivityCounterConstants.TYPE_CREATOR);
+	}
+	else if (activityCounterName.equals(
+		SocialActivityCounterConstants.NAME_PARTICIPATION)) {
+
+		activityCounterDefinition.setOwnerType(
+			SocialActivityCounterConstants.TYPE_ACTOR);
+	}
+	else if (activityCounterName.equals(
+		SocialActivityCounterConstants.NAME_POPULARITY)) {
+
+		activityCounterDefinition.setOwnerType(
+			SocialActivityCounterConstants.TYPE_ASSET);
+
+		activityCounterName =
+			SocialActivityCounterConstants.NAME_CONTRIBUTION;
+	}
+
+	activityCounterDefinition.setEnabled(
+		actionJSONObject.getBoolean("active"));
+	activityCounterDefinition.setIncrement(
+		actionJSONObject.getInt(activityCounterName + "Increment"));
+	activityCounterDefinition.setLimitPeriod(
+		actionJSONObject.getInt(activityCounterName + "LimitPeriod"));
+	activityCounterDefinition.setLimitValue(
+		actionJSONObject.getInt(activityCounterName + "LimitValue"));
+
+	return activityCounterDefinition;
+}
+
+SocialActivitySettingLocalServiceUtil.updateActivitySetting(
+	groupId, modelName, true);
+
+try {
+	BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.getEntry(
+		groupId, "blog-title");
+
+	blogsClassNameId = PortalUtil.getClassNameId(
+		"com.liferay.portlet.blogs.model.BlogsEntry");
+	userClassNameId = PortalUtil.getClassNameId(
+		"com.liferay.portal.model.User");
+
+	SocialActivityCounterLocalServiceUtil.addActivityCounter(
+		groupId, userClassNameId, userId, "user.blogs", 1, 1, 1, 1127, -1,
+		0, 0);
+	SocialActivityCounterLocalServiceUtil.addActivityCounter(
+		groupId, userClassNameId, userId, "participation", 1, 5, 5, 1127,
+		-1, 0, 0);
+	SocialActivityCounterLocalServiceUtil.addActivityCounter(
+		groupId, userClassNameId, userId, "user.activities", 1, 1, 1, 1127,
+		-1, 0, 0);
+	SocialActivityCounterLocalServiceUtil.addActivityCounter(
+		groupId, blogsClassNameId, blogsEntry.getEntryId(),
+		"asset.activities", 2, 1, 1, 1127, -1, 0, 0);
+}
+catch (NoSuchEntryException nsee) {
+}
+
 // Requests
 
 Layout requestsLayout = LayoutLocalServiceUtil.addLayout(
@@ -129,9 +290,11 @@ PortletPreferences userStatisticsPortletPreferences =
 		PortletConstants.DEFAULT_PREFERENCES);
 
 userStatisticsPortletPreferences.setValue(
-	"displayActivityCounterName0", "creator.comments");
-userStatisticsPortletPreferences.setValue(
 	"rankByContribution", "true");
+userStatisticsPortletPreferences.setValue(
+	"rankByParticipation", "true");
+userStatisticsPortletPreferences.setValue(
+	"displayActivityCounterName0", "user.blogs");
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, userStatisticsLayout.getPlid(),
