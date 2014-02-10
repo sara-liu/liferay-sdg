@@ -129,9 +129,9 @@ PortletPreferences userStatisticsPortletPreferences =
 		PortletConstants.DEFAULT_PREFERENCES);
 
 userStatisticsPortletPreferences.setValue(
-	"displayActivityCounterName0", "creator.comments");
-userStatisticsPortletPreferences.setValue(
-	"rankByContribution", "true");
+	"displayActivityCounterName0", "user.blogs");
+userStatisticsPortletPreferences.setValue("rankByContribution", "true");
+userStatisticsPortletPreferences.setValue("rankByParticipation", "true");
 
 PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, userStatisticsLayout.getPlid(),
