@@ -35,5 +35,4 @@ Layout controlPanelLayout = LayoutLocalServiceUtil.addLayout(
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, controlPanelLayout.getLayoutId(),
-	"url=/group/control_panel?refererPlid=" +
-	String.valueOf(welcomeLayout.getPlid()));
+	"url=/group/control_panel");
