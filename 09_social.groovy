@@ -79,7 +79,7 @@ PortletPreferences groupStatisticsPortletPreferences =
 		PortletConstants.DEFAULT_PREFERENCES);
 
 groupStatisticsPortletPreferences.setValue(
-	"displayActivityCounterName0", "user.blogs");
+	"displayActivityCounterName0", "asset.activities");
 groupStatisticsPortletPreferences.setValue(
 	"displayActivityCounterNameIndexes", "0");
 
@@ -129,7 +129,7 @@ PortletPreferences userStatisticsPortletPreferences =
 		PortletConstants.DEFAULT_PREFERENCES);
 
 userStatisticsPortletPreferences.setValue(
-	"displayActivityCounterName0", "user.blogs");
+	"displayActivityCounterName0", "user.achievements");
 userStatisticsPortletPreferences.setValue("rankByContribution", "true");
 userStatisticsPortletPreferences.setValue("rankByParticipation", "true");
 

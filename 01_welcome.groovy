@@ -68,6 +68,12 @@ AssetCategoryLocalServiceUtil.addCategory(
 SocialActivitySettingLocalServiceUtil.updateActivitySetting(
 	groupId, "com.liferay.portlet.blogs.model.BlogsEntry", true);
 
+SocialActivitySettingLocalServiceUtil.updateActivitySetting(
+	groupId, "com.liferay.portlet.wiki.model.WikiPage", true);
+
+SocialActivitySettingLocalServiceUtil.updateActivitySetting(
+	groupId, "com.liferay.portlet.messageboards.model.MBMessage", true);
+
 List<SocialActivityCounterDefinition> createActivityCounterDefinitions() {
 	List<SocialActivityCounterDefinition> definitions =
 		new ArrayList<SocialActivityCounterDefinition>();
@@ -89,6 +95,7 @@ List<SocialActivityCounterDefinition> createActivityCounterDefinitions() {
 		SocialActivityCounterConstants.NAME_PARTICIPATION);
 	participationDefinition.setOwnerType(
 		SocialActivityCounterConstants.TYPE_ACTOR);
+	participationDefinition.setLimitPeriod(0);
 
 	definitions.add(participationDefinition);
 
