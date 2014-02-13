@@ -12,9 +12,6 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.social.model.SocialActivityCounterConstants;
-import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
 ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -63,60 +60,13 @@ AssetCategoryLocalServiceUtil.addCategory(
 AssetCategoryLocalServiceUtil.addCategory(
 	userId, "category2", assetVocabulary.getVocabularyId(), serviceContext);
 
-// Enable Social Activity
+// Enable social activity
 
 SocialActivitySettingLocalServiceUtil.updateActivitySetting(
 	groupId, "com.liferay.portlet.blogs.model.BlogsEntry", true);
 
 SocialActivitySettingLocalServiceUtil.updateActivitySetting(
-	groupId, "com.liferay.portlet.wiki.model.WikiPage", true);
-
-SocialActivitySettingLocalServiceUtil.updateActivitySetting(
 	groupId, "com.liferay.portlet.messageboards.model.MBMessage", true);
 
-List<SocialActivityCounterDefinition> createActivityCounterDefinitions() {
-	List<SocialActivityCounterDefinition> definitions =
-		new ArrayList<SocialActivityCounterDefinition>();
-
-	SocialActivityCounterDefinition contributionDefinition =
-		new SocialActivityCounterDefinition();
-
-	contributionDefinition.setName(
-		SocialActivityCounterConstants.NAME_CONTRIBUTION);
-	contributionDefinition.setOwnerType(
-		SocialActivityCounterConstants.TYPE_CREATOR);
-
-	definitions.add(contributionDefinition);
-
-	SocialActivityCounterDefinition participationDefinition =
-		new SocialActivityCounterDefinition();
-
-	participationDefinition.setName(
-		SocialActivityCounterConstants.NAME_PARTICIPATION);
-	participationDefinition.setOwnerType(
-		SocialActivityCounterConstants.TYPE_ACTOR);
-	participationDefinition.setLimitPeriod(0);
-
-	definitions.add(participationDefinition);
-
-	SocialActivityCounterDefinition popularityDefinition =
-		new SocialActivityCounterDefinition();
-
-	popularityDefinition.setName(
-		SocialActivityCounterConstants.NAME_POPULARITY);
-	popularityDefinition.setOwnerType(
-		SocialActivityCounterConstants.TYPE_ASSET);
-
-	definitions.add(popularityDefinition);
-
-	return definitions;
-}
-
-SocialActivitySettingLocalServiceUtil.updateActivitySettings(
-	groupId, "com.liferay.portlet.blogs.model.BlogsEntry",
-	SocialActivityCounterConstants.TYPE_CREATOR,
-	createActivityCounterDefinitions());
-
-SocialActivitySettingLocalServiceUtil.updateActivitySettings(
-	groupId, "com.liferay.portlet.blogs.model.BlogsEntry",
-	SocialActivityConstants.TYPE_VIEW, createActivityCounterDefinitions());
+SocialActivitySettingLocalServiceUtil.updateActivitySetting(
+	groupId, "com.liferay.portlet.wiki.model.WikiPage", true);
