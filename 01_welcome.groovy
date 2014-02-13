@@ -58,28 +58,28 @@ LayoutLocalServiceUtil.updateLayout(
 AssetVocabulary assetVocabulary =
 	AssetVocabularyLocalServiceUtil.addDefaultVocabulary(groupId);
 
-Map<Locale, String> CategoriesTitleMap1 = new HashMap<Locale, String>();
+Map<Locale, String> assetCategoryTitleMap1 = new HashMap<Locale, String>();
 
-CategoriesTitleMap1.put(Locale.US, "Category1");
+assetCategoryTitleMap1.put(Locale.US, "Category1");
 
-Map<Locale, String> CategoriesDecriptionMap1 = new HashMap<Locale, String>();
+Map<Locale, String> assetCategoryDecriptionMap1 = new HashMap<Locale, String>();
 
-CategoriesDecriptionMap1.put(Locale.US, "");
+assetCategoryDecriptionMap1.put(Locale.US, "");
 
 AssetCategoryLocalServiceUtil.addCategory(
-	userId, 0, CategoriesTitleMap1, CategoriesDecriptionMap1,
+	userId, 0, assetCategoryTitleMap1, assetCategoryDecriptionMap1,
 	assetVocabulary.getVocabularyId(), null, serviceContext);
 
-Map<Locale, String> CategoriesTitleMap2 = new HashMap<Locale, String>();
+Map<Locale, String> assetCategoryTitleMap2 = new HashMap<Locale, String>();
 
-CategoriesTitleMap2.put(Locale.US, "Category2");
+assetCategoryTitleMap2.put(Locale.US, "Category2");
 
-Map<Locale, String> CategoriesDecriptionMap2 = new HashMap<Locale, String>();
+Map<Locale, String> assetCategoryDecriptionMap2 = new HashMap<Locale, String>();
 
-CategoriesDecriptionMap2.put(Locale.US, "");
+assetCategoryDecriptionMap2.put(Locale.US, "");
 
 AssetCategoryLocalServiceUtil.addCategory(
-	userId, 0, CategoriesTitleMap2, CategoriesDecriptionMap2,
+	userId, 0, assetCategoryTitleMap2, assetCategoryDecriptionMap2,
 	assetVocabulary.getVocabularyId(), null, serviceContext);
 
 // Enable social activity
