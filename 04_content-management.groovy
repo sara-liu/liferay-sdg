@@ -397,9 +397,10 @@ String webContentContent = "<?xml version=\"1.0\"?><root " +
 	"magna aliqua.]]></static-content></root>";
 
 JournalArticle webContentArticle = JournalArticleLocalServiceUtil.addArticle(
-	userId, groupId, 0, webContentArticleTitleMap,
-	webContentArticleDescriptionMap, webContentContent, null, null,
-	serviceContext);
+	userId, groupId, 0, 0, "", true, 1.0, webContentArticleTitleMap,
+	webContentArticleDescriptionMap, webContentContent, "general", null, null,
+	null, 0, 1, 2010, 12, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
+	false, null, null, null, null, serviceContext);
 
 PortletPreferences webContentDisplayPortletPreferences =
 	PortletPreferencesLocalServiceUtil.getPreferences(
