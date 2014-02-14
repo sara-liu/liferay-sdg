@@ -60,7 +60,7 @@ AssetVocabulary assetVocabulary =
 
 Map<Locale, String> assetCategoryTitleMap1 = new HashMap<Locale, String>();
 
-assetCategoryTitleMap1.put(Locale.US, "Category1");
+assetCategoryTitleMap1.put(Locale.US, "category1");
 
 Map<Locale, String> assetCategoryDecriptionMap1 = new HashMap<Locale, String>();
 
@@ -72,7 +72,7 @@ AssetCategoryLocalServiceUtil.addCategory(
 
 Map<Locale, String> assetCategoryTitleMap2 = new HashMap<Locale, String>();
 
-assetCategoryTitleMap2.put(Locale.US, "Category2");
+assetCategoryTitleMap2.put(Locale.US, "category2");
 
 Map<Locale, String> assetCategoryDecriptionMap2 = new HashMap<Locale, String>();
 

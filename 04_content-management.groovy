@@ -400,7 +400,7 @@ JournalArticle webContentArticle = JournalArticleLocalServiceUtil.addArticle(
 	userId, groupId, 0, 0, "", true, 1.0, webContentArticleTitleMap,
 	webContentArticleDescriptionMap, webContentContent, "general", null, null,
 	null, 2, 6, 2013, 1, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
-	false, null, null, new HashMap<String, byte[]>(), null, serviceContext);
+	false, null, null, null, null, serviceContext);
 
 PortletPreferences webContentDisplayPortletPreferences =
 	PortletPreferencesLocalServiceUtil.getPreferences(
