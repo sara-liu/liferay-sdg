@@ -141,25 +141,6 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, dmDisplayLayout.getLayoutId(),
 	dmDisplayLayout.getTypeSettings());
 
-// Highest Rated Assets
-
-Layout highestRatedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Highest Rated Assets", "", "", "portlet", false, "/highest-rated-assets",
-	serviceContext);
-
-LayoutTypePortlet highestRatedAssetsLayoutTypePortlet =
-	(LayoutTypePortlet)highestRatedAssetsLayout.getLayoutType();
-
-highestRatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0006", "column-1", -1, false);
-highestRatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "194_INSTANCE_ContenHRA001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, highestRatedAssetsLayout.getLayoutId(),
-	highestRatedAssetsLayout.getTypeSettings());
-
 // Media Gallery
 
 Layout mediaGalleryLayout = LayoutLocalServiceUtil.addLayout(
@@ -178,25 +159,6 @@ mediaGalleryLayoutTypePortlet.addPortletId(
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mediaGalleryLayout.getLayoutId(),
 	mediaGalleryLayout.getTypeSettings());
-
-// Most Viewed Assets
-
-Layout mostViewedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Most Viewed Assets", "", "", "portlet", false, "/most-viewed-assets",
-	serviceContext);
-
-LayoutTypePortlet mostViewedAssetsLayoutTypePortlet =
-	(LayoutTypePortlet)mostViewedAssetsLayout.getLayoutType();
-
-mostViewedAssetsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0008", "column-1", -1, false);
-mostViewedAssetsLayoutTypePortlet.addPortletId(
-	userId, "193_INSTANCE_ContenMVA001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, mostViewedAssetsLayout.getLayoutId(),
-	mostViewedAssetsLayout.getTypeSettings());
 
 // Navigation
 
@@ -361,25 +323,6 @@ siteMapLayoutTypePortlet.addPortletId(
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, siteMapLayout.getLayoutId(),
 	siteMapLayout.getTypeSettings());
-
-// Sites Directory
-
-Layout sitesDirectoryLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Sites Directory", "", "", "portlet", false, "/sites-directory",
-	serviceContext);
-
-LayoutTypePortlet sitesDirectoryLayoutTypePortlet =
-	(LayoutTypePortlet)sitesDirectoryLayout.getLayoutType();
-
-sitesDirectoryLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0015", "column-1", -1, false);
-sitesDirectoryLayoutTypePortlet.addPortletId(
-	userId, "184_INSTANCE_ContenSD0001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, sitesDirectoryLayout.getLayoutId(),
-	sitesDirectoryLayout.getTypeSettings());
 
 // Tag Cloud
 
