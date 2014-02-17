@@ -98,6 +98,30 @@ AssetEntryLocalServiceUtil.updateEntry(
 	userId, groupId, "com.liferay.portlet.bookmarks.model.BookmarksEntry",
 	bookmarksEntry.getEntryId(), bookmarksCategoryIds, null);
 
+// Directory
+
+Layout directoryLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, communityLayout.getLayoutId(), "Directory", "", "",
+	"portlet", false, "/directory", serviceContext);
+
+LayoutTypePortlet directoryLayoutTypePortlet =
+	(LayoutTypePortlet)directoryLayout.getLayoutType();
+
+directoryLayoutTypePortlet.addPortletId(
+	userId, "85_INSTANCE_CommunSM0002", "column-1", -1, false);
+directoryLayoutTypePortlet.addPortletId(userId, "11", "column-2", -1, false);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, directoryLayout.getLayoutId(),
+	directoryLayout.getTypeSettings());
+
+OrganizationLocalServiceUtil.addOrganization(
+	userId, 0, "Organizations Name", "regular-organization", true, 0, 0,
+	ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, null, false, serviceContext);
+
+UserGroupLocalServiceUtil.addUserGroup(
+	userId, companyId, "User Group Name", "User group description");
+
 // Invitation
 
 Layout invitationLayout = LayoutLocalServiceUtil.addLayout(
@@ -108,7 +132,7 @@ LayoutTypePortlet invitationLayoutTypePortlet =
 	(LayoutTypePortlet)invitationLayout.getLayoutType();
 
 invitationLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CommunSM0002", "column-1", -1, false);
+	userId, "85_INSTANCE_CommunSM0003", "column-1", -1, false);
 invitationLayoutTypePortlet.addPortletId(userId, "100", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -125,7 +149,7 @@ LayoutTypePortlet mySitesLayoutTypePortlet =
 	(LayoutTypePortlet)mySitesLayout.getLayoutType();
 
 mySitesLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CommunSM0003", "column-1", -1, false);
+	userId, "85_INSTANCE_CommunSM0004", "column-1", -1, false);
 mySitesLayoutTypePortlet.addPortletId(userId, "29", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -142,7 +166,7 @@ LayoutTypePortlet pageCommentsLayoutTypePortlet =
 	(LayoutTypePortlet)pageCommentsLayout.getLayoutType();
 
 pageCommentsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CommunSM0004", "column-1", -1, false);
+	userId, "85_INSTANCE_CommunSM0005", "column-1", -1, false);
 pageCommentsLayoutTypePortlet.addPortletId(
 	userId, "107", "column-2", -1, false);
 
@@ -175,7 +199,7 @@ LayoutTypePortlet pageFlagsLayoutTypePortlet =
 	(LayoutTypePortlet)pageFlagsLayout.getLayoutType();
 
 pageFlagsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CommunSM0005", "column-1", -1, false);
+	userId, "85_INSTANCE_CommunSM0006", "column-1", -1, false);
 pageFlagsLayoutTypePortlet.addPortletId(userId, "143", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -192,7 +216,7 @@ LayoutTypePortlet pageRatingsLayoutTypePortlet =
 	(LayoutTypePortlet)pageRatingsLayout.getLayoutType();
 
 pageRatingsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CommunSM0006", "column-1", -1, false);
+	userId, "85_INSTANCE_CommunSM0007", "column-1", -1, false);
 pageRatingsLayoutTypePortlet.addPortletId(userId, "108", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(

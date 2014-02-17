@@ -415,6 +415,37 @@ PortletPreferencesLocalServiceUtil.updatePreferences(
 	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, webContentDisplayLayout.getPlid(),
 	"56_INSTANCE_ContenWCD001", webContentDisplayPortletPreferences);
 
+// Web Content List
+
+Layout webContentListLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, contentManagementLayout.getLayoutId(),
+	"Web Content List", "", "", "portlet", false, "/web-content-list",
+	serviceContext);
+
+LayoutTypePortlet webContentListLayoutTypePortlet =
+	(LayoutTypePortlet)webContentListLayout.getLayoutType();
+
+webContentListLayoutTypePortlet.addPortletId(
+	userId, "85_INSTANCE_ContenSM0016", "column-1", -1, false);
+webContentListLayoutTypePortlet.addPortletId(
+	userId, "62_INSTANCE_ContenWCL001", "column-2", -1, false);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, webContentListLayout.getLayoutId(),
+	webContentListLayout.getTypeSettings());
+
+PortletPreferences webContentListPortletPreferences =
+	PortletPreferencesLocalServiceUtil.getPreferences(
+		companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+		webContentListLayout.getPlid(), "62_INSTANCE_ContenWCL001",
+		PortletConstants.DEFAULT_PREFERENCES);
+
+webContentListPortletPreferences.setValue("groupId", String.valueOf(groupId));
+
+PortletPreferencesLocalServiceUtil.updatePreferences(
+	0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, webContentListLayout.getPlid(),
+	"62_INSTANCE_ContenWCL001", webContentListPortletPreferences);
+
 // Web Content Search
 
 Layout webContentSearchLayout = LayoutLocalServiceUtil.addLayout(
@@ -426,7 +457,7 @@ LayoutTypePortlet webContentSearchLayoutTypePortlet =
 	(LayoutTypePortlet)webContentSearchLayout.getLayoutType();
 
 webContentSearchLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0016", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0017", "column-1", -1, false);
 webContentSearchLayoutTypePortlet.addPortletId(
 	userId, "77", "column-2", -1, false);
 
@@ -444,7 +475,7 @@ LayoutTypePortlet xslContentLayoutTypePortlet =
 	(LayoutTypePortlet)xslContentLayout.getLayoutType();
 
 xslContentLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0017", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0018", "column-1", -1, false);
 xslContentLayoutTypePortlet.addPortletId(
 	userId, "102_INSTANCE_ContenXSLC01", "column-2", -1, false);
 

@@ -1,3 +1,7 @@
+import com.liferay.portal.kernel.cal.Duration;
+import com.liferay.portal.kernel.cal.Recurrence;
+import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -21,6 +25,7 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
@@ -41,6 +46,7 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -137,6 +143,38 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, blogsAggregatorLayout.getLayoutId(),
 	blogsAggregatorLayout.getTypeSettings());
 
+// Calendar
+
+Layout calendarLayout = LayoutLocalServiceUtil.addLayout(
+	userId, groupId, false, collaborationLayout.getLayoutId(), "Calendar", "",
+	"", "portlet", false, "/calendar", serviceContext);
+
+LayoutTypePortlet calendarLayoutTypePortlet =
+	(LayoutTypePortlet)calendarLayout.getLayoutType();
+
+calendarLayoutTypePortlet.addPortletId(
+	userId, "85_INSTANCE_CollabSM0003", "column-1", -1, false);
+calendarLayoutTypePortlet.addPortletId(userId, "8", "column-2", -1, false);
+
+LayoutLocalServiceUtil.updateLayout(
+	groupId, false, calendarLayout.getLayoutId(),
+	calendarLayout.getTypeSettings());
+
+TZSRecurrence recurrence = new TZSRecurrence(
+	null, new Duration(1, 0, 0, 0), Recurrence.MONTHLY);
+
+int[] byMonthDay = [15];
+
+recurrence.setByMonthDay(byMonthDay);
+recurrence.setInterval(1);
+recurrence.setTimeZone(TimeZoneUtil.getDefault());
+recurrence.setWeekStart(Calendar.SUNDAY);
+
+CalEventLocalServiceUtil.addEvent(
+	userId, "Calendar Title", "Calendar description", "Calendar Location", 0, 1,
+	2010, 12, 0, 0, 0, true, false, "anniversary", true, recurrence, 0, 0,
+	0, serviceContext);
+
 // Dynamic Data List Display 
 
 Layout ddlDisplayLayout1 = LayoutLocalServiceUtil.addLayout(
@@ -147,7 +185,7 @@ LayoutTypePortlet ddlDisplayLayoutTypePortlet1 =
 	(LayoutTypePortlet)ddlDisplayLayout1.getLayoutType();
 
 ddlDisplayLayoutTypePortlet1.addPortletId(
-	userId, "85_INSTANCE_CollabSM0003", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0004", "column-1", -1, false);
 ddlDisplayLayoutTypePortlet1.addPortletId(
 	userId, "169_INSTANCE_CollabDDLD01", "column-2", -1, false);
 
@@ -200,7 +238,7 @@ LayoutTypePortlet ddlDisplayLayoutTypePortlet2 =
 	(LayoutTypePortlet)ddlDisplayLayout2.getLayoutType();
 
 ddlDisplayLayoutTypePortlet2.addPortletId(
-	userId, "85_INSTANCE_CollabSM0004", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0005", "column-1", -1, false);
 ddlDisplayLayoutTypePortlet2.addPortletId(
 	userId, "169_INSTANCE_CollabDDLD02", "column-2", -1, false);
 
@@ -232,7 +270,7 @@ LayoutTypePortlet mbLayoutTypePortlet =
 	(LayoutTypePortlet)mbLayout.getLayoutType();
 
 mbLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CollabSM0005", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0006", "column-1", -1, false);
 mbLayoutTypePortlet.addPortletId(userId, "19", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -281,7 +319,7 @@ LayoutTypePortlet recentBloggersLayoutTypePortlet =
 	(LayoutTypePortlet)recentBloggersLayout.getLayoutType();
 
 recentBloggersLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CollabSM0006", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0007", "column-1", -1, false);
 recentBloggersLayoutTypePortlet.addPortletId(
 	userId, "114", "column-2", -1, false);
 
@@ -299,7 +337,7 @@ LayoutTypePortlet wikiLayoutTypePortlet =
 	(LayoutTypePortlet)wikiLayout.getLayoutType();
 
 wikiLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CollabSM0007", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0008", "column-1", -1, false);
 wikiLayoutTypePortlet.addPortletId(userId, "36", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
@@ -356,7 +394,7 @@ LayoutTypePortlet wikiDisplayLayoutTypePortlet =
 	(LayoutTypePortlet)wikiDisplayLayout.getLayoutType();
 
 wikiDisplayLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_CollabSM0008", "column-1", -1, false);
+	userId, "85_INSTANCE_CollabSM0009", "column-1", -1, false);
 wikiDisplayLayoutTypePortlet.addPortletId(
 	userId, "54_INSTANCE_CollabWD0001", "column-2", -1, false);
 
