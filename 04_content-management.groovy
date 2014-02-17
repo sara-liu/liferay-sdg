@@ -141,25 +141,6 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, dmDisplayLayout.getLayoutId(),
 	dmDisplayLayout.getTypeSettings());
 
-// Highest Rated Assets
-
-Layout highestRatedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Highest Rated Assets", "", "", "portlet", false, "/highest-rated-assets",
-	serviceContext);
-
-LayoutTypePortlet highestRatedAssetsLayoutTypePortlet =
-	(LayoutTypePortlet)highestRatedAssetsLayout.getLayoutType();
-
-highestRatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0006", "column-1", -1, false);
-highestRatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "194_INSTANCE_ContenHRA001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, highestRatedAssetsLayout.getLayoutId(),
-	highestRatedAssetsLayout.getTypeSettings());
-
 // Media Gallery
 
 Layout mediaGalleryLayout = LayoutLocalServiceUtil.addLayout(
@@ -171,32 +152,13 @@ LayoutTypePortlet mediaGalleryLayoutTypePortlet =
 	(LayoutTypePortlet)mediaGalleryLayout.getLayoutType();
 
 mediaGalleryLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0007", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0006", "column-1", -1, false);
 mediaGalleryLayoutTypePortlet.addPortletId(
 	userId, "31_INSTANCE_ContenMG0001", "column-2", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mediaGalleryLayout.getLayoutId(),
 	mediaGalleryLayout.getTypeSettings());
-
-// Most Viewed Assets
-
-Layout mostViewedAssetsLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Most Viewed Assets", "", "", "portlet", false, "/most-viewed-assets",
-	serviceContext);
-
-LayoutTypePortlet mostViewedAssetsLayoutTypePortlet =
-	(LayoutTypePortlet)mostViewedAssetsLayout.getLayoutType();
-
-mostViewedAssetsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0008", "column-1", -1, false);
-mostViewedAssetsLayoutTypePortlet.addPortletId(
-	userId, "193_INSTANCE_ContenMVA001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, mostViewedAssetsLayout.getLayoutId(),
-	mostViewedAssetsLayout.getTypeSettings());
 
 // Navigation
 
@@ -208,7 +170,7 @@ LayoutTypePortlet navigationLayoutTypePortlet =
 	(LayoutTypePortlet)navigationLayout.getLayoutType();
 
 navigationLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0009", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0007", "column-1", -1, false);
 navigationLayoutTypePortlet.addPortletId(
 	userId, "71_INSTANCE_ContenNav001", "column-2", -1, false);
 
@@ -227,7 +189,7 @@ LayoutTypePortlet nestedPortletsLayoutTypePortlet =
 	(LayoutTypePortlet)nestedPortletsLayout.getLayoutType();
 
 nestedPortletsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0010", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0008", "column-1", -1, false);
 nestedPortletsLayoutTypePortlet.addPortletId(
 	userId, "118_INSTANCE_ContenNP0001", "column-2", -1, false);
 nestedPortletsLayoutTypePortlet.addPortletId(
@@ -250,7 +212,7 @@ LayoutTypePortlet pollsDisplayLayoutTypePortlet =
 	(LayoutTypePortlet)pollsDisplayLayout.getLayoutType();
 
 pollsDisplayLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0011", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0009", "column-1", -1, false);
 pollsDisplayLayoutTypePortlet.addPortletId(
 	userId, "59_INSTANCE_ContenPD0001", "column-2", -1, false);
 
@@ -319,7 +281,7 @@ LayoutTypePortlet recentDownloadsLayoutTypePortlet =
 	(LayoutTypePortlet)recentDownloadsLayout.getLayoutType();
 
 recentDownloadsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0012", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0010", "column-1", -1, false);
 recentDownloadsLayoutTypePortlet.addPortletId(
 	userId, "64", "column-2", -1, false);
 
@@ -338,7 +300,7 @@ LayoutTypePortlet relatedAssetsLayoutTypePortlet =
 	(LayoutTypePortlet)relatedAssetsLayout.getLayoutType();
 
 relatedAssetsLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0013", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0011", "column-1", -1, false);
 relatedAssetsLayoutTypePortlet.addPortletId(
 	userId, "175_INSTANCE_ContenRA0001", "column-2", -1, false);
 
@@ -356,30 +318,11 @@ LayoutTypePortlet siteMapLayoutTypePortlet =
 	(LayoutTypePortlet)siteMapLayout.getLayoutType();
 
 siteMapLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0014", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0012", "column-1", -1, false);
 
 LayoutLocalServiceUtil.updateLayout(
 	groupId, false, siteMapLayout.getLayoutId(),
 	siteMapLayout.getTypeSettings());
-
-// Sites Directory
-
-Layout sitesDirectoryLayout = LayoutLocalServiceUtil.addLayout(
-	userId, groupId, false, contentManagementLayout.getLayoutId(),
-	"Sites Directory", "", "", "portlet", false, "/sites-directory",
-	serviceContext);
-
-LayoutTypePortlet sitesDirectoryLayoutTypePortlet =
-	(LayoutTypePortlet)sitesDirectoryLayout.getLayoutType();
-
-sitesDirectoryLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0015", "column-1", -1, false);
-sitesDirectoryLayoutTypePortlet.addPortletId(
-	userId, "184_INSTANCE_ContenSD0001", "column-2", -1, false);
-
-LayoutLocalServiceUtil.updateLayout(
-	groupId, false, sitesDirectoryLayout.getLayoutId(),
-	sitesDirectoryLayout.getTypeSettings());
 
 // Tag Cloud
 
@@ -391,7 +334,7 @@ LayoutTypePortlet tagCloudLayoutTypePortlet =
 	(LayoutTypePortlet)tagCloudLayout.getLayoutType();
 
 tagCloudLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0016", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0013", "column-1", -1, false);
 tagCloudLayoutTypePortlet.addPortletId(
 	userId, "148_INSTANCE_ContenTC0001", "column-2", -1, false);
 
@@ -410,7 +353,7 @@ LayoutTypePortlet tagsNavigationLayoutTypePortlet =
 	(LayoutTypePortlet)tagsNavigationLayout.getLayoutType();
 
 tagsNavigationLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0017", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0014", "column-1", -1, false);
 tagsNavigationLayoutTypePortlet.addPortletId(
 	userId, "141_INSTANCE_ContenTN0001", "column-2", -1, false);
 
@@ -429,7 +372,7 @@ LayoutTypePortlet webContentDisplayLayoutTypePortlet =
 	(LayoutTypePortlet)webContentDisplayLayout.getLayoutType();
 
 webContentDisplayLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0018", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0015", "column-1", -1, false);
 webContentDisplayLayoutTypePortlet.addPortletId(
 	userId, "56_INSTANCE_ContenWCD001", "column-2", -1, false);
 
@@ -482,7 +425,7 @@ LayoutTypePortlet webContentSearchLayoutTypePortlet =
 	(LayoutTypePortlet)webContentSearchLayout.getLayoutType();
 
 webContentSearchLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0019", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0016", "column-1", -1, false);
 webContentSearchLayoutTypePortlet.addPortletId(
 	userId, "77", "column-2", -1, false);
 
@@ -500,7 +443,7 @@ LayoutTypePortlet xslContentLayoutTypePortlet =
 	(LayoutTypePortlet)xslContentLayout.getLayoutType();
 
 xslContentLayoutTypePortlet.addPortletId(
-	userId, "85_INSTANCE_ContenSM0020", "column-1", -1, false);
+	userId, "85_INSTANCE_ContenSM0017", "column-1", -1, false);
 xslContentLayoutTypePortlet.addPortletId(
 	userId, "102_INSTANCE_ContenXSLC01", "column-2", -1, false);
 
