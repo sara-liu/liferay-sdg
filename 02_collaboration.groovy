@@ -155,11 +155,8 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, ddlDisplayLayout1.getLayoutId(),
 	ddlDisplayLayout1.getTypeSettings());
 
-classNameId = PortalUtil.getClassNameId(
-	"com.liferay.portlet.dynamicdatalists.model.DDLRecordSet");
-
 DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-	groupId, classNameId, "CONTACTS");
+	groupId, "CONTACTS");
 
 Map<Locale, String> ddmRecordSetNameMap = new HashMap<Locale, String>();
 
@@ -242,7 +239,9 @@ LayoutLocalServiceUtil.updateLayout(
 	groupId, false, mbLayout.getLayoutId(), mbLayout.getTypeSettings());
 
 MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-	userId, 0, "MB Category Name", "MB category description", serviceContext);
+	userId, 0, "MB Category Name", "MB category description", "default", null,
+	null, null, 0, false, null, null, 0, null, false, null, 0, false, null,
+	null, false, false, serviceContext);
 
 MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
 	userId, "Test Test", groupId, mbCategory.getCategoryId(),
